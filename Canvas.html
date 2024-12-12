@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Stack with Rotation</title>
+    <!-- Import Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            background-color: #f0f2f5;
+            font-family: 'Roboto', sans-serif;
+        }
+        .canvas-container {
+            position: relative;
+            width: 400px; /* Adjust as needed */
+            height: 400px; /* Adjust as needed */
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .canvas-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: transform 0.1s ease-in-out;
+        }
+        /* Stacking order */
+        #image6 {
+            z-index: 1;
+        }
+        #image7 {
+            z-index: 2;
+        }
+        #image8 {
+            z-index: 3;
+        }
+        #image9 {
+            z-index: 4;
+        }
+        #image10 {
+            z-index: 5;
+        }
+        #image11 {
+            z-index: 6;
+        }
+        #image12 {
+            z-index: 7;
+        }
+        /* Rotation class */
+        .rotate {
+            transform: rotate(15deg);
+        }
+        /* Button styles */
+        button {
+            background-color: #6200ea;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="canvas-container">
+        <img src="Assets/Accessories/1 (6).webp" id="image6" alt="Image 6">
+        <img src="Assets/Accessories/1 (7).webp" id="image7" alt="Image 7">
+        <img src="Assets/Accessories/1 (8).webp" id="image8" alt="Image 8">
+        <img src="Assets/Accessories/1 (9).webp" id="image9" alt="Image 9">
+        <img src="Assets/Accessories/1 (10).webp" id="image10" alt="Image 10">
+        <img src="Assets/Accessories/1 (11).webp" id="image11" alt="Image 11">
+        <img src="Assets/Accessories/1 (12).webp" id="image12" alt="Image 12">
+    </div>
+
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+
+    <script>
+        const image6 = document.getElementById('image6');
+        let rotationInterval = null;
+
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+
+        startButton.addEventListener('click', () => {
+            if (!rotationInterval) {
+                rotationInterval = setInterval(() => {
+                    image6.classList.add('rotate');
+                    setTimeout(() => {
+                        image6.classList.remove('rotate');
+                    }, 200);
+                }, 400); // Adjust interval as needed for desired rotation speed
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (rotationInterval) {
+                clearInterval(rotationInterval);
+                rotationInterval = null;
+            }
+        });
+    </script>
+
+</body>
+</html>
