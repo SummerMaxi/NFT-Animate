@@ -72,45 +72,172 @@
         button:hover {
             background-color: #3700b3;
         }
+        /* Continuous Rotation Animation */
+        @keyframes continuousRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(15deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .rotate {
+            animation: continuousRotate 0.4s infinite ease-in-out;
+        }
+
+        /* Chat Bubble Styles */
+        .chat-bubble {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            opacity: 0;
+            animation: fadeIn 1s forwards, typewriter 2s steps(2) forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 2em; /* Adjust based on text length */
+            }
+        }
+
+        /* Positioning the chat bubble relative to the canvas */
+        .canvas-container {
+            position: relative; /* Ensure chat bubble is positioned relative to this container */
+            /* ... existing styles ... */
+        }
+
+        /* Record/Download Button Styles */
+        #recordButton {
+            background-color: #6200ea;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #recordButton:hover {
+            background-color: #3700b3;
+        }
     </style>
 </head>
 <body>
 
     <div class="canvas-container">
-        <img src="Assets/Accessories/1 (6).webp" id="image6" alt="Image 6">
+        <img src="Assets/Accessories/1 (6).webp" id="image6" alt="Image 6" class="rotate">
         <img src="Assets/Accessories/1 (7).webp" id="image7" alt="Image 7">
         <img src="Assets/Accessories/1 (8).webp" id="image8" alt="Image 8">
         <img src="Assets/Accessories/1 (9).webp" id="image9" alt="Image 9">
         <img src="Assets/Accessories/1 (10).webp" id="image10" alt="Image 10">
         <img src="Assets/Accessories/1 (11).webp" id="image11" alt="Image 11">
         <img src="Assets/Accessories/1 (12).webp" id="image12" alt="Image 12">
+
+        <!-- Chat Bubble Overlay -->
+        <div class="chat-bubble">GM</div>
     </div>
 
-    <button id="startButton">Start</button>
-    <button id="stopButton">Stop</button>
+    <button id="recordButton">Record 5s Video</button>
 
     <script>
         const image6 = document.getElementById('image6');
         let rotationInterval = null;
 
-        const startButton = document.getElementById('startButton');
-        const stopButton = document.getElementById('stopButton');
+        // Recording Functionality
+        const recordButton = document.getElementById('recordButton');
+        const canvasContainer = document.querySelector('.canvas-container');
+        let mediaRecorder;
+        let recordedChunks = [];
+        let videoBlob = null;
 
-        startButton.addEventListener('click', () => {
-            if (!rotationInterval) {
-                rotationInterval = setInterval(() => {
-                    image6.classList.add('rotate');
-                    setTimeout(() => {
-                        image6.classList.remove('rotate');
-                    }, 200);
-                }, 400); // Adjust interval as needed for desired rotation speed
-            }
-        });
+        recordButton.addEventListener('click', async () => {
+            if (recordButton.textContent === 'Record 5s Video') {
+                // Start Recording
+                recordButton.textContent = 'Recording...';
+                recordButton.disabled = true;
 
-        stopButton.addEventListener('click', () => {
-            if (rotationInterval) {
-                clearInterval(rotationInterval);
-                rotationInterval = null;
+                // Clone the canvas container to a canvas element
+                const canvas = document.createElement('canvas');
+                canvas.width = canvasContainer.offsetWidth;
+                canvas.height = canvasContainer.offsetHeight;
+                const ctx = canvas.getContext('2d');
+
+                // Function to render the current state of the canvas-container
+                const renderFrame = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    const images = canvasContainer.querySelectorAll('img');
+                    images.forEach(img => {
+                        const imgElement = new Image();
+                        imgElement.src = img.src;
+                        imgElement.style.transform = img.style.transform;
+                        imgElement.onload = () => {
+                            ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+                        };
+                    });
+                };
+
+                // Start rendering frames at 30 FPS
+                const renderInterval = setInterval(renderFrame, 33);
+
+                // Capture the canvas stream
+                const stream = canvas.captureStream(30); // 30 FPS
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+
+                mediaRecorder.ondataavailable = function(e) {
+                    if (e.data.size > 0) {
+                        recordedChunks.push(e.data);
+                    }
+                };
+
+                mediaRecorder.onstop = function() {
+                    videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
+                    recordedChunks = [];
+                    recordButton.textContent = 'Download Video';
+                    recordButton.disabled = false;
+                    clearInterval(renderInterval);
+                };
+
+                mediaRecorder.start();
+
+                // Stop recording after 5 seconds
+                setTimeout(() => {
+                    mediaRecorder.stop();
+                }, 5000);
+
+            } else if (recordButton.textContent === 'Download Video') {
+                if (videoBlob) {
+                    const url = URL.createObjectURL(videoBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'rotation_animation.webm';
+                    a.click();
+                    URL.revokeObjectURL(url);
+
+                    // Reset button
+                    recordButton.textContent = 'Record 5s Video';
+                    videoBlob = null;
+                }
             }
         });
     </script>
