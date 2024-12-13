@@ -153,7 +153,7 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       onClick={handleClick}
       disabled={isRecording}
     >
-      {isRecording ? 'Recording...' : 'Record 5s Video'}
+      {isRecording ? 'Recording...' : 'Download Video'}
     </Button>
   );
 }; 
