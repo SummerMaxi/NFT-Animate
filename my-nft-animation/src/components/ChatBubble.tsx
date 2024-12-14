@@ -27,7 +27,7 @@ const blink = keyframes`
 const slideIn = keyframes`
   from { 
     width: 0;
-    opacity: 0.5;
+    opacity: 0.8;
   }
   to { 
     width: 100%;
@@ -59,7 +59,7 @@ const ChatBubbleWrapper = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   min-width: 60px;
-  max-width: 280px;
+  width: 280px;
   animation: ${css`${fadeIn} 0.2s ease-out forwards`};
 
   &:after {
@@ -84,14 +84,9 @@ const ChatBubbleWrapper = styled.div`
   }
 `;
 
-const TextWrapper = styled.div<{ isTyping: boolean; duration: number }>`
+const TextWrapper = styled.div`
   overflow: hidden;
-  white-space: nowrap;
-  width: ${props => props.isTyping ? '0' : '100%'};
-  animation: ${props => props.isTyping 
-    ? css`${slideIn} ${props.duration}s cubic-bezier(0.4, 0.0, 0.2, 1) forwards` 
-    : 'none'};
-  animation-iteration-count: ${props => props.isTyping ? 'infinite' : '1'};
+  white-space: pre-wrap;
   max-width: 100%;
   font-weight: 600;
 `;
@@ -105,7 +100,6 @@ const Text = styled.p`
   word-wrap: break-word;
   letter-spacing: -0.01em;
   font-weight: 600;
-  will-change: contents;
 `;
 
 export const ChatBubble = ({
@@ -119,7 +113,7 @@ export const ChatBubble = ({
 }: ChatBubbleProps) => {
   const [position, setPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
-  const [displayText, setDisplayText] = useState(text);
+  const [visibleText, setVisibleText] = useState(text);
   const [isAnimating, setIsAnimating] = useState(false);
   const bubbleRef = useRef<HTMLDivElement>(null);
   const dragStartRef = useRef({ x: 0, y: 0 });
@@ -131,16 +125,29 @@ export const ChatBubble = ({
   }, [position]);
 
   useEffect(() => {
-    setDisplayText(text);
+    if (!text) return;
+    
     setIsAnimating(true);
 
     if (loop) {
       const startAnimation = () => {
-        setIsAnimating(true);
-        animationTimeoutRef.current = setTimeout(() => {
-          setIsAnimating(false);
-          setTimeout(startAnimation, 500); // Brief pause between loops
-        }, typingSpeed);
+        setVisibleText('');
+        let currentIndex = 0;
+        
+        const typeNextChar = () => {
+          if (currentIndex < text.length) {
+            setVisibleText(prev => text.slice(0, currentIndex + 1));
+            currentIndex++;
+            animationTimeoutRef.current = setTimeout(typeNextChar, typingSpeed / text.length);
+          } else {
+            setTimeout(() => {
+              setVisibleText('');
+              startAnimation();
+            }, 1000);
+          }
+        };
+
+        typeNextChar();
       };
 
       startAnimation();
@@ -150,10 +157,15 @@ export const ChatBubble = ({
         }
       };
     } else {
-      const timeout = setTimeout(() => {
-        setIsAnimating(false);
-      }, typingSpeed);
-      return () => clearTimeout(timeout);
+      let currentIndex = 0;
+      const typeNextChar = () => {
+        if (currentIndex < text.length) {
+          setVisibleText(text.slice(0, currentIndex + 1));
+          currentIndex++;
+          animationTimeoutRef.current = setTimeout(typeNextChar, typingSpeed / text.length);
+        }
+      };
+      typeNextChar();
     }
   }, [text, typingSpeed, loop]);
 
@@ -211,13 +223,9 @@ export const ChatBubble = ({
       onMouseDown={handleMouseDown}
     >
       <ChatBubbleWrapper className="chat-bubble-wrapper">
-        <TextWrapper 
-          isTyping={isAnimating} 
-          duration={typingSpeed / 1000}
-          data-typing="true"
-        >
+        <TextWrapper>
           <Text>
-            {displayText}
+            {visibleText}
           </Text>
         </TextWrapper>
       </ChatBubbleWrapper>
