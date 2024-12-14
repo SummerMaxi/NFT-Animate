@@ -83,7 +83,6 @@ export default function Home() {
             {/* Right Column - NFT Display */}
             <div className="col-span-3">
               <div className={`bento-card glass-effect h-full ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                <h2 className="text-lg font-semibold mb-6">Your NFTs</h2>
                 <NFTGallery />
               </div>
             </div>
