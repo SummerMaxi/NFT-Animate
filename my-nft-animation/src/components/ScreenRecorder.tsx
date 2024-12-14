@@ -2,6 +2,7 @@
 
 import { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
+import { useAnimationStore } from '../store/animationStore';
 
 const Button = styled.button`
   width: 100%;
@@ -37,91 +38,75 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameIdRef = useRef<number>();
   const chunksRef = useRef<Blob[]>([]);
+  const textAnimationRef = useRef<string>('');
 
   const renderToCanvas = () => {
     if (!containerRef.current || !canvasRef.current) return;
-    const ctx = canvasRef.current.getContext('2d');
-    if (!ctx) return;
 
     const containerRect = containerRef.current.getBoundingClientRect();
-    
-    // Set canvas size to match original image dimensions
-    canvasRef.current.width = 828;
-    canvasRef.current.height = 828;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    // Clear with white background
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, 828, 828);
+    // Set canvas size
+    canvas.width = containerRect.width;
+    canvas.height = containerRect.height;
 
-    try {
-      const images = containerRef.current.querySelectorAll('img');
-      images.forEach(img => {
-        if (img.complete) {
-          const rect = img.getBoundingClientRect();
-          
-          // Calculate scale to maintain aspect ratio
-          const scale = 828 / containerRect.width;
-          const x = (rect.left - containerRect.left) * scale;
-          const y = (rect.top - containerRect.top) * scale;
+    // Draw background color
+    const backgroundColor = useAnimationStore.getState().backgroundColor;
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-          ctx.save();
-          
-          const style = window.getComputedStyle(img);
-          if (style.transform !== 'none') {
-            const matrix = new DOMMatrix(style.transform);
-            // Scale the transform matrix
-            ctx.setTransform(
-              matrix.a * scale, matrix.b * scale,
-              matrix.c * scale, matrix.d * scale,
-              x, y
-            );
-          } else {
-            ctx.translate(x, y);
-            ctx.scale(scale, scale);
-          }
+    // Draw images
+    const images = containerRef.current.querySelectorAll('img');
+    images.forEach((img) => {
+      const rect = img.getBoundingClientRect();
+      const x = rect.left - containerRect.left;
+      const y = rect.top - containerRect.top;
+      ctx.drawImage(img, x, y, rect.width, rect.height);
+    });
 
-          // Draw at original dimensions
-          ctx.drawImage(img, 0, 0, 828, 828);
-          ctx.restore();
-        }
-      });
+    // Draw chat bubble
+    const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
+    if (chatBubble instanceof HTMLElement) {
+      const rect = chatBubble.getBoundingClientRect();
+      const x = rect.left - containerRect.left;
+      const y = rect.top - containerRect.top;
 
-      const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
-      if (chatBubble instanceof HTMLElement) {
-        const rect = chatBubble.getBoundingClientRect();
-        const x = rect.left - containerRect.left;
-        const y = rect.top - containerRect.top;
-
-        ctx.save();
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        if (ctx.roundRect) {
-          ctx.roundRect(x, y, rect.width, rect.height, 16);
-        } else {
-          ctx.rect(x, y, rect.width, rect.height);
-        }
-        ctx.fill();
-        ctx.strokeStyle = '#E2E2E2';
-        ctx.stroke();
-
-        const textWrapper = chatBubble.querySelector('[data-typing]');
-        if (textWrapper) {
-          const computedStyle = window.getComputedStyle(textWrapper);
-          const width = parseFloat(computedStyle.width);
-          
-          ctx.fillStyle = '#000000';
-          ctx.font = '15px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-          
-          const text = textWrapper.textContent || '';
-          const visibleWidth = (width / parseFloat(computedStyle.maxWidth)) * text.length;
-          const visibleText = text.slice(0, Math.ceil(visibleWidth));
-          
-          ctx.fillText(visibleText, x + 16, y + 24);
-        }
-        ctx.restore();
+      // Draw bubble background
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(x, y, rect.width, rect.height, 16);
+      } else {
+        ctx.rect(x, y, rect.width, rect.height);
       }
-    } catch (error) {
-      console.error('Error rendering to canvas:', error);
+      ctx.fill();
+
+      // Draw bubble border
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw text using the animated text reference
+      ctx.fillStyle = '#000000';
+      ctx.font = '600 16px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText(textAnimationRef.current, x + 20, y + 24);
+
+      // Draw bubble tail
+      ctx.beginPath();
+      ctx.moveTo(x + 24, y + rect.height);
+      ctx.lineTo(x + 44, y + rect.height);
+      ctx.lineTo(x + 24, y + rect.height + 20);
+      ctx.closePath();
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.restore();
     }
   };
 
@@ -136,6 +121,31 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       canvas.height = size;
       canvasRef.current = canvas;
 
+      const { typingDuration, isLooping, bubbleText } = useAnimationStore.getState();
+      const recordingDuration = isLooping ? typingDuration * 2000 : typingDuration * 1000;
+
+      // Reset animation state
+      textAnimationRef.current = '';
+      let currentIndex = 0;
+      const charInterval = typingDuration * 1000 / bubbleText.length;
+
+      // Text animation function
+      const animateText = () => {
+        if (currentIndex <= bubbleText.length) {
+          textAnimationRef.current = bubbleText.slice(0, currentIndex);
+          currentIndex++;
+          setTimeout(animateText, charInterval);
+        } else if (isLooping) {
+          currentIndex = 0;
+          textAnimationRef.current = '';
+          setTimeout(animateText, 500); // Delay before restarting loop
+        }
+      };
+
+      // Start the text animation
+      animateText();
+
+      // Canvas animation loop
       const animate = () => {
         renderToCanvas();
         animationFrameIdRef.current = requestAnimationFrame(animate);
@@ -143,11 +153,13 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       animate();
 
       const stream = canvas.captureStream(60);
-
       const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
         videoBitsPerSecond: 8000000,
       });
+
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
 
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -159,19 +171,18 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
         downloadRecording(blob);
         cleanup();
-        chunksRef.current = [];
       };
 
-      mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start(20);
       setIsRecording(true);
+      mediaRecorder.start(20);
 
       setTimeout(() => {
         if (animationFrameIdRef.current) {
           cancelAnimationFrame(animationFrameIdRef.current);
         }
         mediaRecorder.stop();
-      }, 5000);
+        setIsRecording(false);
+      }, recordingDuration);
 
     } catch (error) {
       console.error('Recording setup error:', error);

@@ -36,10 +36,16 @@ const images = [
 ];
 
 export const Canvas = () => {
-  const { bubbleText, isTyping, typingDuration, isLooping } = useAnimationStore();
+  const { 
+    bubbleText, 
+    isTyping, 
+    typingDuration, 
+    isLooping,
+    backgroundColor 
+  } = useAnimationStore();
 
   return (
-    <Container>
+    <Container style={{ backgroundColor }}>
       {images.map(({ id, zIndex }) => (
         <Image
           key={id}
@@ -50,7 +56,7 @@ export const Canvas = () => {
       ))}
       <ChatBubble
         text={bubbleText}
-        initialPosition={{ x: 20, y: 300 }}
+        initialPosition={{ x: 300, y: 200 }}
         containerWidth={828}
         containerHeight={828}
         isTyping={isTyping}

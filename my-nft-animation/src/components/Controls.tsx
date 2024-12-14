@@ -71,7 +71,9 @@ export const Controls = () => {
     typingDuration, 
     setTypingDuration,
     isLooping,
-    setIsLooping 
+    setIsLooping,
+    backgroundColor,
+    setBackgroundColor
   } = useAnimationStore();
   const { isDarkMode } = useThemeStore();
 
@@ -107,6 +109,25 @@ export const Controls = () => {
           placeholder="Enter text..."
         />
       </div>
+
+      <div>
+        <Label isDark={isDarkMode}>Background Color:</Label>
+        <div className="flex items-center gap-2">
+          <input
+            type="color"
+            value={backgroundColor}
+            onChange={(e) => setBackgroundColor(e.target.value)}
+            className="w-10 h-10 rounded cursor-pointer"
+          />
+          <Input
+            isDark={isDarkMode}
+            value={backgroundColor}
+            onChange={(e) => setBackgroundColor(e.target.value)}
+            placeholder="#ffffff"
+          />
+        </div>
+      </div>
+
       <InputContainer>
         <InputLabel>
           <span>Animation Duration (seconds)</span>

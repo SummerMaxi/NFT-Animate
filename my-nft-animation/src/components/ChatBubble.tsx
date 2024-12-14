@@ -59,7 +59,7 @@ const ChatBubbleWrapper = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   min-width: 60px;
-  width: 280px;
+  width: 235px;
   animation: ${css`${fadeIn} 0.2s ease-out forwards`};
 
   &:after {
@@ -104,9 +104,9 @@ const Text = styled.p`
 
 export const ChatBubble = ({
   text,
-  initialPosition = { x: 20, y: 20 },
-  containerWidth = 400,
-  containerHeight = 400,
+  initialPosition = { x: (828 - 235) / 2, y: 200 },
+  containerWidth = 828,
+  containerHeight = 828,
   isTyping = false,
   typingSpeed = 3000,
   loop = true
