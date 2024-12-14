@@ -50,7 +50,7 @@ const uiConfig: AlchemyAccountsUIConfig = {
 export const config = createConfig(
   {
     transport: alchemy({ 
-      apiKey: "pmgsVDBrpuhTuaidTueOo7JicbpGNXDj",
+      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
     }),
     chain: shapeMainnet,
     chains: [

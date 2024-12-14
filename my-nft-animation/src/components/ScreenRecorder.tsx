@@ -1,8 +1,50 @@
 'use client';
 
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useAnimationStore } from '../store/animationStore';
+import { useUser } from "@account-kit/react";
+import { parseUnits } from 'viem';
+import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
+import { Alchemy, Network } from 'alchemy-sdk';
+
+const ENERGY_TOKEN_ADDRESS = '0x42276dF82BAb34c3CCcA9e5c058b6ff7EA4d07e3';
+const RECIPIENT_ADDRESS = '0xc132224D1B8254dd104D8FB6d41F69DC671748A0';
+const TOKEN_DECIMALS = 18; // Most ERC20 tokens use 18 decimals
+const REQUIRED_AMOUNT = 50;
+const ACCESS_STORAGE_KEY = `token-access-${ENERGY_TOKEN_ADDRESS}-${REQUIRED_AMOUNT}`;
+
+// ERC20 transfer function ABI
+const erc20ABI = [{
+  name: 'transfer',
+  type: 'function',
+  stateMutability: 'nonpayable',
+  inputs: [
+    { name: 'recipient', type: 'address' },
+    { name: 'amount', type: 'uint256' }
+  ],
+  outputs: [{ type: 'bool' }]
+},
+{
+  name: 'approve',
+  type: 'function',
+  stateMutability: 'nonpayable',
+  inputs: [
+    { name: 'spender', type: 'address' },
+    { name: 'amount', type: 'uint256' }
+  ],
+  outputs: [{ type: 'bool' }]
+},
+{
+  name: 'allowance',
+  type: 'function',
+  stateMutability: 'view',
+  inputs: [
+    { name: 'owner', type: 'address' },
+    { name: 'spender', type: 'address' }
+  ],
+  outputs: [{ type: 'uint256' }]
+}] as const;
 
 const Button = styled.button`
   width: 100%;
@@ -34,11 +76,127 @@ interface Props {
 
 export const ScreenRecorder = ({ containerRef }: Props) => {
   const [isRecording, setIsRecording] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameIdRef = useRef<number>();
   const chunksRef = useRef<Blob[]>([]);
   const textAnimationRef = useRef<string>('');
+  const user = useUser();
+  
+  // Contract write hook
+  const { writeContract, data: hash } = useWriteContract();
+  
+  // Transaction receipt hook
+  const { isLoading: isConfirming, isSuccess: isTransferred } = 
+    useWaitForTransactionReceipt({
+      hash,
+    });
+
+  const [needsApproval, setNeedsApproval] = useState(true);
+  
+  // Check allowance
+  const { data: allowance } = useReadContract({
+    address: ENERGY_TOKEN_ADDRESS,
+    abi: erc20ABI,
+    functionName: 'allowance',
+    args: user?.address ? [user.address, RECIPIENT_ADDRESS] : undefined,
+    enabled: !!user?.address,
+  });
+
+  // Check transfer history when component mounts or user changes
+  useEffect(() => {
+    const checkTransferHistory = async () => {
+      if (!user?.address) {
+        setHasAccess(false);
+        return;
+      }
+      
+      setIsChecking(true);
+      try {
+        const alchemy = new Alchemy({
+          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
+          network: Network.SHAPE_MAINNET,
+        });
+
+        // Get transaction receipt for the known transfer
+        const txReceipt = await alchemy.core.getTransactionReceipt(
+          "0x07ed39583db806583c2a8406dbd336ddf20ce5eac583390e29fdaa0367af8053"
+        );
+
+        // Verify the transaction
+        const hasValidTransfer = txReceipt && 
+          txReceipt.from.toLowerCase() === user.address.toLowerCase() &&
+          txReceipt.to.toLowerCase() === ENERGY_TOKEN_ADDRESS.toLowerCase();
+
+        setHasAccess(hasValidTransfer);
+      } catch (error) {
+        console.error('Error checking transfer history:', error);
+        setHasAccess(false);
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkTransferHistory();
+  }, [user?.address]);
+
+  // Reset pending state when transaction is confirmed
+  useEffect(() => {
+    if (isTransferred) {
+      setHasAccess(true);
+      setIsPending(false);
+    } else if (!isConfirming) {
+      setIsPending(false);
+    }
+  }, [isTransferred, isConfirming]);
+
+  useEffect(() => {
+    if (allowance && !hasAccess) {
+      const requiredAmount = parseUnits(REQUIRED_AMOUNT.toString(), TOKEN_DECIMALS);
+      setNeedsApproval(allowance < requiredAmount);
+    }
+  }, [allowance, hasAccess]);
+
+  const handleTransfer = async () => {
+    if (!user?.address) return;
+    
+    try {
+      setIsPending(true);
+      const amount = parseUnits(REQUIRED_AMOUNT.toString(), TOKEN_DECIMALS);
+
+      if (needsApproval) {
+        await writeContract({
+          address: ENERGY_TOKEN_ADDRESS,
+          abi: erc20ABI,
+          functionName: 'approve',
+          args: [RECIPIENT_ADDRESS, amount]
+        });
+      }
+
+      writeContract({
+        address: ENERGY_TOKEN_ADDRESS,
+        abi: erc20ABI,
+        functionName: 'transfer',
+        args: [RECIPIENT_ADDRESS, amount]
+      });
+    } catch (error) {
+      console.error('Transfer error:', error);
+      setIsPending(false);
+    }
+  };
+
+  const handleClick = () => {
+    if (!hasAccess && !isTransferred) {
+      handleTransfer();
+    } else if (isRecording) {
+      cleanup();
+    } else {
+      startRecording();
+    }
+  };
 
   const renderToCanvas = () => {
     if (!containerRef.current || !canvasRef.current) return;
@@ -231,22 +389,37 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     setIsRecording(false);
   };
 
-  const handleClick = () => {
-    if (isRecording) {
-      cleanup();
-    } else {
-      startRecording();
-    }
-  };
+  if (isChecking) {
+    return (
+      <div>
+        <Button disabled>
+          Checking Access...
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div>
       <Button 
         onClick={handleClick}
-        disabled={isRecording}
+        disabled={isRecording || (!hasAccess && (isPending || isConfirming))}
       >
-        {isRecording ? 'Recording...' : 'Record Animation'}
+        {!hasAccess ? (
+          isPending || isConfirming ? 'Confirming Transaction...' :
+          needsApproval ? 'Approve Token Transfer' :
+          'Transfer 50 Energy Tokens'
+        ) : (
+          isRecording ? 'Recording...' : 'Download Animation'
+        )}
       </Button>
+      {!hasAccess && !isPending && !isConfirming && (
+        <p className="text-sm text-gray-500 mt-2">
+          {needsApproval 
+            ? 'Approval needed before transfer' 
+            : 'Transfer 50 Energy tokens to enable downloads'}
+        </p>
+      )}
     </div>
   );
 }; 
