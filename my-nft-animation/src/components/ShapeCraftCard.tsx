@@ -18,6 +18,8 @@ interface NFTDropdownProps {
 interface ShapeCraftCardProps {
   userAddress1: string;
   userAddress2: string;
+  onSelect1?: (id: string) => void;
+  onSelect2?: (id: string) => void;
 }
 
 const NFTDropdown = ({ label, tokenIds, selectedId, onSelect }: NFTDropdownProps) => {
@@ -108,7 +110,12 @@ const NFTDropdown = ({ label, tokenIds, selectedId, onSelect }: NFTDropdownProps
   );
 };
 
-export const ShapeCraftCard = ({ userAddress1, userAddress2 }: ShapeCraftCardProps) => {
+export const ShapeCraftCard = ({ 
+  userAddress1, 
+  userAddress2,
+  onSelect1,
+  onSelect2
+}: ShapeCraftCardProps) => {
   const [tokenIds1, setTokenIds1] = useState<string[]>([]);
   const [tokenIds2, setTokenIds2] = useState<string[]>([]);
   const [selectedId1, setSelectedId1] = useState('');
@@ -152,6 +159,16 @@ export const ShapeCraftCard = ({ userAddress1, userAddress2 }: ShapeCraftCardPro
     }
   }, [userAddress1, userAddress2]);
 
+  const handleSelect1 = (id: string) => {
+    setSelectedId1(id);
+    onSelect1?.(id);
+  };
+
+  const handleSelect2 = (id: string) => {
+    setSelectedId2(id);
+    onSelect2?.(id);
+  };
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
@@ -159,13 +176,13 @@ export const ShapeCraftCard = ({ userAddress1, userAddress2 }: ShapeCraftCardPro
           label="Select Token ID (Contract 1)"
           tokenIds={tokenIds1}
           selectedId={selectedId1}
-          onSelect={setSelectedId1}
+          onSelect={handleSelect1}
         />
         <NFTDropdown
           label="Select Token ID (Contract 2)"
           tokenIds={tokenIds2}
           selectedId={selectedId2}
-          onSelect={setSelectedId2}
+          onSelect={handleSelect2}
         />
       </div>
       {loading && (

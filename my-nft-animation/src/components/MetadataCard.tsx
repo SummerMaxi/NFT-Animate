@@ -1,0 +1,196 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Alchemy, Network } from 'alchemy-sdk';
+
+interface MetadataCardProps {
+  contractAddress: string;
+  tokenId: string;
+  label: string;
+}
+
+interface NFTAttribute {
+  trait_type: string;
+  value: string | number;
+}
+
+interface NFTMetadata {
+  title: string;
+  name: string;
+  description: string;
+  image: {
+    cachedUrl: string;
+    thumbnailUrl: string;
+  };
+  raw: {
+    metadata: {
+      attributes: NFTAttribute[];
+    };
+  };
+}
+
+export const MetadataCard = ({ contractAddress, tokenId, label }: MetadataCardProps) => {
+  const [metadata, setMetadata] = useState<NFTMetadata | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      if (!tokenId) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const alchemy = new Alchemy({
+          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
+          network: Network.SHAPE_MAINNET,
+        });
+
+        // Using getNftMetadata with additional options
+        const response = await alchemy.nft.getNftMetadata(
+          contractAddress,
+          tokenId,
+          {
+            refreshCache: true,
+            tokenType: 'ERC721',
+            tokenUriTimeoutInMs: 10000
+          }
+        );
+
+        console.log('Raw NFT Metadata:', response);
+        
+        // Access the attributes from raw metadata
+        const attributes = response.raw?.metadata?.attributes || [];
+        console.log('NFT Attributes:', attributes);
+
+        setMetadata(response as any);
+      } catch (err) {
+        console.error('Error fetching metadata:', err);
+        setError('Failed to fetch metadata');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMetadata();
+  }, [contractAddress, tokenId]);
+
+  if (!tokenId) {
+    return (
+      <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-gray-500 dark:text-gray-400 text-sm text-center">
+          Select a token to view metadata
+        </p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="p-4 text-center">
+        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 dark:border-white mx-auto"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+        <p className="text-red-600 dark:text-red-400 text-sm text-center">{error}</p>
+      </div>
+    );
+  }
+
+  if (!metadata) return null;
+
+  const attributes = metadata.raw?.metadata?.attributes || [];
+
+  return (
+    <div className="space-y-4">
+      <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+        {/* NFT Title Section */}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            {metadata?.name || metadata?.title || `Token #${tokenId}`}
+          </h3>
+          <span className="px-2.5 py-1 text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
+            {label}
+          </span>
+        </div>
+
+        {/* NFT Image */}
+        {metadata?.image?.cachedUrl && (
+          <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-4 border border-gray-100 dark:border-gray-700 shadow-sm">
+            <img 
+              src={metadata.image.cachedUrl}
+              alt={metadata.name || metadata.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        {/* Description */}
+        {metadata?.description && (
+          <div className="mb-6">
+            <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+              Description
+            </h4>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {metadata.description}
+            </p>
+          </div>
+        )}
+
+        {/* Traits */}
+        {attributes.length > 0 && (
+          <div>
+            <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">
+              Traits
+            </h4>
+            <div className="grid grid-cols-2 gap-3">
+              {attributes.map((attr, index) => (
+                <div 
+                  key={index}
+                  className="flex flex-col p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600"
+                >
+                  <span className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                    {attr.trait_type}
+                  </span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {attr.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading && (
+          <div className="absolute inset-0 bg-white/80 dark:bg-gray-800/80 flex items-center justify-center backdrop-blur-sm">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-indigo-500 border-t-transparent"></div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <p className="text-sm text-red-600 dark:text-red-400 text-center">
+              {error}
+            </p>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!tokenId && (
+          <div className="p-8 text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Select a token to view metadata
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}; 

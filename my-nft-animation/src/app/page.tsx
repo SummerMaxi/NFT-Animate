@@ -8,6 +8,7 @@ import { AccountKitButton } from '@/components/AccountKitButton';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { NFTGallery } from '@/components/NFTGallery';
 import { ShapeCraftCard } from '@/components/ShapeCraftCard';
+import { MetadataCard } from '@/components/MetadataCard';
 
 const Controls = dynamic(
   () => import('../components/Controls').then(mod => mod.Controls),
@@ -29,6 +30,8 @@ export default function Home() {
   const { isDarkMode, toggleTheme } = useThemeStore();
   const [userAddress1, setUserAddress1] = useState('');
   const [userAddress2, setUserAddress2] = useState('');
+  const [selectedId1, setSelectedId1] = useState('');
+  const [selectedId2, setSelectedId2] = useState('');
 
   return (
     <main className={`min-h-screen ${isDarkMode ? 'bg-[#0A0A0A] dark' : 'bg-[#FAFAFA]'}`}>
@@ -78,13 +81,37 @@ export default function Home() {
               {/* ShapeCraft Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                 <h2 className="text-lg font-semibold mb-6">ShapeCraft</h2>
-                <ShapeCraftCard userAddress1={userAddress1} userAddress2={userAddress2} />
+                <ShapeCraftCard 
+                  userAddress1={userAddress1} 
+                  userAddress2={userAddress2}
+                  onSelect1={setSelectedId1}
+                  onSelect2={setSelectedId2}
+                />
               </div>
               
               {/* Download Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                 <h2 className="text-lg font-semibold mb-6">Download</h2>
                 <ScreenRecorder containerRef={containerRef} />
+              </div>
+
+              {/* Metadata Cards */}
+              <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                <h2 className="text-lg font-semibold mb-6">Contract 1 Metadata</h2>
+                <MetadataCard 
+                  contractAddress="0xF2E4b2a15872a20D0fFB336a89B94BA782cE9Ba5"
+                  tokenId={selectedId1}
+                  label="Contract 1 NFT"
+                />
+              </div>
+
+              <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                <h2 className="text-lg font-semibold mb-6">Contract 2 Metadata</h2>
+                <MetadataCard 
+                  contractAddress="0x0602b0fad4d305b2C670808Dd9f77B0A68E36c5B"
+                  tokenId={selectedId2}
+                  label="Contract 2 NFT"
+                />
               </div>
             </div>
 
