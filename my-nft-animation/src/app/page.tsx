@@ -58,7 +58,7 @@ export default function Home() {
               
               {/* Recording Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                <h2 className="text-lg font-semibold mb-6">Recording</h2>
+                <h2 className="text-lg font-semibold mb-6">Download</h2>
                 <ScreenRecorder containerRef={containerRef} />
               </div>
             </div>

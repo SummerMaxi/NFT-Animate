@@ -157,12 +157,15 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     }
   };
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const handleClick = () => {
     if (!hasAccess && !isTransferred) {
       handleTransfer();
     } else if (isRecording) {
       cleanup();
     } else {
+      setIsDownloading(true);
       startRecording();
     }
   };
@@ -319,7 +322,6 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
         cleanup();
       };
 
-      setIsRecording(true);
       mediaRecorder.start(20);
 
       setTimeout(() => {
@@ -327,7 +329,6 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
           cancelAnimationFrame(animationFrameIdRef.current);
         }
         mediaRecorder.stop();
-        setIsRecording(false);
       }, recordingDuration);
 
     } catch (error) {
@@ -343,6 +344,7 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     a.download = `animation_${Date.now()}.webm`;
     a.click();
     URL.revokeObjectURL(url);
+    setIsDownloading(false);
   };
 
   const cleanup = () => {
@@ -356,6 +358,7 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       canvasRef.current = null;
     }
     setIsRecording(false);
+    setIsDownloading(false);
   };
 
   if (isChecking) {
@@ -379,7 +382,7 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
           needsApproval ? 'Approve Token Transfer' :
           'Transfer 50 Energy Tokens'
         ) : (
-          isRecording ? 'Recording...' : 'Download Animation'
+          isDownloading ? 'Download in Progress...' : 'Download Video'
         )}
       </Button>
       {!hasAccess && !isPending && !isConfirming && (
