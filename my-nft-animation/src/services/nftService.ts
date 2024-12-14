@@ -1,19 +1,27 @@
 import { Network, Alchemy, NftFilters } from "alchemy-sdk";
 
 if (!process.env.NEXT_PUBLIC_ALCHEMY_API_KEY) {
-  throw new Error('NEXT_PUBLIC_ALCHEMY_API_KEY is not defined in environment variables');
+  throw new Error('NEXT_PUBLIC_ALCHEMY_API_KEY is not defined');
 }
 
-const settings = {
-  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-  network: Network.SHAPE_MAINNET,
+const CHAIN_TO_NETWORK: Record<number, string> = {
+  1: 'eth-mainnet',
+  137: 'polygon-mainnet',
+  42161: 'arb-mainnet',
+  10: 'opt-mainnet',
+  360: 'shape-mainnet',
+  11155111: 'eth-sepolia',
+  11011: 'shape-sepolia'
 };
 
-const alchemy = new Alchemy(settings);
-
-export async function getNFTsForOwner(ownerAddress: string) {
+export async function getNFTsForOwner(ownerAddress: string, chainId: number) {
   try {
-    const baseURL = `https://shape-mainnet.g.alchemy.com/nft/v3/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}/getNFTsForOwner`;
+    const network = CHAIN_TO_NETWORK[chainId];
+    if (!network) {
+      throw new Error('Unsupported chain');
+    }
+
+    const baseURL = `https://${network}.g.alchemy.com/nft/v3/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}/getNFTsForOwner`;
     const params = new URLSearchParams({
       owner: ownerAddress,
       withMetadata: 'true',

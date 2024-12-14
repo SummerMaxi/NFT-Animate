@@ -52,7 +52,7 @@ export const config = createConfig(
     transport: alchemy({ 
       apiKey: "pmgsVDBrpuhTuaidTueOo7JicbpGNXDj",
     }),
-    chain: shapeSepolia,
+    chain: shapeMainnet,
     chains: [
       {
         chain: mainnet,

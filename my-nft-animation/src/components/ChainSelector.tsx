@@ -13,14 +13,20 @@ export function ChainSelector() {
   const { isDarkMode } = useThemeStore();
 
   const chains = [
+    { ...shapeMainnet, label: 'Shape', icon: '🔺' },
     { ...mainnet, label: 'Ethereum', icon: '🔷' },
     { ...polygon, label: 'Polygon', icon: '💜' },
     { ...arbitrum, label: 'Arbitrum', icon: '🔵' },
     { ...optimism, label: 'Optimism', icon: '❤️' },
-    { ...shapeMainnet, label: 'Shape', icon: '🔺' },
     { ...sepolia, label: 'Sepolia', icon: '🟣' },
     { ...shapeSepolia, label: 'Shape Testnet', icon: '🔻' }
   ];
+
+  useEffect(() => {
+    if (chain.id !== shapeMainnet.id) {
+      setChain(shapeMainnet);
+    }
+  }, []);
 
   const currentChain = chains.find(c => c.id === chain.id) || chains[0];
 

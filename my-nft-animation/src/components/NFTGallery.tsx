@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, Fragment } from 'react';
-import { useUser } from "@account-kit/react";
+import { useUser, useChain } from "@account-kit/react";
 import { getNFTsForOwner } from '@/services/nftService';
 import Image from 'next/image';
 import type { OwnedNft } from 'alchemy-sdk';
@@ -115,6 +115,7 @@ function getContractName(contractAddress: string): string {
 
 export function NFTGallery() {
   const user = useUser();
+  const { chain } = useChain();
   const [nfts, setNfts] = useState<OwnedNft[]>([]);
   const [collections, setCollections] = useState<NFTCollection[]>([]);
   const [selectedCollection, setSelectedCollection] = useState<string>('all');
@@ -128,7 +129,7 @@ export function NFTGallery() {
       try {
         setLoading(true);
         setError(null);
-        const { nfts: fetchedNfts } = await getNFTsForOwner(user.address);
+        const { nfts: fetchedNfts } = await getNFTsForOwner(user.address, chain.id);
         setNfts(fetchedNfts);
 
         // Group NFTs by collection with contract names
@@ -162,7 +163,7 @@ export function NFTGallery() {
     }
 
     fetchNFTs();
-  }, [user?.address]);
+  }, [user?.address, chain.id]);
 
   const displayedNfts = selectedCollection === 'all' 
     ? nfts 
