@@ -104,15 +104,6 @@ export default function Home() {
                   label="Contract 1 NFT"
                 />
               </div>
-
-              <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                <h2 className="text-lg font-semibold mb-6">Contract 2 Metadata</h2>
-                <MetadataCard 
-                  contractAddress="0x0602b0fad4d305b2C670808Dd9f77B0A68E36c5B"
-                  tokenId={selectedId2}
-                  label="Contract 2 NFT"
-                />
-              </div>
             </div>
 
             {/* Middle Column - Canvas */}
