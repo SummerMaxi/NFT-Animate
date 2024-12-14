@@ -4,6 +4,7 @@ import { useState, useEffect, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Alchemy, Network } from 'alchemy-sdk';
+import { useAnimationStore } from '../store/animationStore';
 
 const SHAPE_CONTRACT_1 = '0xF2E4b2a15872a20D0fFB336a89B94BA782cE9Ba5';
 const SHAPE_CONTRACT_2 = '0x0602b0fad4d305b2C670808Dd9f77B0A68E36c5B';
@@ -110,6 +111,11 @@ const NFTDropdown = ({ label, tokenIds, selectedId, onSelect }: NFTDropdownProps
   );
 };
 
+interface NFTAttribute {
+  trait_type: string;
+  value: string | number;
+}
+
 export const ShapeCraftCard = ({ 
   userAddress1, 
   userAddress2,
@@ -167,6 +173,44 @@ export const ShapeCraftCard = ({
   const handleSelect2 = (id: string) => {
     setSelectedId2(id);
     onSelect2?.(id);
+
+    // First, clear the existing text
+    useAnimationStore.getState().setBubbleText('');
+
+    // Fetch metadata and update bubble text
+    const fetchBaseNameTrait = async () => {
+      try {
+        const alchemy = new Alchemy({
+          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
+          network: Network.SHAPE_MAINNET,
+        });
+
+        const nftMetadata = await alchemy.nft.getNftMetadata(
+          SHAPE_CONTRACT_2,
+          id,
+          {
+            refreshCache: true,
+            tokenType: 'erc721' as const,
+            tokenUriTimeoutInMs: 10000
+          }
+        );
+
+        const attributes = (nftMetadata.raw?.metadata?.attributes || []) as NFTAttribute[];
+        const baseTrait = attributes.find((attr: NFTAttribute) => attr.trait_type === 'Base');
+        
+        if (baseTrait?.value) {
+          // Set the new text after a brief delay to ensure the clear happened
+          setTimeout(() => {
+            useAnimationStore.getState().setBubbleText(String(baseTrait.value).trim());
+            console.log('Updated bubble text to:', baseTrait.value);
+          }, 100);
+        }
+      } catch (error) {
+        console.error('Error fetching base trait:', error);
+      }
+    };
+
+    fetchBaseNameTrait();
   };
 
   return (
