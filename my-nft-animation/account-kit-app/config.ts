@@ -1,6 +1,6 @@
 import {
   AlchemyAccountsUIConfig,
-  cookieStorage,
+  noopStorage,
   createConfig,
 } from "@account-kit/react";
 import { alchemy } from "@account-kit/infra";
@@ -34,7 +34,7 @@ export const config = createConfig(
     }),
     chain: shapeMainnet,
     ssr: true,
-    storage: cookieStorage,
+    storage: noopStorage,
     enablePopupOauth: true,
   },
   uiConfig

@@ -14,6 +14,16 @@ import {
 import { QueryClient } from "@tanstack/react-query";
 import { shapeMainnet, shapeSepolia } from './chains';
 
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      staleTime: 5000,
+    },
+  },
+});
+
 const uiConfig: AlchemyAccountsUIConfig = {
   illustrationStyle: "outline",
   auth: {
@@ -54,40 +64,17 @@ export const config = createConfig(
     }),
     chain: shapeMainnet,
     chains: [
-      {
-        chain: mainnet,
-      },
-      {
-        chain: polygon,
-      },
-      {
-        chain: arbitrum,
-      },
-      {
-        chain: optimism,
-      },
-      {
-        chain: shapeMainnet,
-      },
-      {
-        chain: sepolia,
-      },
-      {
-        chain: shapeSepolia,
-      }
+      { chain: mainnet },
+      { chain: polygon },
+      { chain: arbitrum },
+      { chain: optimism },
+      { chain: shapeMainnet },
+      { chain: sepolia },
+      { chain: shapeSepolia }
     ],
     ssr: true,
     storage: cookieStorage,
     enablePopupOauth: true,
   },
   uiConfig
-);
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  },
-}); 
+); 

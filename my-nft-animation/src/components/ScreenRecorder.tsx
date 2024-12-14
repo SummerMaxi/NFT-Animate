@@ -7,44 +7,13 @@ import { useUser } from "@account-kit/react";
 import { parseUnits } from 'viem';
 import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
 import { Alchemy, Network } from 'alchemy-sdk';
+import { erc20ABI } from '@account-kit/infra';
 
 const ENERGY_TOKEN_ADDRESS = '0x42276dF82BAb34c3CCcA9e5c058b6ff7EA4d07e3';
 const RECIPIENT_ADDRESS = '0xc132224D1B8254dd104D8FB6d41F69DC671748A0';
 const TOKEN_DECIMALS = 18; // Most ERC20 tokens use 18 decimals
 const REQUIRED_AMOUNT = 50;
 const ACCESS_STORAGE_KEY = `token-access-${ENERGY_TOKEN_ADDRESS}-${REQUIRED_AMOUNT}`;
-
-// ERC20 transfer function ABI
-const erc20ABI = [{
-  name: 'transfer',
-  type: 'function',
-  stateMutability: 'nonpayable',
-  inputs: [
-    { name: 'recipient', type: 'address' },
-    { name: 'amount', type: 'uint256' }
-  ],
-  outputs: [{ type: 'bool' }]
-},
-{
-  name: 'approve',
-  type: 'function',
-  stateMutability: 'nonpayable',
-  inputs: [
-    { name: 'spender', type: 'address' },
-    { name: 'amount', type: 'uint256' }
-  ],
-  outputs: [{ type: 'bool' }]
-},
-{
-  name: 'allowance',
-  type: 'function',
-  stateMutability: 'view',
-  inputs: [
-    { name: 'owner', type: 'address' },
-    { name: 'spender', type: 'address' }
-  ],
-  outputs: [{ type: 'uint256' }]
-}] as const;
 
 const Button = styled.button`
   width: 100%;

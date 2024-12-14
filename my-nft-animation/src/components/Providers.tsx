@@ -2,9 +2,9 @@
 import { config } from "@/config/accountKit";
 import { AlchemyClientState } from "@account-kit/core";
 import { AlchemyAccountProvider } from "@account-kit/react";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { PropsWithChildren, Suspense } from "react";
+import { PropsWithChildren } from "react";
 import { WagmiProvider, createConfig, http } from 'wagmi';
+import { queryClient } from "@/config/accountKit";
 import { shapeMainnet } from '@/config/chains';
 
 // Configure Wagmi
@@ -17,25 +17,23 @@ const wagmiConfig = createConfig({
   },
 });
 
-// Use the existing queryClient from accountKit
-import { queryClient } from "@/config/accountKit";
+interface ProvidersProps {
+  initialState?: AlchemyClientState;
+}
 
-export const Providers = (
-  props: PropsWithChildren<{ initialState?: AlchemyClientState }>
-) => {
+export function Providers({ 
+  children,
+  initialState 
+}: PropsWithChildren<ProvidersProps>) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          <AlchemyAccountProvider
-            config={config}
-            queryClient={queryClient}
-            initialState={props.initialState}
-          >
-            {props.children}
-          </AlchemyAccountProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
-    </Suspense>
+    <WagmiProvider config={wagmiConfig}>
+      <AlchemyAccountProvider
+        config={config}
+        queryClient={queryClient}
+        initialState={initialState}
+      >
+        {children}
+      </AlchemyAccountProvider>
+    </WagmiProvider>
   );
-}; 
+} 

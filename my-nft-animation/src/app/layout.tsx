@@ -21,12 +21,12 @@ export default function RootLayout({
 }) {
   const initialState = cookieToInitialState(
     config,
-    headers().get("cookie") ?? undefined
+    headers().get("cookie") ?? ""
   );
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+    <html lang="en">
+      <body className={inter.className}>
         <Providers initialState={initialState}>
           <SignerContainer />
           {children}
