@@ -95,6 +95,7 @@ const TextWrapper = styled.div<{ isTyping: boolean; duration: number }>`
   animation: ${props => props.isTyping 
     ? css`${slideIn} ${props.duration}s cubic-bezier(0.4, 0.0, 0.2, 1) forwards` 
     : 'none'};
+  animation-iteration-count: ${props => props.isTyping ? 'infinite' : '1'};
   max-width: 100%;
 `;
 
@@ -142,37 +143,24 @@ export const ChatBubble = ({
 
   useEffect(() => {
     setDisplayText(text);
-    
-    const startAnimation = () => {
-      setIsAnimating(true);
-      
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
+    setIsAnimating(isTyping);
 
-      animationTimeoutRef.current = setTimeout(() => {
-        setIsAnimating(false);
-        
-        if (loop) {
-          setTimeout(startAnimation, 1000);
-        }
-      }, typingSpeed);
-    };
+    if (isTyping && loop) {
+      const startAnimation = () => {
+        setIsAnimating(true);
+        animationTimeoutRef.current = setTimeout(() => {
+          setIsAnimating(false);
+          setTimeout(startAnimation, 500); // Brief pause between loops
+        }, typingSpeed);
+      };
 
-    if (isTyping) {
       startAnimation();
-    } else {
-      setIsAnimating(false);
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
+      return () => {
+        if (animationTimeoutRef.current) {
+          clearTimeout(animationTimeoutRef.current);
+        }
+      };
     }
-
-    return () => {
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
-    };
   }, [text, isTyping, typingSpeed, loop]);
 
   const handleMouseDown = (e: React.MouseEvent) => {

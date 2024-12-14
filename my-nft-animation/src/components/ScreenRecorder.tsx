@@ -4,23 +4,26 @@ import { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 
 const Button = styled.button`
-  background-color: #6200ea;
-  color: #fff;
+  width: 100%;
+  background: ${props => props.disabled 
+    ? '#e5e7eb' 
+    : 'linear-gradient(to right, #818cf8, #6366f1)'};
+  color: ${props => props.disabled ? '#9ca3af' : 'white'};
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  transition: all 0.2s;
 
-  &:hover {
-    background-color: #3700b3;
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 `;
 
@@ -40,58 +43,55 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     const ctx = canvasRef.current.getContext('2d');
     if (!ctx) return;
 
-    // Get the device pixel ratio
-    const dpr = window.devicePixelRatio || 1;
     const containerRect = containerRef.current.getBoundingClientRect();
+    
+    // Set canvas size to match original image dimensions
+    canvasRef.current.width = 828;
+    canvasRef.current.height = 828;
 
-    // Set canvas size accounting for device pixel ratio
-    canvasRef.current.width = containerRect.width * dpr;
-    canvasRef.current.height = containerRect.height * dpr;
-    canvasRef.current.style.width = `${containerRect.width}px`;
-    canvasRef.current.style.height = `${containerRect.height}px`;
-
-    // Scale the context to account for the device pixel ratio
-    ctx.scale(dpr, dpr);
-
-    // Clear canvas
-    ctx.clearRect(0, 0, containerRect.width, containerRect.height);
-
-    // Set white background
+    // Clear with white background
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, containerRect.width, containerRect.height);
+    ctx.fillRect(0, 0, 828, 828);
 
     try {
-      // Draw all images with their current transforms
       const images = containerRef.current.querySelectorAll('img');
       images.forEach(img => {
         if (img.complete) {
           const rect = img.getBoundingClientRect();
-          const style = window.getComputedStyle(img);
-
-          // Calculate position relative to container
-          const x = rect.left - containerRect.left;
-          const y = rect.top - containerRect.top;
+          
+          // Calculate scale to maintain aspect ratio
+          const scale = 828 / containerRect.width;
+          const x = (rect.left - containerRect.left) * scale;
+          const y = (rect.top - containerRect.top) * scale;
 
           ctx.save();
+          
+          const style = window.getComputedStyle(img);
           if (style.transform !== 'none') {
             const matrix = new DOMMatrix(style.transform);
-            ctx.transform(matrix.a, matrix.b, matrix.c, matrix.d, x, y);
+            // Scale the transform matrix
+            ctx.setTransform(
+              matrix.a * scale, matrix.b * scale,
+              matrix.c * scale, matrix.d * scale,
+              x, y
+            );
           } else {
             ctx.translate(x, y);
+            ctx.scale(scale, scale);
           }
-          ctx.drawImage(img, 0, 0, rect.width, rect.height);
+
+          // Draw at original dimensions
+          ctx.drawImage(img, 0, 0, 828, 828);
           ctx.restore();
         }
       });
 
-      // Draw chat bubble
       const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
       if (chatBubble instanceof HTMLElement) {
         const rect = chatBubble.getBoundingClientRect();
         const x = rect.left - containerRect.left;
         const y = rect.top - containerRect.top;
 
-        // Draw bubble background
         ctx.save();
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
@@ -104,7 +104,6 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
         ctx.strokeStyle = '#E2E2E2';
         ctx.stroke();
 
-        // Draw text content
         const textWrapper = chatBubble.querySelector('[data-typing]');
         if (textWrapper) {
           const computedStyle = window.getComputedStyle(textWrapper);
@@ -113,7 +112,6 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
           ctx.fillStyle = '#000000';
           ctx.font = '15px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
           
-          // Only show the visible portion of text based on animation
           const text = textWrapper.textContent || '';
           const visibleWidth = (width / parseFloat(computedStyle.maxWidth)) * text.length;
           const visibleText = text.slice(0, Math.ceil(visibleWidth));
@@ -131,21 +129,21 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     if (!containerRef.current) return;
 
     try {
-      // Create and setup canvas
       const canvas = document.createElement('canvas');
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const size = containerRect.width;
+      canvas.width = size;
+      canvas.height = size;
       canvasRef.current = canvas;
 
-      // Start animation loop
       const animate = () => {
         renderToCanvas();
         animationFrameIdRef.current = requestAnimationFrame(animate);
       };
       animate();
 
-      // Create stream with high frame rate
       const stream = canvas.captureStream(60);
 
-      // Setup MediaRecorder with high quality settings
       const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
         videoBitsPerSecond: 8000000,
@@ -165,10 +163,9 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       };
 
       mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start(20); // Collect data more frequently for smoother recording
+      mediaRecorder.start(20);
       setIsRecording(true);
 
-      // Stop after 5 seconds
       setTimeout(() => {
         if (animationFrameIdRef.current) {
           cancelAnimationFrame(animationFrameIdRef.current);
@@ -213,11 +210,13 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
   };
 
   return (
-    <Button 
-      onClick={handleClick}
-      disabled={isRecording}
-    >
-      {isRecording ? 'Recording...' : 'Record Animation'}
-    </Button>
+    <div>
+      <Button 
+        onClick={handleClick}
+        disabled={isRecording}
+      >
+        {isRecording ? 'Recording...' : 'Record Animation'}
+      </Button>
+    </div>
   );
 }; 
