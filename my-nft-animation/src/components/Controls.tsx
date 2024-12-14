@@ -14,19 +14,18 @@ const Label = styled.div<{ isDark: boolean }>`
 
 const Input = styled.input<{ isDark: boolean }>`
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid ${props => props.isDark ? '#4B5563' : '#e5e7eb'};
-  border-radius: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
   font-size: 14px;
   transition: all 0.2s;
-  background: ${props => props.isDark ? '#374151' : '#f9fafb'};
+  background: ${props => props.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)'};
   color: ${props => props.isDark ? '#E5E7EB' : 'inherit'};
+  border: 1px solid ${props => props.isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
 
   &:focus {
     outline: none;
-    border-color: #818cf8;
-    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
-    background: ${props => props.isDark ? '#4B5563' : 'white'};
+    background: ${props => props.isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
+    border-color: ${props => props.isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
   }
 `;
 

@@ -4,6 +4,14 @@ const nextConfig = {
     domains: ['localhost'],
   },
   webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      encoding: false,
+    };
+
     config.module.rules.push({
       test: /\.(mp4|webm)$/,
       use: {
@@ -20,7 +28,7 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
-  transpilePackages: ['recordrtc']
+  transpilePackages: ['recordrtc', '@account-kit/react', '@account-kit/core', '@account-kit/infra']
 };
 
 export default nextConfig; 

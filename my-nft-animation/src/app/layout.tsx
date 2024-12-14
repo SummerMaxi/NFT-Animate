@@ -1,24 +1,26 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { config } from "@/config/accountKit";
+import { cookieToInitialState } from "@account-kit/core";
+import { headers } from "next/headers";
+import { Providers } from "@/components/Providers";
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'NFT Animation',
-  description: 'NFT Animation with rotating images',
-}
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const initialState = cookieToInitialState(
+    config,
+    headers().get("cookie") ?? ""
+  );
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        {children}
+        <Providers initialState={initialState}>
+          {children}
+        </Providers>
       </body>
     </html>
-  )
+  );
 } 
