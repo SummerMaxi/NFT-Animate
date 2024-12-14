@@ -16,6 +16,7 @@
     "@account-kit/smart-contracts": "^4.6.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@tanstack/react-query": "^5.62.7",
     "alchemy-sdk": "^3.5.0",
