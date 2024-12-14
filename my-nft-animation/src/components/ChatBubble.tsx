@@ -53,10 +53,10 @@ const BubbleContainer = styled.div<{ x: number; y: number }>`
 
 const ChatBubbleWrapper = styled.div`
   background-color: white;
-  border: 1px solid #E2E2E2;
+  border: 2px solid #000000;
   border-radius: 16px;
-  padding: 12px 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 16px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   min-width: 60px;
   max-width: 280px;
@@ -65,13 +65,13 @@ const ChatBubbleWrapper = styled.div`
   &:after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -10px;
     left: 24px;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     background-color: white;
-    border-right: 1px solid #E2E2E2;
-    border-bottom: 1px solid #E2E2E2;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
     transform: rotate(45deg);
     clip-path: polygon(100% 0, 100% 100%, 0 100%);
   }
@@ -81,10 +81,6 @@ const ChatBubbleWrapper = styled.div`
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
-  }
-
-  &.recording {
-    animation-play-state: running !important;
   }
 `;
 
@@ -97,26 +93,19 @@ const TextWrapper = styled.div<{ isTyping: boolean; duration: number }>`
     : 'none'};
   animation-iteration-count: ${props => props.isTyping ? 'infinite' : '1'};
   max-width: 100%;
-`;
-
-const Cursor = styled.span`
-  display: inline-block;
-  width: 2px;
-  height: 1em;
-  background-color: #000;
-  margin-left: 2px;
-  animation: ${css`${blink} 0.7s infinite`};
-  vertical-align: middle;
+  font-weight: 600;
 `;
 
 const Text = styled.p`
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-  font-size: 15px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
   line-height: 1.4;
   color: #000000;
   word-wrap: break-word;
   letter-spacing: -0.01em;
+  font-weight: 600;
+  will-change: contents;
 `;
 
 export const ChatBubble = ({
@@ -143,9 +132,9 @@ export const ChatBubble = ({
 
   useEffect(() => {
     setDisplayText(text);
-    setIsAnimating(isTyping);
+    setIsAnimating(true);
 
-    if (isTyping && loop) {
+    if (loop) {
       const startAnimation = () => {
         setIsAnimating(true);
         animationTimeoutRef.current = setTimeout(() => {
@@ -160,8 +149,13 @@ export const ChatBubble = ({
           clearTimeout(animationTimeoutRef.current);
         }
       };
+    } else {
+      const timeout = setTimeout(() => {
+        setIsAnimating(false);
+      }, typingSpeed);
+      return () => clearTimeout(timeout);
     }
-  }, [text, isTyping, typingSpeed, loop]);
+  }, [text, typingSpeed, loop]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -224,7 +218,6 @@ export const ChatBubble = ({
         >
           <Text>
             {displayText}
-            {isTyping && <Cursor />}
           </Text>
         </TextWrapper>
       </ChatBubbleWrapper>

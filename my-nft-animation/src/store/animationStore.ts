@@ -12,7 +12,7 @@ interface AnimationState {
 }
 
 export const useAnimationStore = create<AnimationState>((set) => ({
-  bubbleText: "GM",
+  bubbleText: "Welcome to Shapecraft!",
   isTyping: false,
   typingDuration: 2,
   isLooping: true,

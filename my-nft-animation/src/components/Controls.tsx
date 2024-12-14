@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useAnimationStore } from '../store/animationStore';
 import { useThemeStore } from '../store/themeStore';
@@ -61,21 +61,17 @@ const DurationInput = styled.input`
   }
 `;
 
-interface ControlsProps {
-  containerRef: React.RefObject<HTMLDivElement>;
-}
-
-export const Controls = ({ containerRef }: ControlsProps) => {
+export const Controls = () => {
   const timeoutRef = useRef<NodeJS.Timeout>();
-  const {
-    bubbleText,
-    isTyping,
-    typingDuration,
-    isLooping,
-    setBubbleText,
-    setIsTyping,
+  const { 
+    bubbleText, 
+    setBubbleText, 
+    isTyping, 
+    setIsTyping, 
+    typingDuration, 
     setTypingDuration,
-    setIsLooping
+    isLooping,
+    setIsLooping 
   } = useAnimationStore();
   const { isDarkMode } = useThemeStore();
 
