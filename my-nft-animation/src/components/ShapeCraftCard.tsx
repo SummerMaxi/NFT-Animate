@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Menu } from '@headlessui/react';
+import { useState, useEffect, Fragment } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Alchemy, Network } from 'alchemy-sdk';
 
@@ -20,34 +20,93 @@ interface ShapeCraftCardProps {
   userAddress2: string;
 }
 
-const NFTDropdown = ({ label, tokenIds, selectedId, onSelect }: NFTDropdownProps) => (
-  <Menu as="div" className="relative inline-block text-left w-full">
-    <Menu.Button className="w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none">
-      <div className="flex items-center justify-between">
-        <span>{selectedId || label}</span>
-        <ChevronDownIcon className="w-4 h-4" />
-      </div>
-    </Menu.Button>
-    <Menu.Items className="absolute z-10 w-full mt-2 origin-top-right bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg">
-      <div className="py-1 max-h-48 overflow-auto">
-        {tokenIds.map((id) => (
-          <Menu.Item key={id}>
-            {({ active }) => (
-              <button
-                className={`${
-                  active ? 'bg-gray-100 dark:bg-gray-700' : ''
-                } w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200`}
-                onClick={() => onSelect(id)}
+const NFTDropdown = ({ label, tokenIds, selectedId, onSelect }: NFTDropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => setIsOpen(true)}
+        className="w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
+      >
+        <div className="flex items-center justify-between">
+          <span>{selectedId ? `Token #${selectedId}` : label}</span>
+          <ChevronDownIcon className="w-4 h-4" />
+        </div>
+      </button>
+
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={() => setIsOpen(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                Token #{id}
-              </button>
-            )}
-          </Menu.Item>
-        ))}
-      </div>
-    </Menu.Items>
-  </Menu>
-);
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100 mb-4"
+                  >
+                    {label}
+                  </Dialog.Title>
+                  <div className="mt-2 max-h-[60vh] overflow-y-auto">
+                    <div className="grid grid-cols-3 gap-2">
+                      {tokenIds.map((id) => (
+                        <button
+                          key={id}
+                          className={`p-3 text-sm rounded-lg transition-colors
+                            ${selectedId === id 
+                              ? 'bg-indigo-500 text-white' 
+                              : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600'
+                            }
+                          `}
+                          onClick={() => {
+                            onSelect(id);
+                            setIsOpen(false);
+                          }}
+                        >
+                          #{id}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-100 dark:bg-indigo-900 px-4 py-2 text-sm font-medium text-indigo-900 dark:text-indigo-100 hover:bg-indigo-200 dark:hover:bg-indigo-800 focus:outline-none"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
+  );
+};
 
 export const ShapeCraftCard = ({ userAddress1, userAddress2 }: ShapeCraftCardProps) => {
   const [tokenIds1, setTokenIds1] = useState<string[]>([]);
