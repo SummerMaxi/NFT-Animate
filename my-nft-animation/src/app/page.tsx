@@ -6,6 +6,7 @@ import { useThemeStore } from '@/store/themeStore';
 import { ClientOnly } from '@/components/ClientOnly';
 import { AccountKitButton } from '@/components/AccountKitButton';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import { NFTGallery } from '@/components/NFTGallery';
 
 const Controls = dynamic(
   () => import('../components/Controls').then(mod => mod.Controls),
@@ -83,20 +84,7 @@ export default function Home() {
             <div className="col-span-3">
               <div className={`bento-card glass-effect h-full ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                 <h2 className="text-lg font-semibold mb-6">Your NFTs</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div 
-                      key={i} 
-                      className={`aspect-square rounded-xl nft-card flex items-center justify-center
-                        ${isDarkMode 
-                          ? 'text-gray-400' 
-                          : 'text-gray-600'
-                        } transition-all cursor-pointer`}
-                    >
-                      NFT {i}
-                    </div>
-                  ))}
-                </div>
+                <NFTGallery />
               </div>
             </div>
           </div>

@@ -3,8 +3,16 @@ import {
   createConfig,
   cookieStorage,
 } from "@account-kit/react";
-import { alchemy, sepolia } from "@account-kit/infra";
+import { 
+  alchemy, 
+  sepolia,
+  mainnet,
+  polygon,
+  arbitrum,
+  optimism 
+} from "@account-kit/infra";
 import { QueryClient } from "@tanstack/react-query";
+import { shapeMainnet, shapeSepolia } from './chains';
 
 const uiConfig: AlchemyAccountsUIConfig = {
   illustrationStyle: "outline",
@@ -13,8 +21,16 @@ const uiConfig: AlchemyAccountsUIConfig = {
       [{ type: "email" }],
       [
         { type: "passkey" },
-        { type: "social", authProviderId: "google", mode: "redirect" },
-        { type: "social", authProviderId: "facebook", mode: "redirect" },
+        { 
+          type: "social", 
+          authProviderId: "google", 
+          mode: "popup" 
+        },
+        { 
+          type: "social", 
+          authProviderId: "facebook", 
+          mode: "popup"
+        },
       ],
       [
         {
@@ -25,6 +41,10 @@ const uiConfig: AlchemyAccountsUIConfig = {
     ],
     addPasskeyOnSignup: false,
   },
+  chains: {
+    enabled: [mainnet, polygon, arbitrum, optimism, sepolia, shapeMainnet, shapeSepolia],
+    default: shapeSepolia,
+  },
 };
 
 export const config = createConfig(
@@ -32,14 +52,33 @@ export const config = createConfig(
     transport: alchemy({ 
       apiKey: "pmgsVDBrpuhTuaidTueOo7JicbpGNXDj",
     }),
-    chain: sepolia,
+    chain: shapeSepolia,
+    chains: [
+      {
+        chain: mainnet,
+      },
+      {
+        chain: polygon,
+      },
+      {
+        chain: arbitrum,
+      },
+      {
+        chain: optimism,
+      },
+      {
+        chain: shapeMainnet,
+      },
+      {
+        chain: sepolia,
+      },
+      {
+        chain: shapeSepolia,
+      }
+    ],
     ssr: true,
     storage: cookieStorage,
-    enablePopupOauth: false,
-    persist: {
-      storage: cookieStorage,
-      key: 'alchemyAccountState',
-    },
+    enablePopupOauth: true,
   },
   uiConfig
 );
