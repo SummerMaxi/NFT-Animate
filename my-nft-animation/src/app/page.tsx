@@ -1,12 +1,13 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useThemeStore } from '@/store/themeStore';
 import { ClientOnly } from '@/components/ClientOnly';
 import { AccountKitButton } from '@/components/AccountKitButton';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { NFTGallery } from '@/components/NFTGallery';
+import { ShapeCraftCard } from '@/components/ShapeCraftCard';
 
 const Controls = dynamic(
   () => import('../components/Controls').then(mod => mod.Controls),
@@ -26,6 +27,8 @@ const ScreenRecorder = dynamic(
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { isDarkMode, toggleTheme } = useThemeStore();
+  const [userAddress1, setUserAddress1] = useState('');
+  const [userAddress2, setUserAddress2] = useState('');
 
   return (
     <main className={`min-h-screen ${isDarkMode ? 'bg-[#0A0A0A] dark' : 'bg-[#FAFAFA]'}`}>
@@ -42,6 +45,22 @@ export default function Home() {
               >
                 {isDarkMode ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
               </button>
+              <div className="flex gap-4">
+                <input
+                  type="text"
+                  placeholder="User Address 1"
+                  value={userAddress1}
+                  onChange={(e) => setUserAddress1(e.target.value)}
+                  className="px-3 py-2 rounded-lg glass-effect text-sm w-[300px]"
+                />
+                <input
+                  type="text"
+                  placeholder="User Address 2"
+                  value={userAddress2}
+                  onChange={(e) => setUserAddress2(e.target.value)}
+                  className="px-3 py-2 rounded-lg glass-effect text-sm w-[300px]"
+                />
+              </div>
             </div>
             <AccountKitButton />
           </div>
@@ -56,7 +75,13 @@ export default function Home() {
                 <Controls containerRef={containerRef} />
               </div>
               
-              {/* Recording Card */}
+              {/* ShapeCraft Card */}
+              <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                <h2 className="text-lg font-semibold mb-6">ShapeCraft</h2>
+                <ShapeCraftCard userAddress1={userAddress1} userAddress2={userAddress2} />
+              </div>
+              
+              {/* Download Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                 <h2 className="text-lg font-semibold mb-6">Download</h2>
                 <ScreenRecorder containerRef={containerRef} />
