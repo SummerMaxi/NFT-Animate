@@ -1,9 +1,23 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useAnimationStore } from '../store/animationStore';
 import { useThemeStore } from '../store/themeStore';
+import { useUser } from "@account-kit/react";
+import { Network, Alchemy } from 'alchemy-sdk';
+
+const NoAccessMessage = styled.div<{ isDark: boolean }>`
+  padding: 20px;
+  border-radius: 12px;
+  background: ${props => props.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)'};
+  color: ${props => props.isDark ? '#E5E7EB' : '#4b5563'};
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+`;
+
+const CONTRACT_ADDRESS = '0x05aA491820662b131d285757E5DA4b74BD0F0e5F';
 
 const Label = styled.div<{ isDark: boolean }>`
   font-size: 14px;
@@ -62,6 +76,10 @@ const DurationInput = styled.input`
 `;
 
 export const Controls = () => {
+  const [hasAccess, setHasAccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const user = useUser();
+  const { isDarkMode } = useThemeStore();
   const timeoutRef = useRef<NodeJS.Timeout>();
   const { 
     bubbleText, 
@@ -75,7 +93,70 @@ export const Controls = () => {
     backgroundColor,
     setBackgroundColor
   } = useAnimationStore();
-  const { isDarkMode } = useThemeStore();
+
+  useEffect(() => {
+    const checkNFTOwnership = async () => {
+      if (!user?.address) {
+        setHasAccess(false);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const settings = {
+          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+          network: Network.SHAPE_MAINNET,
+        };
+        const alchemy = new Alchemy(settings);
+        
+        const nfts = await alchemy.nft.getNftsForOwner(user.address, {
+          contractAddresses: [CONTRACT_ADDRESS],
+        });
+
+        setHasAccess(nfts.totalCount > 0);
+      } catch (error) {
+        console.error('Error checking NFT ownership:', error);
+        setHasAccess(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkNFTOwnership();
+  }, [user?.address]);
+
+  if (isLoading) {
+    return (
+      <NoAccessMessage isDark={isDarkMode}>
+        Checking access...
+      </NoAccessMessage>
+    );
+  }
+
+  if (!user?.address) {
+    return (
+      <NoAccessMessage isDark={isDarkMode}>
+        Please connect your wallet to access controls
+      </NoAccessMessage>
+    );
+  }
+
+  if (!hasAccess) {
+    return (
+      <NoAccessMessage isDark={isDarkMode}>
+        You need to own at least one NFT from the collection to access these controls.
+        <br />
+        <a 
+          href="https://highlight.xyz/mint/shape:0x05aA491820662b131d285757E5DA4b74BD0F0e5F:31b18ae4b8b0b0be466ec33560d51935"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: '#6366f1', textDecoration: 'underline', marginTop: '8px', display: 'inline-block' }}
+        >
+          Mint NFT to Get Access
+        </a>
+      </NoAccessMessage>
+    );
+  }
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
