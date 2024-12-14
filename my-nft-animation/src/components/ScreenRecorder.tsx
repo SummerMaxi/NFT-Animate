@@ -48,13 +48,10 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
+    // Set canvas size and background
     canvas.width = containerRect.width;
     canvas.height = containerRect.height;
-
-    // Draw background color
-    const backgroundColor = useAnimationStore.getState().backgroundColor;
-    ctx.fillStyle = backgroundColor;
+    ctx.fillStyle = useAnimationStore.getState().backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw images
@@ -73,38 +70,60 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       const x = rect.left - containerRect.left;
       const y = rect.top - containerRect.top;
 
-      // Draw bubble background
       ctx.save();
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      if (ctx.roundRect) {
-        ctx.roundRect(x, y, rect.width, rect.height, 16);
-      } else {
-        ctx.rect(x, y, rect.width, rect.height);
-      }
-      ctx.fill();
 
-      // Draw bubble border
+      // Create bubble path (including the tail)
+      ctx.beginPath();
+      
+      // Main bubble rectangle with rounded corners
+      const radius = 16;
+      const width = rect.width;
+      const height = rect.height;
+      
+      // Start from top-left and draw clockwise
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      
+      // Draw to the tail start point
+      ctx.lineTo(x + 44, y + height);
+      
+      // Draw the tail
+      ctx.lineTo(x + 24, y + height + 20);
+      ctx.lineTo(x + 24, y + height);
+      
+      // Complete the bubble
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      
+      // Fill and stroke the entire path
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
       ctx.strokeStyle = '#000000';
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Draw text using the animated text reference
+      // Draw text with proper centering
       ctx.fillStyle = '#000000';
       ctx.font = '600 16px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillText(textAnimationRef.current, x + 20, y + 24);
-
-      // Draw bubble tail
-      ctx.beginPath();
-      ctx.moveTo(x + 24, y + rect.height);
-      ctx.lineTo(x + 44, y + rect.height);
-      ctx.lineTo(x + 24, y + rect.height + 20);
-      ctx.closePath();
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+      ctx.textBaseline = 'middle';
+      
+      // Calculate text metrics for centering
+      const fullText = useAnimationStore.getState().bubbleText;
+      const currentText = textAnimationRef.current;
+      const fullTextMetrics = ctx.measureText(fullText);
+      const fullWidth = fullTextMetrics.width;
+      
+      // Calculate the starting X position as if the full text was centered
+      const startX = x + (width - fullWidth) / 2;
+      const textY = y + (height / 2);
+      
+      // Draw the current text starting from the left position
+      ctx.fillText(currentText, startX, textY);
 
       ctx.restore();
     }
