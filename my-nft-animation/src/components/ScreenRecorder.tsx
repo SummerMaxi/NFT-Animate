@@ -30,119 +30,183 @@ interface Props {
 
 export const ScreenRecorder = ({ containerRef }: Props) => {
   const [isRecording, setIsRecording] = useState(false);
-  const recorderRef = useRef<any>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationFrameIdRef = useRef<number>();
+  const chunksRef = useRef<Blob[]>([]);
 
   const renderToCanvas = () => {
     if (!containerRef.current || !canvasRef.current) return;
     const ctx = canvasRef.current.getContext('2d');
     if (!ctx) return;
 
+    // Get the device pixel ratio
+    const dpr = window.devicePixelRatio || 1;
+    const containerRect = containerRef.current.getBoundingClientRect();
+
+    // Set canvas size accounting for device pixel ratio
+    canvasRef.current.width = containerRect.width * dpr;
+    canvasRef.current.height = containerRect.height * dpr;
+    canvasRef.current.style.width = `${containerRect.width}px`;
+    canvasRef.current.style.height = `${containerRect.height}px`;
+
+    // Scale the context to account for the device pixel ratio
+    ctx.scale(dpr, dpr);
+
     // Clear canvas
+    ctx.clearRect(0, 0, containerRect.width, containerRect.height);
+
+    // Set white background
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    ctx.fillRect(0, 0, containerRect.width, containerRect.height);
 
-    const images = containerRef.current.querySelectorAll('img');
-    images.forEach(img => {
-      if (img.complete) {
-        const rect = img.getBoundingClientRect();
-        const containerRect = containerRef.current!.getBoundingClientRect();
+    try {
+      // Draw all images with their current transforms
+      const images = containerRef.current.querySelectorAll('img');
+      images.forEach(img => {
+        if (img.complete) {
+          const rect = img.getBoundingClientRect();
+          const style = window.getComputedStyle(img);
 
-        // Get position relative to container
+          // Calculate position relative to container
+          const x = rect.left - containerRect.left;
+          const y = rect.top - containerRect.top;
+
+          ctx.save();
+          if (style.transform !== 'none') {
+            const matrix = new DOMMatrix(style.transform);
+            ctx.transform(matrix.a, matrix.b, matrix.c, matrix.d, x, y);
+          } else {
+            ctx.translate(x, y);
+          }
+          ctx.drawImage(img, 0, 0, rect.width, rect.height);
+          ctx.restore();
+        }
+      });
+
+      // Draw chat bubble
+      const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
+      if (chatBubble instanceof HTMLElement) {
+        const rect = chatBubble.getBoundingClientRect();
         const x = rect.left - containerRect.left;
         const y = rect.top - containerRect.top;
 
-        // Get the current rotation
-        const transform = window.getComputedStyle(img).transform;
-        
+        // Draw bubble background
         ctx.save();
-        
-        // Apply the exact same transform as the original image
-        if (transform && transform !== 'none') {
-          ctx.setTransform(new DOMMatrix(transform));
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        if (ctx.roundRect) {
+          ctx.roundRect(x, y, rect.width, rect.height, 16);
+        } else {
+          ctx.rect(x, y, rect.width, rect.height);
         }
+        ctx.fill();
+        ctx.strokeStyle = '#E2E2E2';
+        ctx.stroke();
 
-        // Draw the image at its exact position
-        ctx.drawImage(img, x, y, rect.width, rect.height);
+        // Draw text content
+        const textWrapper = chatBubble.querySelector('[data-typing]');
+        if (textWrapper) {
+          const computedStyle = window.getComputedStyle(textWrapper);
+          const width = parseFloat(computedStyle.width);
+          
+          ctx.fillStyle = '#000000';
+          ctx.font = '15px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+          
+          // Only show the visible portion of text based on animation
+          const text = textWrapper.textContent || '';
+          const visibleWidth = (width / parseFloat(computedStyle.maxWidth)) * text.length;
+          const visibleText = text.slice(0, Math.ceil(visibleWidth));
+          
+          ctx.fillText(visibleText, x + 16, y + 24);
+        }
         ctx.restore();
       }
-    });
+    } catch (error) {
+      console.error('Error rendering to canvas:', error);
+    }
   };
 
   const startRecording = useCallback(async () => {
     if (!containerRef.current) return;
 
     try {
-      const { default: RecordRTC } = await import('recordrtc');
-
-      // Create canvas at the exact size needed
-      const containerRect = containerRef.current.getBoundingClientRect();
+      // Create and setup canvas
       const canvas = document.createElement('canvas');
-      canvas.width = containerRect.width;
-      canvas.height = containerRect.height;
       canvasRef.current = canvas;
 
       // Start animation loop
-      let animationFrameId: number;
       const animate = () => {
         renderToCanvas();
-        animationFrameId = requestAnimationFrame(animate);
+        animationFrameIdRef.current = requestAnimationFrame(animate);
       };
       animate();
 
-      // Start recording
-      const stream = canvas.captureStream(30);
-      const recordInstance = new RecordRTC(stream, {
-        type: 'video',
+      // Create stream with high frame rate
+      const stream = canvas.captureStream(60);
+
+      // Setup MediaRecorder with high quality settings
+      const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
-        frameRate: 30,
-        quality: 1,
-        videoBitsPerSecond: 5000000,
-        frameInterval: 20
+        videoBitsPerSecond: 8000000,
       });
 
-      recorderRef.current = recordInstance;
-      recordInstance.startRecording();
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+        downloadRecording(blob);
+        cleanup();
+        chunksRef.current = [];
+      };
+
+      mediaRecorderRef.current = mediaRecorder;
+      mediaRecorder.start(20); // Collect data more frequently for smoother recording
       setIsRecording(true);
 
+      // Stop after 5 seconds
       setTimeout(() => {
-        cancelAnimationFrame(animationFrameId);
-        recordInstance.stopRecording(() => {
-          const blob = recordInstance.getBlob();
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'tilt_animation.webm';
-          a.click();
-          URL.revokeObjectURL(url);
-          
-          recordInstance.destroy();
-          recorderRef.current = null;
-          setIsRecording(false);
-        });
+        if (animationFrameIdRef.current) {
+          cancelAnimationFrame(animationFrameIdRef.current);
+        }
+        mediaRecorder.stop();
       }, 5000);
 
     } catch (error) {
-      console.error('Recording error:', error);
-      setIsRecording(false);
+      console.error('Recording setup error:', error);
+      cleanup();
     }
   }, [containerRef]);
 
+  const downloadRecording = (blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `animation_${Date.now()}.webm`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const cleanup = () => {
+    if (animationFrameIdRef.current) {
+      cancelAnimationFrame(animationFrameIdRef.current);
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+    }
+    if (canvasRef.current) {
+      canvasRef.current = null;
+    }
+    setIsRecording(false);
+  };
+
   const handleClick = () => {
-    if (isRecording && recorderRef.current) {
-      recorderRef.current.stopRecording(() => {
-        const blob = recorderRef.current.getBlob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'tilt_animation.webm';
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        recorderRef.current.destroy();
-        recorderRef.current = null;
-        setIsRecording(false);
-      });
+    if (isRecording) {
+      cleanup();
     } else {
       startRecording();
     }
@@ -153,7 +217,7 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
       onClick={handleClick}
       disabled={isRecording}
     >
-      {isRecording ? 'Recording...' : 'Download Video'}
+      {isRecording ? 'Recording...' : 'Record Animation'}
     </Button>
   );
 }; 

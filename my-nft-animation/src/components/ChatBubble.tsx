@@ -75,6 +75,17 @@ const ChatBubbleWrapper = styled.div`
     transform: rotate(45deg);
     clip-path: polygon(100% 0, 100% 100%, 0 100%);
   }
+
+  &.chat-bubble-wrapper {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  &.recording {
+    animation-play-state: running !important;
+  }
 `;
 
 const TextWrapper = styled.div<{ isTyping: boolean; duration: number }>`
@@ -84,6 +95,7 @@ const TextWrapper = styled.div<{ isTyping: boolean; duration: number }>`
   animation: ${props => props.isTyping 
     ? css`${slideIn} ${props.duration}s cubic-bezier(0.4, 0.0, 0.2, 1) forwards` 
     : 'none'};
+  max-width: 100%;
 `;
 
 const Cursor = styled.span`
@@ -216,10 +228,11 @@ export const ChatBubble = ({
       y={position.y}
       onMouseDown={handleMouseDown}
     >
-      <ChatBubbleWrapper>
+      <ChatBubbleWrapper className="chat-bubble-wrapper">
         <TextWrapper 
           isTyping={isAnimating} 
           duration={typingSpeed / 1000}
+          data-typing="true"
         >
           <Text>
             {displayText}
