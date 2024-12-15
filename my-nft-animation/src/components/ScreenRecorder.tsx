@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { useAnimationStore } from '../store/animationStore';
 
 interface ScreenRecorderProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -10,82 +11,169 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const textAnimationRef = useRef<string>('');
+  const recordingCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const startRecording = async () => {
-    console.log('Starting recording...');
-    if (!containerRef.current) {
-      console.error('Container ref not found');
-      return;
+  const renderToCanvas = (ctx: CanvasRenderingContext2D) => {
+    if (!containerRef.current) return;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, 828, 828);
+
+    // Draw background
+    const backgroundColor = useAnimationStore.getState().backgroundColor;
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, 828, 828);
+
+    // Draw the original canvas (NFT layers)
+    const originalCanvas = containerRef.current.querySelector('canvas');
+    if (originalCanvas) {
+      ctx.drawImage(originalCanvas, 0, 0);
     }
 
-    try {
-      // Create a canvas to match the container size
-      const canvas = document.createElement('canvas');
-      canvas.width = 828;
-      canvas.height = 828;
-      const ctx = canvas.getContext('2d');
+    // Draw chat bubble
+    const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
+    if (chatBubble instanceof HTMLElement) {
+      const rect = chatBubble.getBoundingClientRect();
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const x = rect.left - containerRect.left;
+      const y = rect.top - containerRect.top;
+      const bubbleWidth = rect.width;
+      const bubbleHeight = rect.height;
 
-      if (!ctx) {
-        throw new Error('Failed to get canvas context');
+      // Draw bubble background (this will clear previous text)
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.roundRect(x, y, bubbleWidth, bubbleHeight, 16);
+      ctx.fill();
+
+      // Draw bubble border
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw bubble tail
+      ctx.beginPath();
+      ctx.moveTo(x + 24, y + bubbleHeight);
+      ctx.lineTo(x + 34, y + bubbleHeight + 10);
+      ctx.lineTo(x + 44, y + bubbleHeight);
+      ctx.closePath();
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.stroke();
+
+      // Draw animated text with center alignment
+      if (textAnimationRef.current) {  // Only draw if there's text
+        ctx.fillStyle = '#000000';
+        ctx.font = '600 16px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // Calculate text position
+        const textX = x + (bubbleWidth / 2);
+        const textY = y + (bubbleHeight / 2);
+
+        // Handle multiline text
+        const maxWidth = bubbleWidth - 40;
+        const words = textAnimationRef.current.split(' ');
+        let line = '';
+        let lines = [];
+
+        for (let word of words) {
+          const testLine = line + word + ' ';
+          const metrics = ctx.measureText(testLine);
+          
+          if (metrics.width > maxWidth && line !== '') {
+            lines.push(line);
+            line = word + ' ';
+          } else {
+            line = testLine;
+          }
+        }
+        lines.push(line);
+
+        // Draw each line centered
+        const lineHeight = 20;
+        const totalHeight = lines.length * lineHeight;
+        const startY = textY - (totalHeight / 2) + (lineHeight / 2);
+
+        lines.forEach((line, index) => {
+          ctx.fillText(
+            line.trim(),
+            textX,
+            startY + (index * lineHeight)
+          );
+        });
       }
 
-      // Function to capture and draw a frame
-      const captureFrame = () => {
-        // Get the original canvas and chat bubble container
-        const originalCanvas = containerRef.current!.querySelector('canvas');
-        const chatBubbleContainer = containerRef.current!.querySelector('.absolute.inset-0');
+      ctx.restore();
+    }
+  };
 
-        if (originalCanvas) {
-          // Draw the canvas content
-          ctx.drawImage(originalCanvas, 0, 0, 828, 828);
-        }
+  const startRecording = async () => {
+    if (!containerRef.current) return;
 
-        if (chatBubbleContainer) {
-          // Use native DOM rendering to capture the chat bubble
-          const chatBubbleHTML = chatBubbleContainer.innerHTML;
-          const tempDiv = document.createElement('div');
-          tempDiv.style.position = 'absolute';
-          tempDiv.style.left = '0';
-          tempDiv.style.top = '0';
-          tempDiv.style.width = '828px';
-          tempDiv.style.height = '828px';
-          tempDiv.innerHTML = chatBubbleHTML;
-          
-          // Convert the chat bubble to SVG and draw it
-          const data = `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="828" height="828">
-            <foreignObject width="100%" height="100%">
-              <div xmlns="http://www.w3.org/1999/xhtml">
-                ${tempDiv.outerHTML}
-              </div>
-            </foreignObject>
-          </svg>`;
+    try {
+      // Create recording canvas if it doesn't exist
+      if (!recordingCanvasRef.current) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 828;
+        canvas.height = 828;
+        recordingCanvasRef.current = canvas;
+      }
 
-          const img = new Image();
-          img.src = data;
-          img.onload = () => {
-            ctx.drawImage(img, 0, 0);
-          };
+      const ctx = recordingCanvasRef.current.getContext('2d');
+      if (!ctx) throw new Error('Failed to get canvas context');
+
+      // Get animation settings from store
+      const { typingDuration, isLooping, bubbleText } = useAnimationStore.getState();
+      const recordingDuration = isLooping ? typingDuration * 2000 : typingDuration * 1000;
+
+      // Reset and set up text animation
+      textAnimationRef.current = '';
+      let currentIndex = 0;
+      const charInterval = typingDuration * 1000 / bubbleText.length;
+
+      // Text animation function
+      const animateText = () => {
+        if (currentIndex <= bubbleText.length) {
+          // Update text directly without clearing
+          textAnimationRef.current = bubbleText.slice(0, currentIndex);
+          currentIndex++;
+          setTimeout(animateText, charInterval);
+        } else if (isLooping) {
+          // For looping, add a pause before restart
+          setTimeout(() => {
+            currentIndex = 0;
+            textAnimationRef.current = '';
+            setTimeout(animateText, 100); // Short delay before starting next loop
+          }, 1000); // Pause at the end for 1 second
         }
       };
+
+      // Start text animation
+      animateText();
 
       // Set up animation loop
       let animationFrameId: number;
       const animate = () => {
-        captureFrame();
+        renderToCanvas(ctx);
         animationFrameId = requestAnimationFrame(animate);
       };
 
       // Start animation loop
       animate();
 
-      // Create a stream from the canvas
-      const stream = canvas.captureStream(60);
-
-      // Create and configure media recorder
+      // Create and set up media recorder
+      const stream = recordingCanvasRef.current.captureStream(60);
       const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
         videoBitsPerSecond: 8000000,
       });
+
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
 
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -94,15 +182,9 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
       };
 
       mediaRecorder.onstop = () => {
-        // Stop animation loop
         cancelAnimationFrame(animationFrameId);
-
-        const blob = new Blob(chunksRef.current, {
-          type: 'video/webm'
-        });
-        chunksRef.current = [];
-
-        // Create and trigger download
+        const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+        
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -110,18 +192,20 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
         a.click();
         URL.revokeObjectURL(url);
 
+        chunksRef.current = [];
         setIsRecording(false);
       };
 
       // Start recording
-      mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start(100); // Collect data every 100ms
       setIsRecording(true);
+      mediaRecorder.start(100);
 
-      // Auto-stop after 5 seconds
+      // Auto-stop after recording duration
       setTimeout(() => {
-        stopRecording();
-      }, 5000);
+        if (mediaRecorderRef.current?.state === 'recording') {
+          mediaRecorderRef.current.stop();
+        }
+      }, recordingDuration);
 
     } catch (error) {
       console.error('Error starting recording:', error);
@@ -129,29 +213,19 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
     }
   };
 
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
-    }
-  };
-
   return (
     <div className="space-y-4">
-      {!isRecording ? (
-        <button
-          onClick={startRecording}
-          className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-        >
-          Start Recording
-        </button>
-      ) : (
-        <button
-          onClick={stopRecording}
-          className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-        >
-          Stop Recording
-        </button>
-      )}
+      <button
+        onClick={startRecording}
+        disabled={isRecording}
+        className={`w-full px-4 py-2 rounded-lg transition-colors ${
+          isRecording 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+        }`}
+      >
+        {isRecording ? 'Recording...' : 'Start Recording'}
+      </button>
     </div>
   );
 }; 
