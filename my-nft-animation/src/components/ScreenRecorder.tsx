@@ -19,40 +19,90 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
     }
 
     try {
-      // Find the canvas element within the container
-      const canvas = containerRef.current.querySelector('canvas');
-      if (!canvas) {
-        console.error('Canvas element not found');
-        return;
+      // Create a canvas to match the container size
+      const canvas = document.createElement('canvas');
+      canvas.width = 828;
+      canvas.height = 828;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        throw new Error('Failed to get canvas context');
       }
 
-      console.log('Found canvas:', canvas);
+      // Function to capture and draw a frame
+      const captureFrame = () => {
+        // Get the original canvas and chat bubble container
+        const originalCanvas = containerRef.current!.querySelector('canvas');
+        const chatBubbleContainer = containerRef.current!.querySelector('.absolute.inset-0');
 
-      // Get the media stream from the canvas
-      const stream = canvas.captureStream(60); // 60 FPS
-      console.log('Created stream:', stream);
+        if (originalCanvas) {
+          // Draw the canvas content
+          ctx.drawImage(originalCanvas, 0, 0, 828, 828);
+        }
 
-      // Create MediaRecorder instance
+        if (chatBubbleContainer) {
+          // Use native DOM rendering to capture the chat bubble
+          const chatBubbleHTML = chatBubbleContainer.innerHTML;
+          const tempDiv = document.createElement('div');
+          tempDiv.style.position = 'absolute';
+          tempDiv.style.left = '0';
+          tempDiv.style.top = '0';
+          tempDiv.style.width = '828px';
+          tempDiv.style.height = '828px';
+          tempDiv.innerHTML = chatBubbleHTML;
+          
+          // Convert the chat bubble to SVG and draw it
+          const data = `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="828" height="828">
+            <foreignObject width="100%" height="100%">
+              <div xmlns="http://www.w3.org/1999/xhtml">
+                ${tempDiv.outerHTML}
+              </div>
+            </foreignObject>
+          </svg>`;
+
+          const img = new Image();
+          img.src = data;
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+          };
+        }
+      };
+
+      // Set up animation loop
+      let animationFrameId: number;
+      const animate = () => {
+        captureFrame();
+        animationFrameId = requestAnimationFrame(animate);
+      };
+
+      // Start animation loop
+      animate();
+
+      // Create a stream from the canvas
+      const stream = canvas.captureStream(60);
+
+      // Create and configure media recorder
       const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
         videoBitsPerSecond: 8000000,
       });
 
-      // Handle data available event
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
           chunksRef.current.push(event.data);
         }
       };
 
-      // Handle recording stop
       mediaRecorder.onstop = () => {
+        // Stop animation loop
+        cancelAnimationFrame(animationFrameId);
+
         const blob = new Blob(chunksRef.current, {
           type: 'video/webm'
         });
         chunksRef.current = [];
 
-        // Create download link
+        // Create and trigger download
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -65,16 +115,17 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
 
       // Start recording
       mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start();
+      mediaRecorder.start(100); // Collect data every 100ms
       setIsRecording(true);
 
-      // Stop recording after 5 seconds
+      // Auto-stop after 5 seconds
       setTimeout(() => {
         stopRecording();
       }, 5000);
 
     } catch (error) {
       console.error('Error starting recording:', error);
+      setIsRecording(false);
     }
   };
 

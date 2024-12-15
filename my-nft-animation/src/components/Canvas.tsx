@@ -653,16 +653,20 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
 
   return (
     <Container style={{ backgroundColor }}>
-      <canvas ref={canvasRef} width={828} height={828} />
-      <ChatBubble
-        text={bubbleText}
-        initialPosition={{ x: 300, y: 200 }}
-        containerWidth={828}
-        containerHeight={828}
-        isTyping={isTyping}
-        typingSpeed={typingDuration * 1000}
-        loop={isLooping}
-      />
+      <div className="relative w-full h-full">
+        <canvas ref={canvasRef} width={828} height={828} />
+        <div className="absolute inset-0">
+          <ChatBubble
+            text={bubbleText}
+            initialPosition={{ x: 300, y: 200 }}
+            containerWidth={828}
+            containerHeight={828}
+            isTyping={isTyping}
+            typingSpeed={typingDuration * 1000}
+            loop={isLooping}
+          />
+        </div>
+      </div>
     </Container>
   );
 }; 
