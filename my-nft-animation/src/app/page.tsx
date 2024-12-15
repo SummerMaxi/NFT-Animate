@@ -43,10 +43,7 @@ export default function Home() {
   }, []);
 
   const handleAnimationChange = (value: string) => {
-    if (value === 'wave') {
-      setIsWaving(true);
-      setTimeout(() => setIsWaving(false), 2000);
-    }
+    setIsWaving(value === 'wave');
   };
 
   return (
