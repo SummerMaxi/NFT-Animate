@@ -78,25 +78,41 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
           const bubbleWidth = rect.width;
           const bubbleHeight = rect.height;
 
-          // Draw bubble background
+          // Draw chat bubble (rectangle and pointer as one path)
           bufferCtx.save();
           bufferCtx.fillStyle = '#ffffff';
-          bufferCtx.beginPath();
-          bufferCtx.roundRect(x, y, bubbleWidth, bubbleHeight, 16);
-          bufferCtx.fill();
-
-          // Draw bubble border
           bufferCtx.strokeStyle = '#000000';
           bufferCtx.lineWidth = 2;
-          bufferCtx.stroke();
 
-          // Draw bubble tail
+          // Start a new path
           bufferCtx.beginPath();
-          bufferCtx.moveTo(x + 24, y + bubbleHeight);
-          bufferCtx.lineTo(x + 34, y + bubbleHeight + 10);
-          bufferCtx.lineTo(x + 44, y + bubbleHeight);
+
+          // Start from the top-left corner and draw clockwise
+          bufferCtx.moveTo(x + 16, y); // Start after top-left corner radius
+
+          // Top edge
+          bufferCtx.lineTo(x + bubbleWidth - 16, y);
+          bufferCtx.arcTo(x + bubbleWidth, y, x + bubbleWidth, y + 16, 16);
+
+          // Right edge
+          bufferCtx.lineTo(x + bubbleWidth, y + bubbleHeight - 16);
+          bufferCtx.arcTo(x + bubbleWidth, y + bubbleHeight, x + bubbleWidth - 16, y + bubbleHeight, 16);
+
+          // Bottom edge with pointer
+          bufferCtx.lineTo(x + 44, y + bubbleHeight); // Right side of pointer
+          bufferCtx.lineTo(x + 34, y + bubbleHeight + 10); // Pointer tip
+          bufferCtx.lineTo(x + 24, y + bubbleHeight); // Left side of pointer
+          bufferCtx.lineTo(x + 16, y + bubbleHeight);
+          bufferCtx.arcTo(x, y + bubbleHeight, x, y + bubbleHeight - 16, 16);
+
+          // Left edge
+          bufferCtx.lineTo(x, y + 16);
+          bufferCtx.arcTo(x, y, x + 16, y, 16);
+
+          // Close the path
           bufferCtx.closePath();
-          bufferCtx.fillStyle = '#ffffff';
+
+          // Fill and stroke in one go
           bufferCtx.fill();
           bufferCtx.stroke();
 
