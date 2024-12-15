@@ -1,17 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   typescript: {
-    // Temporarily ignore type errors during build
     ignoreBuildErrors: true,
   },
   eslint: {
-    // Temporarily ignore eslint errors during build
     ignoreDuringBuilds: true,
   },
   images: {
-    dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -25,7 +22,7 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-      // ... (keep your existing remotePatterns)
+      // Keep all your existing remotePatterns
     ],
   },
   webpack: (config) => {
@@ -35,10 +32,13 @@ const nextConfig = {
       net: false,
       tls: false,
     };
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, './src'),
+    };
     return config;
   },
   experimental: {
-    // Remove esmExternals as it might cause issues
     serverActions: true,
     serverComponentsExternalPackages: ['@account-kit/react', '@account-kit/core', '@account-kit/infra'],
   },
