@@ -94,11 +94,12 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, src:
   console.error(e);
 };
 
-// Update the layerOrder object to handle different accessory-2 positions
+// Update the layerOrder object to include shoes
 const layerOrder = {
   'arm-left': 1,
   'body': 2,
   'bottom': 3,
+  'shoes': 3,     // Add shoes at same level as bottom
   'arm-right': 4,
   'sleeve-left': 5,
   'torso': 5,
@@ -107,9 +108,9 @@ const layerOrder = {
   'ear-left': 7,
   'hair-hat-back': 8,
   'head': 9,
-  'beard': 9,        // Beards go under face
+  'beard': 9,
   'face': 10,
-  'accessory-2': 11, // Other accessory-2 items go above face
+  'accessory-2': 11,
   'hair-hat-front': 12,
   'ear-right': 13
 };
@@ -199,6 +200,26 @@ const getAccessory2Value = (metadata: NFTMetadata): string | null => {
 
   console.log('Found accessory 2 trait:', accessory2Trait);
   return accessory2Trait.value.toString();
+};
+
+// Add getShoesValue function
+const getShoesValue = (metadata: NFTMetadata): string | null => {
+  if (!metadata?.raw?.metadata?.attributes) {
+    console.log('No attributes found in metadata');
+    return null;
+  }
+
+  const shoesTrait = metadata.raw.metadata.attributes.find(attr => 
+    attr.trait_type?.toLowerCase() === 'shoes'
+  );
+
+  if (!shoesTrait) {
+    console.log('No shoes trait found');
+    return null;
+  }
+
+  console.log('Found shoes trait:', shoesTrait);
+  return shoesTrait.value.toString();
 };
 
 export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
@@ -456,6 +477,37 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
             console.log('Added accessory-2 layer:', accessory2Layer);
           } else {
             console.log('No matching accessory-2 found for:', accessory2Value);
+          }
+        }
+
+        // Load shoes metadata and layer
+        console.log('Loading shoes layer...');
+        const shoesValue = getShoesValue(metadata);
+        console.log('Shoes value:', shoesValue);
+
+        if (shoesValue) {
+          const shoesMetadata = await fetch('/Assets/traits/metadata/shoes_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching shoes entry
+          const shoesEntry = Object.entries(shoesMetadata).find(([_, data]) => 
+            (data as any).name === shoesValue
+          );
+
+          if (shoesEntry) {
+            const [_, data] = shoesEntry;
+            const file = (data as any).files[0];
+            
+            // Add shoes layer
+            const shoesLayer = {
+              src: `/Assets/traits/shoes/${file}`,
+              zIndex: layerOrder['shoes'],
+              alt: `Shoes - ${shoesValue}`
+            };
+            newLayers.push(shoesLayer);
+            console.log('Added shoes layer:', shoesLayer);
+          } else {
+            console.log('No matching shoes found for:', shoesValue);
           }
         }
 
