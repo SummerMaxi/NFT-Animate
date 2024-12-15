@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 import styled from '@emotion/styled';
 import { ChatBubble } from './ChatBubble';
 import { useAnimationStore } from '../store/animationStore';
@@ -17,6 +17,9 @@ const Container = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: visible;
+  transform: translateZ(0);
+  backfaceVisibility: hidden;
+  perspective: 1000;
 `;
 
 const StyledImage = styled.img<{ zIndex: number }>`
@@ -269,12 +272,13 @@ const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
 interface CanvasProps {
   metadata: NFTMetadata | null;
   isWaving: boolean;
+  containerRef: RefObject<HTMLDivElement>;
 }
 
 // Add type for files array
 type TraitFile = string;
 
-export const Canvas = ({ metadata, isWaving }: CanvasProps) => {
+export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
   if (!metadata) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -563,6 +567,23 @@ export const Canvas = ({ metadata, isWaving }: CanvasProps) => {
       />
     );
   };
+
+  useEffect(() => {
+    // Make sure all images are loaded before animation starts
+    const images = containerRef.current?.getElementsByTagName('img');
+    if (images) {
+      Promise.all(Array.from(images).map((img: HTMLImageElement) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve; // Handle error case as well
+        });
+      })).then(() => {
+        // All images are loaded
+        console.log('All images loaded');
+      });
+    }
+  }, [metadata]); // Add containerRef to dependencies if needed
 
   return (
     <Container style={{ backgroundColor }}>

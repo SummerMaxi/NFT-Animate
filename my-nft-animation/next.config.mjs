@@ -90,6 +90,16 @@ const nextConfig = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, './src'),
     };
+    config.module.rules.push({
+      test: /\.(mp4|webm|ogg)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: '/_next',
+          name: 'static/media/[name].[hash].[ext]',
+        },
+      },
+    });
     return config;
   },
   experimental: {

@@ -126,7 +126,13 @@ export default function Home() {
                     aspectRatio: '1',
                   }}
                 >
-                  {nftMetadata && <Canvas metadata={nftMetadata} isWaving={isWaving} />}
+                  {nftMetadata && (
+                    <Canvas 
+                      metadata={nftMetadata} 
+                      isWaving={isWaving} 
+                      containerRef={containerRef} 
+                    />
+                  )}
                 </div>
               </div>
             </div>
