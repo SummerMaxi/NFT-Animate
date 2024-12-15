@@ -2,7 +2,7 @@ import {
   AlchemyAccountsUIConfig,
   createConfig,
 } from "@account-kit/react";
-import { alchemy, mainnet, polygon, arbitrum, optimism, sepolia } from "@account-kit/infra";
+import { alchemy } from "@account-kit/infra";
 import { cookieStorage } from "@account-kit/core";
 import { QueryClient } from "@tanstack/react-query";
 import { createPublicClient, http } from 'viem';
@@ -48,10 +48,6 @@ export const shapeMainnet = {
   },
 };
 
-const alchemyTransport = alchemy({ 
-  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
-});
-
 // UI Config
 const uiConfig: AlchemyAccountsUIConfig = {
   illustrationStyle: "outline",
@@ -77,12 +73,14 @@ const uiConfig: AlchemyAccountsUIConfig = {
 // Create config with proper chain configuration
 export const config = createConfig(
   {
-    transport: alchemyTransport,
+    transport: alchemy({ 
+      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
+    }),
     chain: shapeMainnet,
     chains: [
       { 
         chain: shapeMainnet,
-        transport: alchemyTransport,
+        transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
         policyId: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
       }
     ],

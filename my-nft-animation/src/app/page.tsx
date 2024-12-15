@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useThemeStore } from '@/store/themeStore';
 import { ClientOnly } from '@/components/ClientOnly';
 import { AccountKitButton } from '@/components/AccountKitButton';
