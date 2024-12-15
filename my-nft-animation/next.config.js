@@ -3,6 +3,10 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  distDir: '.next',
+  generateBuildId: async () => {
+    return 'build-' + Date.now();
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -33,15 +37,23 @@ const nextConfig = {
       fs: false,
       net: false,
       tls: false,
+      path: false,
+      crypto: false,
+      stream: false,
+      http: false,
+      https: false,
+      zlib: false
     };
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, './src'),
     };
+    config.resolve.mainFields = ['browser', 'module', 'main'];
     return config;
   },
   experimental: {
     esmExternals: false,
+    webpackBuildWorker: true
   }
 };
 
