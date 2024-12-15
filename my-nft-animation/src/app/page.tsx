@@ -116,17 +116,6 @@ export default function Home() {
                 <h2 className="text-lg font-semibold mb-6">Download</h2>
                 <ScreenRecorder containerRef={containerRef} />
               </div>
-
-              {/* Metadata Cards */}
-              <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                <h2 className="text-lg font-semibold mb-6">Contract 1 Metadata</h2>
-                <MetadataCard
-                  contractAddress="0xF2E4b2a15872a20D0fFB336a89B94BA782cE9Ba5"
-                  tokenId={selectedId1}
-                  label="Contract 1 NFT"
-                  onMetadataLoad={handleMetadataUpdate}
-                />
-              </div>
             </div>
 
             {/* Middle Column - Canvas */}

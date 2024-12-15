@@ -22,6 +22,7 @@ interface ShapeCraftCardProps {
   userAddress2: string;
   onSelect1?: (id: string) => void;
   onSelect2?: (id: string) => void;
+  onMetadataUpdate?: (nftMetadata: any) => void;
 }
 
 const NFTDropdown = ({ label, tokenIds, selectedId, onSelect }: NFTDropdownProps) => {
@@ -121,7 +122,8 @@ export const ShapeCraftCard = ({
   userAddress1, 
   userAddress2,
   onSelect1,
-  onSelect2
+  onSelect2,
+  onMetadataUpdate
 }: ShapeCraftCardProps) => {
   const [tokenIds1, setTokenIds1] = useState<string[]>([]);
   const [tokenIds2, setTokenIds2] = useState<string[]>([]);
@@ -188,6 +190,33 @@ export const ShapeCraftCard = ({
   const handleSelect1 = (id: string) => {
     setSelectedId1(id);
     onSelect1?.(id);
+
+    // Fetch metadata for Contract 1
+    const fetchMetadata = async () => {
+      try {
+        const alchemy = new Alchemy({
+          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
+          network: Network.SHAPE_MAINNET,
+        });
+
+        const nftMetadata = await alchemy.nft.getNftMetadata(
+          SHAPE_CONTRACT_1,
+          id,
+          {
+            refreshCache: true,
+            tokenType: 'erc721' as const,
+            tokenUriTimeoutInMs: 10000
+          }
+        );
+
+        // Update the metadata in the parent component
+        onMetadataUpdate?.(nftMetadata);
+      } catch (error) {
+        console.error('Error fetching Contract 1 metadata:', error);
+      }
+    };
+
+    fetchMetadata();
   };
 
   const handleSelect2 = (id: string) => {
@@ -225,6 +254,9 @@ export const ShapeCraftCard = ({
             console.log('Updated bubble text to:', baseTrait.value);
           }, 100);
         }
+
+        // Update the metadata in the parent component
+        onMetadataUpdate?.(nftMetadata);
       } catch (error) {
         console.error('Error fetching base trait:', error);
       }
