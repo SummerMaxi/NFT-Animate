@@ -1,0 +1,38 @@
+{
+  "Lighter": {
+    "arm-left": "1.png",
+    "arm-right": "1.png",
+    "body": "1.png",
+    "ear-left": "1.png",
+    "ear-right": "1.png",
+    "head": "1.png",
+    "face": "1.png"
+  },
+  "Light": {
+    "arm-left": "2.png",
+    "arm-right": "2.png",
+    "body": "2.png",
+    "ear-left": "2.png",
+    "ear-right": "2.png",
+    "head": "2.png",
+    "face": "1.png"
+  },
+  "Dark": {
+    "arm-left": "3.png",
+    "arm-right": "3.png",
+    "body": "3.png",
+    "ear-left": "3.png",
+    "ear-right": "3.png",
+    "head": "3.png",
+    "face": "1.png"
+  },
+  "Darker": {
+    "arm-left": "4.png",
+    "arm-right": "4.png",
+    "body": "4.png",
+    "ear-left": "4.png",
+    "ear-right": "4.png",
+    "head": "4.png",
+    "face": "1.png"
+  }
+} 

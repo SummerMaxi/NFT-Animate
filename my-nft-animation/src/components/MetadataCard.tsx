@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Alchemy, Network } from 'alchemy-sdk';
 
 interface MetadataCardProps {
   contractAddress: string;
   tokenId: string;
   label: string;
+  onMetadataLoad?: (metadata: NFTMetadata) => void;
 }
 
 interface NFTAttribute {
@@ -15,13 +16,13 @@ interface NFTAttribute {
 }
 
 interface NFTMetadata {
-  title: string;
+  contract: {
+    address: string;
+  };
+  tokenId: string;
+  tokenType: string;
   name: string;
   description: string;
-  image: {
-    cachedUrl: string;
-    thumbnailUrl: string;
-  };
   raw: {
     metadata: {
       attributes: NFTAttribute[];
@@ -29,77 +30,63 @@ interface NFTMetadata {
   };
 }
 
-export const MetadataCard = ({ contractAddress, tokenId, label }: MetadataCardProps) => {
+export const MetadataCard = ({ contractAddress, tokenId, label, onMetadataLoad }: MetadataCardProps) => {
   const [metadata, setMetadata] = useState<NFTMetadata | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchMetadata = useCallback(async () => {
+    if (!tokenId) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const alchemy = new Alchemy({
+        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+        network: Network.SHAPE_MAINNET,
+      });
+
+      const response = await alchemy.nft.getNftMetadata(
+        contractAddress,
+        tokenId,
+        {
+          refreshCache: false,
+          tokenType: 'ERC721',
+          tokenUriTimeoutInMs: 10000
+        }
+      );
+
+      console.log('Raw NFT Metadata:', response);
+      const attributes = response.raw?.metadata?.attributes || [];
+      console.log('NFT Attributes:', attributes);
+
+      setMetadata(response as any);
+      onMetadataLoad?.(response as any);
+    } catch (err) {
+      console.error('Error fetching metadata:', err);
+      setError('Failed to fetch metadata');
+    } finally {
+      setLoading(false);
+    }
+  }, [contractAddress, tokenId, onMetadataLoad]);
+
   useEffect(() => {
-    const fetchMetadata = async () => {
-      if (!tokenId) return;
-      
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const alchemy = new Alchemy({
-          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
-          network: Network.SHAPE_MAINNET,
-        });
-
-        // Using getNftMetadata with additional options
-        const response = await alchemy.nft.getNftMetadata(
-          contractAddress,
-          tokenId,
-          {
-            refreshCache: true,
-            tokenType: 'ERC721',
-            tokenUriTimeoutInMs: 10000
-          }
-        );
-
-        console.log('Raw NFT Metadata:', response);
-        
-        // Access the attributes from raw metadata
-        const attributes = response.raw?.metadata?.attributes || [];
-        console.log('NFT Attributes:', attributes);
-
-        setMetadata(response as any);
-      } catch (err) {
-        console.error('Error fetching metadata:', err);
-        setError('Failed to fetch metadata');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMetadata();
-  }, [contractAddress, tokenId]);
+    if (contractAddress && tokenId) {
+      fetchMetadata();
+    }
+  }, [fetchMetadata]);
 
   if (!tokenId) {
-    return (
-      <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-        <p className="text-gray-500 dark:text-gray-400 text-sm text-center">
-          Select a token to view metadata
-        </p>
-      </div>
-    );
+    return <div>No token ID provided</div>;
   }
 
   if (loading) {
-    return (
-      <div className="p-4 text-center">
-        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 dark:border-white mx-auto"></div>
-      </div>
-    );
+    return <div>Loading metadata...</div>;
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
-        <p className="text-red-600 dark:text-red-400 text-sm text-center">{error}</p>
-      </div>
-    );
+    return <div>Error: {error}</div>;
   }
 
   if (!metadata) return null;
