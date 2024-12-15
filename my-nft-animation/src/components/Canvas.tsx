@@ -45,8 +45,8 @@ const debugMetadata = (metadata: any) => {
 
 const TRAIT_TYPE_MAPPING: Record<string, string[]> = {
   'SKIN': ['Skin'],
+  'HAIR-HAT': ['Hair', 'Hat'],
   // Comment out other mappings for now
-  // 'HAIR-HAT': ['Hair', 'Hat'],
   // 'SUITS': ['Suit'],
   // 'ACCESSORIES': ['Accessory 1', 'Accessory 2', 'Accessory 3', 'Accessory 4', 'Watch'],
   // 'BOTTOM': ['Bottom', 'Pants'],
@@ -94,16 +94,22 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, src:
   console.error(e);
 };
 
-// Update the layerOrder object to include accessory-4
+// Update the layerOrder object to include bottom
 const layerOrder = {
   'arm-left': 1,
   'body': 2,
-  'arm-right': 3,
-  'accessory-4': 4,  // Add accessory-4 here - above arm-right but below head
-  'ear-left': 5,
-  'head': 6,
-  'face': 7,
-  'ear-right': 8
+  'bottom': 3,     // Add bottom layer before arm-right
+  'arm-right': 4,
+  'sleeve-left': 5,
+  'torso': 5,
+  'sleeve-right': 5,
+  'accessory-4': 6,
+  'ear-left': 7,
+  'hair-hat-back': 8,
+  'head': 9,
+  'face': 10,
+  'hair-hat-front': 11,
+  'ear-right': 12
 };
 
 // Add this helper function to get accessory values
@@ -111,6 +117,66 @@ const getAccessoryValue = (metadata: NFTMetadata, accessoryType: string) => {
   return metadata?.raw?.metadata?.attributes?.find(
     attr => attr.trait_type.toLowerCase() === accessoryType.toLowerCase()
   )?.value;
+};
+
+// Update getHairHatValue function
+const getHairHatValue = (metadata: NFTMetadata): string | null => {
+  if (!metadata?.raw?.metadata?.attributes) {
+    console.log('No attributes found in metadata');
+    return null;
+  }
+
+  const hairHatTrait = metadata.raw.metadata.attributes.find(attr => 
+    attr.trait_type?.toLowerCase() === 'hair/hat'
+  );
+
+  if (!hairHatTrait) {
+    console.log('No hair/hat trait found');
+    return null;
+  }
+
+  console.log('Found hair/hat trait:', hairHatTrait);
+  return hairHatTrait.value.toString();
+};
+
+// Add getTopValue function
+const getTopValue = (metadata: NFTMetadata): string | null => {
+  if (!metadata?.raw?.metadata?.attributes) {
+    console.log('No attributes found in metadata');
+    return null;
+  }
+
+  const topTrait = metadata.raw.metadata.attributes.find(attr => 
+    attr.trait_type?.toLowerCase() === 'top'
+  );
+
+  if (!topTrait) {
+    console.log('No top trait found');
+    return null;
+  }
+
+  console.log('Found top trait:', topTrait);
+  return topTrait.value.toString();
+};
+
+// Add getBottomValue function
+const getBottomValue = (metadata: NFTMetadata): string | null => {
+  if (!metadata?.raw?.metadata?.attributes) {
+    console.log('No attributes found in metadata');
+    return null;
+  }
+
+  const bottomTrait = metadata.raw.metadata.attributes.find(attr => 
+    attr.trait_type?.toLowerCase() === 'bottom'
+  );
+
+  if (!bottomTrait) {
+    console.log('No bottom trait found');
+    return null;
+  }
+
+  console.log('Found bottom trait:', bottomTrait);
+  return bottomTrait.value.toString();
 };
 
 export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
@@ -186,6 +252,154 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
               zIndex: layerOrder['accessory-4'],
               alt: `accessory-4-${id}`
             });
+          }
+        }
+
+        // Load hair/hat metadata
+        console.log('Loading hair/hat layers...');
+        const hairHatValue = getHairHatValue(metadata);
+        console.log('Hair/Hat value:', hairHatValue);
+
+        if (hairHatValue) {
+          const hairHatMetadata = await fetch('/Assets/traits/metadata/hair-hat_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching hair/hat entry by exact name match first
+          let hairHatEntry = Object.entries(hairHatMetadata).find(([_, data]) => 
+            (data as any).name === hairHatValue
+          );
+
+          // If no exact match, then try with base name
+          if (!hairHatEntry) {
+            const baseName = hairHatValue.split(' - ')[0];
+            console.log('No exact match, looking for hair/hat with base name:', baseName);
+            
+            hairHatEntry = Object.entries(hairHatMetadata).find(([_, data]) => 
+              (data as any).name === baseName
+            );
+          }
+
+          if (hairHatEntry) {
+            const [_, data] = hairHatEntry;
+            const files = (data as any).files;
+            
+            // If there are multiple files, load them in different positions
+            if (files.length > 1) {
+              // Add the back layer (-1 file)
+              const backFile = files.find(f => f.includes('-1'));
+              if (backFile) {
+                const backLayer = {
+                  src: `/Assets/traits/hair-hat/${backFile}`,
+                  zIndex: layerOrder['hair-hat-back'],
+                  alt: `Hair/Hat Back - ${hairHatValue}`
+                };
+                newLayers.push(backLayer);
+                console.log('Added hair/hat back layer:', backLayer);
+              }
+
+              // Add the front layer (-2 file)
+              const frontFile = files.find(f => f.includes('-2'));
+              if (frontFile) {
+                const frontLayer = {
+                  src: `/Assets/traits/hair-hat/${frontFile}`,
+                  zIndex: layerOrder['hair-hat-front'],
+                  alt: `Hair/Hat Front - ${hairHatValue}`
+                };
+                newLayers.push(frontLayer);
+                console.log('Added hair/hat front layer:', frontLayer);
+              }
+            } else {
+              // Single file case - place in front of head
+              const hairHatLayer = {
+                src: `/Assets/traits/hair-hat/${files[0]}`,
+                zIndex: layerOrder['hair-hat-front'], // Changed from 'hair-hat-back' to 'hair-hat-front'
+                alt: `Hair/Hat - ${hairHatValue}`
+              };
+              newLayers.push(hairHatLayer);
+              console.log('Added hair/hat layer:', hairHatLayer);
+            }
+          } else {
+            console.log('No matching hair/hat found for:', hairHatValue);
+          }
+        }
+
+        // Load top metadata and layers
+        console.log('Loading top layers...');
+        const topValue = getTopValue(metadata);
+        console.log('Top value:', topValue);
+
+        if (topValue) {
+          const topMetadata = await fetch('/Assets/traits/metadata/top_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching top entry
+          const topEntry = Object.entries(topMetadata).find(([_, data]) => 
+            (data as any).name === topValue
+          );
+
+          if (topEntry) {
+            const [_, data] = topEntry;
+            const files = (data as any).files;
+            
+            // Add sleeve-left layer
+            const sleeveLeftLayer = {
+              src: `/Assets/traits/${files[0]}`,
+              zIndex: layerOrder['sleeve-left'],
+              alt: `Top Sleeve Left - ${topValue}`
+            };
+            newLayers.push(sleeveLeftLayer);
+            console.log('Added sleeve-left layer:', sleeveLeftLayer);
+
+            // Add torso layer
+            const torsoLayer = {
+              src: `/Assets/traits/${files[1]}`,
+              zIndex: layerOrder['torso'],
+              alt: `Top Torso - ${topValue}`
+            };
+            newLayers.push(torsoLayer);
+            console.log('Added torso layer:', torsoLayer);
+
+            // Add sleeve-right layer
+            const sleeveRightLayer = {
+              src: `/Assets/traits/${files[2]}`,
+              zIndex: layerOrder['sleeve-right'],
+              alt: `Top Sleeve Right - ${topValue}`
+            };
+            newLayers.push(sleeveRightLayer);
+            console.log('Added sleeve-right layer:', sleeveRightLayer);
+          } else {
+            console.log('No matching top found for:', topValue);
+          }
+        }
+
+        // Load bottom metadata and layer
+        console.log('Loading bottom layer...');
+        const bottomValue = getBottomValue(metadata);
+        console.log('Bottom value:', bottomValue);
+
+        if (bottomValue) {
+          const bottomMetadata = await fetch('/Assets/traits/metadata/bottom_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching bottom entry
+          const bottomEntry = Object.entries(bottomMetadata).find(([_, data]) => 
+            (data as any).name === bottomValue
+          );
+
+          if (bottomEntry) {
+            const [_, data] = bottomEntry;
+            const file = (data as any).files[0];
+            
+            // Add bottom layer
+            const bottomLayer = {
+              src: `/Assets/traits/bottom/${file}`,
+              zIndex: layerOrder['bottom'],
+              alt: `Bottom - ${bottomValue}`
+            };
+            newLayers.push(bottomLayer);
+            console.log('Added bottom layer:', bottomLayer);
+          } else {
+            console.log('No matching bottom found for:', bottomValue);
           }
         }
 
