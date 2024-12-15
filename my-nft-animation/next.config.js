@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
@@ -39,10 +41,11 @@ const nextConfig = {
     return config;
   },
   experimental: {
+    esmExternals: false,
     serverActions: true,
-    serverComponentsExternalPackages: ['@account-kit/react', '@account-kit/core', '@account-kit/infra'],
+    webpackBuildWorker: true,
   },
-  transpilePackages: ['recordrtc', '@account-kit/react', '@account-kit/core', '@account-kit/infra']
+  transpilePackages: ['recordrtc']
 };
 
 module.exports = nextConfig; 
