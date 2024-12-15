@@ -246,17 +246,35 @@ const getShoesValue = (metadata: NFTMetadata): string | null => {
   return shoesTrait.value.toString();
 };
 
-// Update keyframes for sharp wave motion
+// Update keyframes for sharp wave motion with shake
 const waveKeyframes = keyframes`
-  0%, 30%, 100% { 
+  0% { 
     transform: rotate(0deg); 
   }
-  10%, 20% { 
-    transform: rotate(-20deg);  // More pronounced rotation
+  15% { 
+    transform: rotate(-20deg);
+  }
+  20% { 
+    transform: rotate(-18deg);
+  }
+  25% { 
+    transform: rotate(-22deg);
+  }
+  30% { 
+    transform: rotate(-18deg);
+  }
+  35% { 
+    transform: rotate(-22deg);
+  }
+  40% { 
+    transform: rotate(-20deg);
+  }
+  65%, 100% { 
+    transform: rotate(0deg);
   }
 `;
 
-// Update AnimatedImage with faster animation
+// Update AnimatedImage with adjusted animation timing
 const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
   position: absolute;
   width: 100%;
@@ -264,7 +282,7 @@ const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
   top: 0;
   left: 0;
   animation: ${props => props.$isWaving 
-    ? css`${waveKeyframes} 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite` 
+    ? css`${waveKeyframes} 2s cubic-bezier(0.4, 0, 0.2, 1) infinite` 
     : 'none'};
   transform-origin: 50% 50%;
 `;
