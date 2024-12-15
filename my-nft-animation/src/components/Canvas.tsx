@@ -94,6 +94,25 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, src:
   console.error(e);
 };
 
+// Update the layerOrder object to include accessory-4
+const layerOrder = {
+  'arm-left': 1,
+  'body': 2,
+  'arm-right': 3,
+  'accessory-4': 4,  // Add accessory-4 here - above arm-right but below head
+  'ear-left': 5,
+  'head': 6,
+  'face': 7,
+  'ear-right': 8
+};
+
+// Add this helper function to get accessory values
+const getAccessoryValue = (metadata: NFTMetadata, accessoryType: string) => {
+  return metadata?.raw?.metadata?.attributes?.find(
+    attr => attr.trait_type.toLowerCase() === accessoryType.toLowerCase()
+  )?.value;
+};
+
 export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
   const [layers, setLayers] = useState<LayerImage[]>([]);
   const { bubbleText, isTyping, typingDuration, isLooping, backgroundColor } = useAnimationStore();
@@ -134,16 +153,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
         let currentZIndex = 1;
 
         // Add base skin layers using the files array from the mapping
-        const layerOrder = {
-          'arm-left': 1,
-          'body': 2,
-          'arm-right': 3,  // arm-right above body
-          'ear-left': 4,
-          'head': 5,
-          'face': 6,
-          'ear-right': 7   // ear-right should be above head and face
-        };
-
         Object.entries(basePaths).forEach(([part, filename]) => {
           const filePath = `/Assets/traits/base/${part}/${filename}`;
           console.log('Loading file:', filePath);
@@ -155,10 +164,34 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
           });
         });
 
+        // Load accessory-4 metadata
+        const accessory4Value = getAccessoryValue(metadata, 'Accessory 4');
+        if (accessory4Value) {
+          console.log('Loading accessory-4:', accessory4Value);
+          
+          const accessory4Metadata = await fetch('/Assets/traits/metadata/accessory-4_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching accessory by name
+          const accessoryEntry = Object.entries(accessory4Metadata)
+            .find(([_, data]) => (data as any).name === accessory4Value);
+          
+          if (accessoryEntry) {
+            const [id, data] = accessoryEntry;
+            const filePath = `/Assets/traits/accessory-4/${(data as any).files[0]}`;
+            console.log('Loading accessory-4 file:', filePath);
+            
+            newLayers.push({
+              src: filePath,
+              zIndex: layerOrder['accessory-4'],
+              alt: `accessory-4-${id}`
+            });
+          }
+        }
+
         // Sort layers by zIndex to ensure correct rendering order
         newLayers.sort((a, b) => a.zIndex - b.zIndex);
-
-        console.log('Created layers:', newLayers);
+        console.log('Final layers:', newLayers);
         setLayers(newLayers);
 
       } catch (error) {
