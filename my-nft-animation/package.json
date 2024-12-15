@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_NO_WARNINGS=1 next build && cp -r public .next/standalone/public && cp -r .next/static .next/standalone/.next/static",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

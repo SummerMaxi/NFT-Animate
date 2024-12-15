@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { useThemeStore } from '@/store/themeStore';
 import { ClientOnly } from '@/components/ClientOnly';
 import { AccountKitButton } from '@/components/AccountKitButton';
@@ -23,6 +23,10 @@ const ScreenRecorder = dynamic(
   { ssr: false }
 );
 
+const serializeData = (data: any) => {
+  return JSON.parse(JSON.stringify(data));
+};
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { isDarkMode, toggleTheme } = useThemeStore();
@@ -30,12 +34,12 @@ export default function Home() {
   const [userAddress2, setUserAddress2] = useState('');
   const [selectedId1, setSelectedId1] = useState('');
   const [selectedId2, setSelectedId2] = useState('');
-  const [nftMetadata, setNftMetadata] = useState<NFTMetadata | null>(null);
+  const [nftMetadata, setNftMetadata] = useState<NFTMetadata | null>(() => null);
   const [isWaving, setIsWaving] = useState(false);
 
   const handleMetadataUpdate = useCallback((metadata: NFTMetadata) => {
     console.log('Received metadata:', metadata);
-    setNftMetadata(metadata);
+    setNftMetadata(serializeData(metadata));
   }, []);
 
   const handleAnimationChange = (value: string) => {
