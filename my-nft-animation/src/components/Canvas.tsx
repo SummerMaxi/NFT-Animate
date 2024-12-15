@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 import styled from '@emotion/styled';
 import { ChatBubble } from './ChatBubble';
 import { useAnimationStore } from '../store/animationStore';
@@ -17,6 +17,9 @@ const Container = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: visible;
+  transform: translateZ(0);
+  backfaceVisibility: hidden;
+  perspective: 1000;
 `;
 
 const StyledImage = styled.img<{ zIndex: number }>`
@@ -95,8 +98,28 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, src:
   console.error(e);
 };
 
-// Update the layerOrder object to ensure sleeve-right has the correct z-index
-const layerOrder = {
+// Define a type for the valid layer keys
+type LayerKey = 
+  | 'arm-left' 
+  | 'body' 
+  | 'bottom' 
+  | 'shoes' 
+  | 'arm-right' 
+  | 'sleeve-left' 
+  | 'torso' 
+  | 'sleeve-right' 
+  | 'accessory-4' 
+  | 'ear-left' 
+  | 'hair-hat-back' 
+  | 'head' 
+  | 'beard' 
+  | 'face' 
+  | 'accessory-2' 
+  | 'hair-hat-front' 
+  | 'ear-right';
+
+// Update the layerOrder object with the type
+const layerOrder: Record<LayerKey, number> = {
   'arm-left': 1,
   'body': 2,
   'bottom': 3,
@@ -246,13 +269,24 @@ const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
   transform-origin: 50% 50%;
 `;
 
-export const Canvas = ({ 
-  metadata, 
-  isWaving 
-}: { 
-  metadata: NFTMetadata;
+interface CanvasProps {
+  metadata: NFTMetadata | null;
   isWaving: boolean;
-}) => {
+  containerRef: RefObject<HTMLDivElement>;
+}
+
+// Add type for files array
+type TraitFile = string;
+
+export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
+  if (!metadata) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-gray-500">Select an NFT to view</p>
+      </div>
+    );
+  }
+
   const [layers, setLayers] = useState<LayerImage[]>([]);
   const { bubbleText, isTyping, typingDuration, isLooping, backgroundColor } = useAnimationStore();
 
@@ -277,7 +311,7 @@ export const Canvas = ({
           const filePath = `/Assets/traits/base/${part}/${filename}`;
           newLayers.push({
             src: filePath,
-            zIndex: layerOrder[part] || 1,
+            zIndex: layerOrder[part as LayerKey] || 1,
             alt: `base-${part}`
           });
         });
@@ -327,12 +361,12 @@ export const Canvas = ({
 
           if (hairHatEntry) {
             const [_, data] = hairHatEntry;
-            const files = (data as any).files;
+            const files = (data as any).files as TraitFile[];
             
             // If there are multiple files, load them in different positions
             if (files.length > 1) {
               // Add the back layer (-1 file)
-              const backFile = files.find(f => f.includes('-1'));
+              const backFile = files.find((f: string) => f.includes('-1'));
               if (backFile) {
                 const backLayer = {
                   src: `/Assets/traits/hair-hat/${backFile}`,
@@ -343,7 +377,7 @@ export const Canvas = ({
               }
 
               // Add the front layer (-2 file)
-              const frontFile = files.find(f => f.includes('-2'));
+              const frontFile = files.find((f: string) => f.includes('-2'));
               if (frontFile) {
                 const frontLayer = {
                   src: `/Assets/traits/hair-hat/${frontFile}`,
@@ -533,6 +567,23 @@ export const Canvas = ({
       />
     );
   };
+
+  useEffect(() => {
+    // Make sure all images are loaded before animation starts
+    const images = containerRef.current?.getElementsByTagName('img');
+    if (images) {
+      Promise.all(Array.from(images).map((img: HTMLImageElement) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve; // Handle error case as well
+        });
+      })).then(() => {
+        // All images are loaded
+        console.log('All images loaded');
+      });
+    }
+  }, [metadata]); // Add containerRef to dependencies if needed
 
   return (
     <Container style={{ backgroundColor }}>

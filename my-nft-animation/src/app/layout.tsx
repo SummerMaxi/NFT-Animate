@@ -10,12 +10,9 @@ import './globals.css';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://your-domain.com'),
   title: "NFT Animation",
   description: "Create and manage NFT animations",
-  viewport: 'width=device-width, initial-scale=1',
-  icons: {
-    icon: '/favicon.ico',
-  },
   openGraph: {
     title: 'NFT Animation',
     description: 'Create and manage NFT animations',
@@ -33,10 +30,10 @@ export const metadata: Metadata = {
   },
 };
 
-export function reportWebVitals(metric: any) {
-  console.log(metric);
-  // Send to your analytics service
-}
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export default function RootLayout({
   children,

@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@account-kit/*": ["./account-kit-app/*"]
     },
     "baseUrl": "."
   },

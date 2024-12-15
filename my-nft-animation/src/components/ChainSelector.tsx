@@ -2,7 +2,7 @@
 
 import { useChain } from "@account-kit/react";
 import { mainnet, polygon, arbitrum, optimism, sepolia } from "@account-kit/infra";
-import { shapeMainnet, shapeSepolia } from "@/config/chains";
+import { shapeMainnet } from "@/config/accountKit";
 import { useState, useRef, useEffect } from 'react';
 import { useThemeStore } from '@/store/themeStore';
 
@@ -19,12 +19,11 @@ export function ChainSelector() {
     { ...arbitrum, label: 'Arbitrum', icon: '🔵' },
     { ...optimism, label: 'Optimism', icon: '❤️' },
     { ...sepolia, label: 'Sepolia', icon: '🟣' },
-    { ...shapeSepolia, label: 'Shape Testnet', icon: '🔻' }
   ];
 
   useEffect(() => {
     if (chain.id !== shapeMainnet.id) {
-      setChain(shapeMainnet);
+      setChain({ chain: shapeMainnet });
     }
   }, []);
 
@@ -80,7 +79,7 @@ export function ChainSelector() {
               <button
                 key={c.id}
                 onClick={() => {
-                  setChain({ chain: c });
+                  setChain({ chain: shapeMainnet });
                   setIsOpen(false);
                 }}
                 className={`

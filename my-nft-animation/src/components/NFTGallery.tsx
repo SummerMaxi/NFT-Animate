@@ -8,6 +8,15 @@ import type { OwnedNft } from 'alchemy-sdk';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
+// Add IPFS_GATEWAYS constant at the top of the file
+const IPFS_GATEWAYS = [
+  'https://dweb.link/ipfs/',
+  'https://cloudflare-ipfs.com/ipfs/',
+  'https://gateway.ipfscdn.io/ipfs/',
+  'https://ipfs.filebase.io/ipfs/',
+  'https://ipfs.io/ipfs/', // Move ipfs.io to last as fallback
+];
+
 function getImageUrl(nft: OwnedNft): string | null {
   // IPFS Gateway URLs in order of preference
   const IPFS_GATEWAYS = [
@@ -133,7 +142,7 @@ export function NFTGallery() {
         setNfts(fetchedNfts);
 
         // Group NFTs by collection with contract names
-        const groupedNfts = fetchedNfts.reduce((acc: NFTCollection[], nft) => {
+        const groupedNfts = fetchedNfts.reduce((acc: NFTCollection[], nft: OwnedNft) => {
           const existingCollection = acc.find(
             c => c.contractAddress === nft.contract.address
           );
@@ -286,7 +295,7 @@ export function NFTGallery() {
                   {imageUrl ? (
                     <NFTImage
                       src={imageUrl}
-                      alt={nft.title || `NFT #${nft.tokenId}`}
+                      alt={nft.name || `NFT #${nft.tokenId}`}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
@@ -298,7 +307,7 @@ export function NFTGallery() {
                 {/* NFT Info */}
                 <div className="p-3 border-t border-gray-200 dark:border-gray-700">
                   <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate">
-                    {nft.title || nft.name || `NFT #${nft.tokenId}`}
+                    {nft.name || `NFT #${nft.tokenId}`}
                   </h3>
                   <div className="flex justify-between items-center mt-1">
                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate">

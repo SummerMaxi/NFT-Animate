@@ -1,13 +1,22 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-import { useAnimationStore } from '../store/animationStore';
-import { useThemeStore } from '../store/themeStore';
+import { useEffect, useState, useRef } from 'react';
 import { useUser } from "@account-kit/react";
-import { Network, Alchemy } from 'alchemy-sdk';
+import { useThemeStore } from '@/store/themeStore';
+import { useAnimationStore } from '@/store/animationStore';
+import { Alchemy, Network } from 'alchemy-sdk';
+import styled from '@emotion/styled';
 
-const NoAccessMessage = styled.div<{ isDark: boolean }>`
+interface ControlsProps {
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+// Add interfaces for styled components props
+interface StyledProps {
+  isDark: boolean;
+}
+
+const NoAccessMessage = styled.div<StyledProps>`
   padding: 20px;
   border-radius: 12px;
   background: ${props => props.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)'};
@@ -19,14 +28,14 @@ const NoAccessMessage = styled.div<{ isDark: boolean }>`
 
 const CONTRACT_ADDRESS = '0x05aA491820662b131d285757E5DA4b74BD0F0e5F';
 
-const Label = styled.div<{ isDark: boolean }>`
+const Label = styled.div<StyledProps>`
   font-size: 14px;
   font-weight: 500;
   color: ${props => props.isDark ? '#E5E7EB' : '#4b5563'};
   margin-bottom: 6px;
 `;
 
-const Input = styled.input<{ isDark: boolean }>`
+const Input = styled.input<StyledProps>`
   width: 100%;
   padding: 12px 16px;
   border-radius: 12px;
@@ -75,7 +84,7 @@ const DurationInput = styled.input`
   }
 `;
 
-export const Controls = () => {
+export const Controls = ({ containerRef }: ControlsProps) => {
   const [hasAccess, setHasAccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const user = useUser();
@@ -180,7 +189,7 @@ export const Controls = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" ref={containerRef}>
       <div>
         <Label isDark={isDarkMode}>Chat Bubble Text:</Label>
         <Input

@@ -11,11 +11,7 @@ import type { NFTMetadata } from '@/types/nft';
 import dynamic from 'next/dynamic';
 import { AnimationCard } from '../components/AnimationCard';
 import { ShapeCraftCard } from '@/components/ShapeCraftCard';
-
-const Controls = dynamic(
-  () => import('../components/Controls').then(mod => mod.Controls),
-  { ssr: false }
-);
+import { Controls } from '@/components/Controls';
 
 const Canvas = dynamic(
   () => import('../components/Canvas').then(mod => mod.Canvas),
@@ -130,7 +126,13 @@ export default function Home() {
                     aspectRatio: '1',
                   }}
                 >
-                  <Canvas metadata={nftMetadata} isWaving={isWaving} />
+                  {nftMetadata && (
+                    <Canvas 
+                      metadata={nftMetadata} 
+                      isWaving={isWaving} 
+                      containerRef={containerRef} 
+                    />
+                  )}
                 </div>
               </div>
             </div>
