@@ -1,19 +1,13 @@
 import {
   AlchemyAccountsUIConfig,
   createConfig,
-  cookieStorage,
 } from "@account-kit/react";
-import { 
-  alchemy, 
-  sepolia,
-  mainnet,
-  polygon,
-  arbitrum,
-  optimism 
-} from "@account-kit/infra";
+import { alchemy, mainnet, polygon, arbitrum, optimism, sepolia } from "@account-kit/infra";
+import { cookieStorage } from "@account-kit/core";
 import { QueryClient } from "@tanstack/react-query";
-import { shapeMainnet, shapeSepolia } from './chains';
+import { createPublicClient, http } from 'viem';
 
+// Create a new QueryClient instance
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,6 +18,41 @@ export const queryClient = new QueryClient({
   },
 });
 
+// Define Shape Mainnet chain
+export const shapeMainnet = {
+  id: 360,
+  name: 'Shape',
+  network: 'shape',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    alchemy: {
+      http: [`https://shape-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`],
+      webSocket: [`wss://shape-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`],
+    },
+    default: {
+      http: [`https://shape-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`],
+    },
+    public: {
+      http: [`https://shape-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Shape Explorer',
+      url: 'https://explorer.shape.network',
+    },
+  },
+};
+
+const alchemyTransport = alchemy({ 
+  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
+});
+
+// UI Config
 const uiConfig: AlchemyAccountsUIConfig = {
   illustrationStyle: "outline",
   auth: {
@@ -31,16 +60,8 @@ const uiConfig: AlchemyAccountsUIConfig = {
       [{ type: "email" }],
       [
         { type: "passkey" },
-        { 
-          type: "social", 
-          authProviderId: "google", 
-          mode: "popup" 
-        },
-        { 
-          type: "social", 
-          authProviderId: "facebook", 
-          mode: "popup"
-        },
+        { type: "social", authProviderId: "google", mode: "popup" },
+        { type: "social", authProviderId: "facebook", mode: "popup" },
       ],
       [
         {
@@ -51,30 +72,29 @@ const uiConfig: AlchemyAccountsUIConfig = {
     ],
     addPasskeyOnSignup: false,
   },
-  chains: {
-    enabled: [mainnet, polygon, arbitrum, optimism, sepolia, shapeMainnet, shapeSepolia],
-    default: shapeSepolia,
-  },
 };
 
+// Create config with proper chain configuration
 export const config = createConfig(
   {
-    transport: alchemy({ 
-      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!,
-    }),
+    transport: alchemyTransport,
     chain: shapeMainnet,
     chains: [
-      { chain: mainnet },
-      { chain: polygon },
-      { chain: arbitrum },
-      { chain: optimism },
-      { chain: shapeMainnet },
-      { chain: sepolia },
-      { chain: shapeSepolia }
+      { 
+        chain: shapeMainnet,
+        transport: alchemyTransport,
+        policyId: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+      }
     ],
     ssr: true,
     storage: cookieStorage,
     enablePopupOauth: true,
   },
   uiConfig
-); 
+);
+
+// Create a public client
+export const publicClient = createPublicClient({
+  chain: shapeMainnet,
+  transport: http(),
+}); 

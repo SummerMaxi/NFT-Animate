@@ -7,7 +7,7 @@ import { useUser } from "@account-kit/react";
 import { parseUnits } from 'viem';
 import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
 import { Alchemy, Network } from 'alchemy-sdk';
-import { erc20ABI } from '@account-kit/infra';
+import { erc20ABI } from '@/constants/abis';
 
 const ENERGY_TOKEN_ADDRESS = '0x42276dF82BAb34c3CCcA9e5c058b6ff7EA4d07e3';
 const RECIPIENT_ADDRESS = '0xc132224D1B8254dd104D8FB6d41F69DC671748A0';
@@ -72,7 +72,6 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
     abi: erc20ABI,
     functionName: 'allowance',
     args: user?.address ? [user.address, RECIPIENT_ADDRESS] : undefined,
-    enabled: !!user?.address,
   });
 
   // Check transfer history when component mounts or user changes
@@ -100,7 +99,7 @@ export const ScreenRecorder = ({ containerRef }: Props) => {
           txReceipt.from.toLowerCase() === user.address.toLowerCase() &&
           txReceipt.to.toLowerCase() === ENERGY_TOKEN_ADDRESS.toLowerCase();
 
-        setHasAccess(hasValidTransfer);
+        setHasAccess(hasValidTransfer || false);
       } catch (error) {
         console.error('Error checking transfer history:', error);
         setHasAccess(false);

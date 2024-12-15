@@ -3,7 +3,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import { Alchemy, Network } from 'alchemy-sdk';
+import { Alchemy, Network, NftTokenType } from 'alchemy-sdk';
 import { useAnimationStore } from '../store/animationStore';
 import { useUser } from "@account-kit/react";
 
@@ -204,7 +204,7 @@ export const ShapeCraftCard = ({
           id,
           {
             refreshCache: true,
-            tokenType: 'erc721' as const,
+            tokenType: NftTokenType.ERC721,
             tokenUriTimeoutInMs: 10000
           }
         );
@@ -239,7 +239,7 @@ export const ShapeCraftCard = ({
           id,
           {
             refreshCache: true,
-            tokenType: 'erc721' as const,
+            tokenType: NftTokenType.ERC721,
             tokenUriTimeoutInMs: 10000
           }
         );

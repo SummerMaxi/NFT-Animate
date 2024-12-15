@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ReactNode } from 'react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,13 +14,11 @@ export const metadata: Metadata = {
   description: "Account Kit Quickstart NextJS Template",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  // Persist state across pages
-  // https://accountkit.alchemy.com/react/ssr#persisting-the-account-state
+type RootLayoutProps = {
+  children: ReactNode;
+};
+
+export default function RootLayout({ children }: RootLayoutProps) {
   const initialState = cookieToInitialState(
     config,
     headers().get("cookie") ?? undefined
@@ -28,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers initialState={initialState}>{children}</Providers>
+        <Providers initialState={initialState}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Alchemy, Network } from 'alchemy-sdk';
+import { Alchemy, Network, NftTokenType } from 'alchemy-sdk';
 
 interface MetadataCardProps {
   contractAddress: string;
@@ -22,7 +22,13 @@ interface NFTMetadata {
   tokenId: string;
   tokenType: string;
   name: string;
+  title?: string;
   description: string;
+  image?: {
+    cachedUrl?: string;
+    thumbnailUrl?: string;
+    originalUrl?: string;
+  };
   raw: {
     metadata: {
       attributes: NFTAttribute[];
@@ -52,7 +58,7 @@ export const MetadataCard = ({ contractAddress, tokenId, label, onMetadataLoad }
         tokenId,
         {
           refreshCache: false,
-          tokenType: 'ERC721',
+          tokenType: NftTokenType.ERC721,
           tokenUriTimeoutInMs: 10000
         }
       );
@@ -99,7 +105,7 @@ export const MetadataCard = ({ contractAddress, tokenId, label, onMetadataLoad }
         {/* NFT Title Section */}
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-            {metadata?.name || metadata?.title || `Token #${tokenId}`}
+            {metadata?.name || `Token #${tokenId}`}
           </h3>
           <span className="px-2.5 py-1 text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
             {label}
@@ -111,7 +117,7 @@ export const MetadataCard = ({ contractAddress, tokenId, label, onMetadataLoad }
           <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-4 border border-gray-100 dark:border-gray-700 shadow-sm">
             <img 
               src={metadata.image.cachedUrl}
-              alt={metadata.name || metadata.title}
+              alt={metadata.name || `Token #${tokenId}`}
               className="w-full h-full object-cover"
             />
           </div>

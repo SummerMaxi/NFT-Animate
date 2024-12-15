@@ -1,11 +1,10 @@
 "use client";
-import { config } from "@/config/accountKit";
+import { config, shapeMainnet } from "@/config/accountKit";
 import { AlchemyClientState } from "@account-kit/core";
 import { AlchemyAccountProvider } from "@account-kit/react";
 import { PropsWithChildren } from "react";
 import { WagmiProvider, createConfig, http } from 'wagmi';
 import { queryClient } from "@/config/accountKit";
-import { shapeMainnet } from '@/config/chains';
 
 // Configure Wagmi
 const wagmiConfig = createConfig({
