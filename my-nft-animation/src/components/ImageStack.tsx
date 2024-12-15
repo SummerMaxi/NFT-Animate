@@ -28,7 +28,9 @@ const Image = styled.img<{ zIndex: number; isRotating?: boolean }>`
   top: 0;
   left: 0;
   z-index: ${props => props.zIndex};
-  animation: ${props => props.isRotating ? css`${rotateAnimation} 0.4s infinite linear` : 'none'};
+  animation: ${props => props.isRotating 
+    ? css`${rotateAnimation} 0.4s infinite linear` 
+    : 'none'};
   transform-origin: center center;
   will-change: transform;
 `;

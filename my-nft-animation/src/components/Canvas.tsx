@@ -7,6 +7,7 @@ import { useAnimationStore } from '../store/animationStore';
 import { LAYER_STRUCTURE } from '../constants/layerStructure';
 import type { NFTMetadata } from '../types/nft';
 import Image from 'next/image';
+import { keyframes, css } from '@emotion/react';
 
 const Container = styled.div`
   position: relative;
@@ -94,12 +95,12 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, src:
   console.error(e);
 };
 
-// Update the layerOrder object to include shoes
+// Update the layerOrder object to ensure sleeve-right has the correct z-index
 const layerOrder = {
   'arm-left': 1,
   'body': 2,
   'bottom': 3,
-  'shoes': 3,     // Add shoes at same level as bottom
+  'shoes': 3,
   'arm-right': 4,
   'sleeve-left': 5,
   'torso': 5,
@@ -222,53 +223,60 @@ const getShoesValue = (metadata: NFTMetadata): string | null => {
   return shoesTrait.value.toString();
 };
 
-export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
+// Update the wave animation keyframes to be more pronounced
+const waveKeyframes = keyframes`
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(20deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(20deg); }
+  100% { transform: rotate(0deg); }
+`;
+
+// Update the AnimatedImage component to have the correct transform origin
+const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: ${props => props.$isWaving 
+    ? css`${waveKeyframes} 2s ease-in-out infinite` 
+    : 'none'};
+  transform-origin: 65% 90%; // Adjust this to match the arm's pivot point
+`;
+
+export const Canvas = ({ 
+  metadata, 
+  isWaving 
+}: { 
+  metadata: NFTMetadata;
+  isWaving: boolean;
+}) => {
   const [layers, setLayers] = useState<LayerImage[]>([]);
   const { bubbleText, isTyping, typingDuration, isLooping, backgroundColor } = useAnimationStore();
 
   useEffect(() => {
     const loadLayers = async () => {
-      if (!metadata) {
-        console.log('No metadata available yet');
-        return;
-      }
+      if (!metadata) return;
 
       try {
-        console.log('Loading skin layers...');
         const skinTone = getTraitValue(metadata, 'skin');
-        console.log('Extracted skin tone:', skinTone);
-
-        if (!skinTone) {
-          console.error('Could not determine skin tone');
-          return;
-        }
+        if (!skinTone) return;
 
         const skinMapping = await fetch('/Assets/traits/metadata/base_skin_mapping.json')
           .then(res => res.json());
         
-        console.log('Loaded skin mapping:', skinMapping);
-        console.log('Looking for skin tone:', skinTone);
-        
         const basePaths = skinMapping[skinTone];
-        if (!basePaths) {
-          console.error(`No base paths found for skin tone: ${skinTone}`);
-          return;
-        }
+        if (!basePaths) return;
 
-        console.log('Found base paths:', basePaths);
-
-        // Load just the skin layers for now
         const newLayers: LayerImage[] = [];
-        let currentZIndex = 1;
 
         // Add base skin layers using the files array from the mapping
         Object.entries(basePaths).forEach(([part, filename]) => {
           const filePath = `/Assets/traits/base/${part}/${filename}`;
-          console.log('Loading file:', filePath);
-          
           newLayers.push({
             src: filePath,
-            zIndex: layerOrder[part] || 1, // Use the defined order or default to 1
+            zIndex: layerOrder[part] || 1,
             alt: `base-${part}`
           });
         });
@@ -276,8 +284,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
         // Load accessory-4 metadata
         const accessory4Value = getAccessoryValue(metadata, 'Accessory 4');
         if (accessory4Value) {
-          console.log('Loading accessory-4:', accessory4Value);
-          
           const accessory4Metadata = await fetch('/Assets/traits/metadata/accessory-4_metadata.json')
             .then(res => res.json());
           
@@ -288,7 +294,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
           if (accessoryEntry) {
             const [id, data] = accessoryEntry;
             const filePath = `/Assets/traits/accessory-4/${(data as any).files[0]}`;
-            console.log('Loading accessory-4 file:', filePath);
             
             newLayers.push({
               src: filePath,
@@ -299,9 +304,7 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
         }
 
         // Load hair/hat metadata
-        console.log('Loading hair/hat layers...');
         const hairHatValue = getHairHatValue(metadata);
-        console.log('Hair/Hat value:', hairHatValue);
 
         if (hairHatValue) {
           const hairHatMetadata = await fetch('/Assets/traits/metadata/hair-hat_metadata.json')
@@ -315,7 +318,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
           // If no exact match, then try with base name
           if (!hairHatEntry) {
             const baseName = hairHatValue.split(' - ')[0];
-            console.log('No exact match, looking for hair/hat with base name:', baseName);
             
             hairHatEntry = Object.entries(hairHatMetadata).find(([_, data]) => 
               (data as any).name === baseName
@@ -337,7 +339,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
                   alt: `Hair/Hat Back - ${hairHatValue}`
                 };
                 newLayers.push(backLayer);
-                console.log('Added hair/hat back layer:', backLayer);
               }
 
               // Add the front layer (-2 file)
@@ -349,7 +350,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
                   alt: `Hair/Hat Front - ${hairHatValue}`
                 };
                 newLayers.push(frontLayer);
-                console.log('Added hair/hat front layer:', frontLayer);
               }
             } else {
               // Single file case - place in front of head
@@ -359,17 +359,12 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
                 alt: `Hair/Hat - ${hairHatValue}`
               };
               newLayers.push(hairHatLayer);
-              console.log('Added hair/hat layer:', hairHatLayer);
             }
-          } else {
-            console.log('No matching hair/hat found for:', hairHatValue);
           }
         }
 
         // Load top metadata and layers
-        console.log('Loading top layers...');
         const topValue = getTopValue(metadata);
-        console.log('Top value:', topValue);
 
         if (topValue) {
           const topMetadata = await fetch('/Assets/traits/metadata/top_metadata.json')
@@ -391,7 +386,6 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
               alt: `Top Sleeve Left - ${topValue}`
             };
             newLayers.push(sleeveLeftLayer);
-            console.log('Added sleeve-left layer:', sleeveLeftLayer);
 
             // Add torso layer
             const torsoLayer = {
@@ -400,25 +394,19 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
               alt: `Top Torso - ${topValue}`
             };
             newLayers.push(torsoLayer);
-            console.log('Added torso layer:', torsoLayer);
 
-            // Add sleeve-right layer
+            // Add sleeve-right layer with specific alt text
             const sleeveRightLayer = {
               src: `/Assets/traits/${files[2]}`,
               zIndex: layerOrder['sleeve-right'],
-              alt: `Top Sleeve Right - ${topValue}`
+              alt: `sleeve-right-${topValue}`, // Make sure we use consistent naming
             };
             newLayers.push(sleeveRightLayer);
-            console.log('Added sleeve-right layer:', sleeveRightLayer);
-          } else {
-            console.log('No matching top found for:', topValue);
           }
         }
 
         // Load bottom metadata and layer
-        console.log('Loading bottom layer...');
         const bottomValue = getBottomValue(metadata);
-        console.log('Bottom value:', bottomValue);
 
         if (bottomValue) {
           const bottomMetadata = await fetch('/Assets/traits/metadata/bottom_metadata.json')
@@ -440,16 +428,11 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
               alt: `Bottom - ${bottomValue}`
             };
             newLayers.push(bottomLayer);
-            console.log('Added bottom layer:', bottomLayer);
-          } else {
-            console.log('No matching bottom found for:', bottomValue);
           }
         }
 
         // Load accessory-2 metadata and layer
-        console.log('Loading accessory-2 layer...');
         const accessory2Value = getAccessory2Value(metadata);
-        console.log('Accessory 2 value:', accessory2Value);
 
         if (accessory2Value) {
           const accessory2Metadata = await fetch('/Assets/traits/metadata/accessory-2_metadata.json')
@@ -474,16 +457,11 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
               alt: `Accessory 2 - ${accessory2Value}`
             };
             newLayers.push(accessory2Layer);
-            console.log('Added accessory-2 layer:', accessory2Layer);
-          } else {
-            console.log('No matching accessory-2 found for:', accessory2Value);
           }
         }
 
         // Load shoes metadata and layer
-        console.log('Loading shoes layer...');
         const shoesValue = getShoesValue(metadata);
-        console.log('Shoes value:', shoesValue);
 
         if (shoesValue) {
           const shoesMetadata = await fetch('/Assets/traits/metadata/shoes_metadata.json')
@@ -505,15 +483,11 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
               alt: `Shoes - ${shoesValue}`
             };
             newLayers.push(shoesLayer);
-            console.log('Added shoes layer:', shoesLayer);
-          } else {
-            console.log('No matching shoes found for:', shoesValue);
           }
         }
 
-        // Sort layers by zIndex to ensure correct rendering order
+        // Sort layers by zIndex
         newLayers.sort((a, b) => a.zIndex - b.zIndex);
-        console.log('Final layers:', newLayers);
         setLayers(newLayers);
 
       } catch (error) {
@@ -524,30 +498,48 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
     loadLayers();
   }, [metadata]);
 
+  // Update the renderLayer function to remove debug logs
+  const renderLayer = (layer: LayerImage) => {
+    const shouldAnimate = isWaving && (
+      layer.alt?.toLowerCase().includes('sleeve-right') ||
+      layer.alt?.toLowerCase().includes('arm-right') ||
+      layer.alt?.toLowerCase().includes('accessory-4') ||
+      layer.src.toLowerCase().includes('sleeve-right')
+    );
+
+    return shouldAnimate ? (
+      <AnimatedImage
+        key={layer.src}
+        src={layer.src}
+        alt={layer.alt}
+        $isWaving={true}
+        style={{ 
+          zIndex: layer.zIndex,
+          transformOrigin: '65% 90%'
+        }}
+        onError={(e) => handleImageError(e, layer.src)}
+      />
+    ) : (
+      <img
+        key={layer.src}
+        src={layer.src}
+        alt={layer.alt}
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0,
+          zIndex: layer.zIndex,
+        }}
+        onError={(e) => handleImageError(e, layer.src)}
+      />
+    );
+  };
+
   return (
     <Container style={{ backgroundColor }}>
-      {layers.map((layer, index) => (
-        <Image
-          key={`${layer.alt}-${index}`}
-          src={layer.src}
-          alt={layer.alt}
-          width={828}
-          height={828}
-          style={{ 
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            top: 0,
-            left: 0,
-            zIndex: layer.zIndex,
-            transformOrigin: 'center center'
-          }}
-          onError={(e) => {
-            console.error(`Failed to load image: ${layer.src}`);
-            console.error(e);
-          }}
-        />
-      ))}
+      {layers.map(renderLayer)}
       <ChatBubble
         text={bubbleText}
         initialPosition={{ x: 300, y: 200 }}

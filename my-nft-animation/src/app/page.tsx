@@ -1,15 +1,16 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useRef, useState, useCallback } from 'react';
 import { useThemeStore } from '@/store/themeStore';
 import { ClientOnly } from '@/components/ClientOnly';
 import { AccountKitButton } from '@/components/AccountKitButton';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { NFTGallery } from '@/components/NFTGallery';
-import { ShapeCraftCard } from '@/components/ShapeCraftCard';
 import { MetadataCard } from '@/components/MetadataCard';
 import type { NFTMetadata } from '@/types/nft';
+import dynamic from 'next/dynamic';
+import { AnimationCard } from '../components/AnimationCard';
+import { ShapeCraftCard } from '@/components/ShapeCraftCard';
 
 const Controls = dynamic(
   () => import('../components/Controls').then(mod => mod.Controls),
@@ -34,11 +35,19 @@ export default function Home() {
   const [selectedId1, setSelectedId1] = useState('');
   const [selectedId2, setSelectedId2] = useState('');
   const [nftMetadata, setNftMetadata] = useState<NFTMetadata | null>(null);
+  const [isWaving, setIsWaving] = useState(false);
 
   const handleMetadataUpdate = useCallback((metadata: NFTMetadata) => {
     console.log('Received metadata:', metadata);
     setNftMetadata(metadata);
   }, []);
+
+  const handleAnimationChange = (value: string) => {
+    if (value === 'wave') {
+      setIsWaving(true);
+      setTimeout(() => setIsWaving(false), 2000);
+    }
+  };
 
   return (
     <main className={`min-h-screen ${isDarkMode ? 'bg-[#0A0A0A] dark' : 'bg-[#FAFAFA]'}`}>
@@ -88,13 +97,22 @@ export default function Home() {
               {/* ShapeCraft Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                 <h2 className="text-lg font-semibold mb-6">ShapeCraft</h2>
-                <ShapeCraftCard 
+                <ShapeCraftCard
                   userAddress1={userAddress1} 
                   userAddress2={userAddress2}
                   onSelect1={setSelectedId1}
                   onSelect2={setSelectedId2}
+                  onMetadataUpdate={handleMetadataUpdate}
                 />
               </div>
+
+              {/* Animation Card */}
+              {nftMetadata && (
+                <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                  <h2 className="text-lg font-semibold mb-6">Animation</h2>
+                  <AnimationCard onAnimationChange={handleAnimationChange} />
+                </div>
+              )}
               
               {/* Download Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
@@ -126,7 +144,7 @@ export default function Home() {
                     aspectRatio: '1',
                   }}
                 >
-                  <Canvas metadata={nftMetadata} />
+                  <Canvas metadata={nftMetadata} isWaving={isWaving} />
                 </div>
               </div>
             </div>
