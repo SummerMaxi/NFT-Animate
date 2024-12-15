@@ -14,108 +14,16 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
   const textAnimationRef = useRef<string>('');
   const recordingCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const renderToCanvas = (ctx: CanvasRenderingContext2D) => {
-    if (!containerRef.current) return;
-
-    // Clear canvas
-    ctx.clearRect(0, 0, 828, 828);
-
-    // Draw background
-    const backgroundColor = useAnimationStore.getState().backgroundColor;
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, 828, 828);
-
-    // Draw the original canvas (NFT layers)
-    const originalCanvas = containerRef.current.querySelector('canvas');
-    if (originalCanvas) {
-      ctx.drawImage(originalCanvas, 0, 0);
-    }
-
-    // Draw chat bubble
-    const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
-    if (chatBubble instanceof HTMLElement) {
-      const rect = chatBubble.getBoundingClientRect();
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const x = rect.left - containerRect.left;
-      const y = rect.top - containerRect.top;
-      const bubbleWidth = rect.width;
-      const bubbleHeight = rect.height;
-
-      // Draw bubble background (this will clear previous text)
-      ctx.save();
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.roundRect(x, y, bubbleWidth, bubbleHeight, 16);
-      ctx.fill();
-
-      // Draw bubble border
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Draw bubble tail
-      ctx.beginPath();
-      ctx.moveTo(x + 24, y + bubbleHeight);
-      ctx.lineTo(x + 34, y + bubbleHeight + 10);
-      ctx.lineTo(x + 44, y + bubbleHeight);
-      ctx.closePath();
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.stroke();
-
-      // Draw animated text with center alignment
-      if (textAnimationRef.current) {  // Only draw if there's text
-        ctx.fillStyle = '#000000';
-        ctx.font = '600 16px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        // Calculate text position
-        const textX = x + (bubbleWidth / 2);
-        const textY = y + (bubbleHeight / 2);
-
-        // Handle multiline text
-        const maxWidth = bubbleWidth - 40;
-        const words = textAnimationRef.current.split(' ');
-        let line = '';
-        let lines = [];
-
-        for (let word of words) {
-          const testLine = line + word + ' ';
-          const metrics = ctx.measureText(testLine);
-          
-          if (metrics.width > maxWidth && line !== '') {
-            lines.push(line);
-            line = word + ' ';
-          } else {
-            line = testLine;
-          }
-        }
-        lines.push(line);
-
-        // Draw each line centered
-        const lineHeight = 20;
-        const totalHeight = lines.length * lineHeight;
-        const startY = textY - (totalHeight / 2) + (lineHeight / 2);
-
-        lines.forEach((line, index) => {
-          ctx.fillText(
-            line.trim(),
-            textX,
-            startY + (index * lineHeight)
-          );
-        });
-      }
-
-      ctx.restore();
-    }
-  };
-
   const startRecording = async () => {
     if (!containerRef.current) return;
 
     try {
-      // Create recording canvas if it doesn't exist
+      // Set recording flag
+      if (containerRef.current.querySelector('canvas').__proto__.isRecordingRef) {
+        containerRef.current.querySelector('canvas').__proto__.isRecordingRef.current = true;
+      }
+
+      // Create main recording canvas
       if (!recordingCanvasRef.current) {
         const canvas = document.createElement('canvas');
         canvas.width = 828;
@@ -123,32 +31,156 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
         recordingCanvasRef.current = canvas;
       }
 
+      // Create buffer canvas for double buffering
+      const bufferCanvas = document.createElement('canvas');
+      bufferCanvas.width = 828;
+      bufferCanvas.height = 828;
+      const bufferCtx = bufferCanvas.getContext('2d');
+      
       const ctx = recordingCanvasRef.current.getContext('2d');
-      if (!ctx) throw new Error('Failed to get canvas context');
+      if (!ctx || !bufferCtx) throw new Error('Failed to get canvas context');
+
+      if (ctx) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+      }
+      if (bufferCtx) {
+        bufferCtx.imageSmoothingEnabled = true;
+        bufferCtx.imageSmoothingQuality = 'high';
+      }
+
+      // Define render function with access to both contexts
+      const renderToCanvas = async () => {
+        if (!containerRef.current) return;
+
+        // Clear buffer
+        bufferCtx.clearRect(0, 0, 828, 828);
+
+        // Draw background to buffer
+        bufferCtx.fillStyle = useAnimationStore.getState().backgroundColor;
+        bufferCtx.fillRect(0, 0, 828, 828);
+
+        // Draw the original canvas to buffer
+        const originalCanvas = containerRef.current.querySelector('canvas');
+        if (originalCanvas) {
+          const bitmap = await createImageBitmap(originalCanvas);
+          bufferCtx.drawImage(bitmap, 0, 0);
+          bitmap.close();
+        }
+
+        // Draw chat bubble to buffer
+        const chatBubble = containerRef.current.querySelector('.chat-bubble-wrapper');
+        if (chatBubble instanceof HTMLElement) {
+          const rect = chatBubble.getBoundingClientRect();
+          const containerRect = containerRef.current.getBoundingClientRect();
+          const x = rect.left - containerRect.left;
+          const y = rect.top - containerRect.top;
+          const bubbleWidth = rect.width;
+          const bubbleHeight = rect.height;
+
+          // Draw bubble background
+          bufferCtx.save();
+          bufferCtx.fillStyle = '#ffffff';
+          bufferCtx.beginPath();
+          bufferCtx.roundRect(x, y, bubbleWidth, bubbleHeight, 16);
+          bufferCtx.fill();
+
+          // Draw bubble border
+          bufferCtx.strokeStyle = '#000000';
+          bufferCtx.lineWidth = 2;
+          bufferCtx.stroke();
+
+          // Draw bubble tail
+          bufferCtx.beginPath();
+          bufferCtx.moveTo(x + 24, y + bubbleHeight);
+          bufferCtx.lineTo(x + 34, y + bubbleHeight + 10);
+          bufferCtx.lineTo(x + 44, y + bubbleHeight);
+          bufferCtx.closePath();
+          bufferCtx.fillStyle = '#ffffff';
+          bufferCtx.fill();
+          bufferCtx.stroke();
+
+          // Draw animated text
+          if (textAnimationRef.current) {
+            bufferCtx.fillStyle = '#000000';
+            bufferCtx.font = '600 16px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+            bufferCtx.textAlign = 'center';
+            bufferCtx.textBaseline = 'middle';
+
+            const textX = x + (bubbleWidth / 2);
+            const textY = y + (bubbleHeight / 2);
+
+            const maxWidth = bubbleWidth - 40;
+            const words = textAnimationRef.current.split(' ');
+            let line = '';
+            let lines = [];
+
+            for (let word of words) {
+              const testLine = line + word + ' ';
+              const metrics = bufferCtx.measureText(testLine);
+              
+              if (metrics.width > maxWidth && line !== '') {
+                lines.push(line);
+                line = word + ' ';
+              } else {
+                line = testLine;
+              }
+            }
+            lines.push(line);
+
+            const lineHeight = 20;
+            const totalHeight = lines.length * lineHeight;
+            const startY = textY - (totalHeight / 2) + (lineHeight / 2);
+
+            lines.forEach((line, index) => {
+              bufferCtx.fillText(
+                line.trim(),
+                textX,
+                startY + (index * lineHeight)
+              );
+            });
+          }
+
+          bufferCtx.restore();
+        }
+
+        // Copy buffer to main canvas
+        ctx.clearRect(0, 0, 828, 828);
+        ctx.drawImage(bufferCanvas, 0, 0);
+      };
 
       // Get animation settings from store
       const { typingDuration, isLooping, bubbleText } = useAnimationStore.getState();
       const recordingDuration = isLooping ? typingDuration * 2000 : typingDuration * 1000;
 
-      // Reset and set up text animation
-      textAnimationRef.current = '';
+      // Clear any existing animation
+      let timeoutIds: NodeJS.Timeout[] = [];
+      const clearTimeouts = () => {
+        timeoutIds.forEach(id => clearTimeout(id));
+        timeoutIds = [];
+        textAnimationRef.current = '';
+      };
+
+      // Reset animation state
+      clearTimeouts();
       let currentIndex = 0;
       const charInterval = typingDuration * 1000 / bubbleText.length;
 
       // Text animation function
       const animateText = () => {
         if (currentIndex <= bubbleText.length) {
-          // Update text directly without clearing
           textAnimationRef.current = bubbleText.slice(0, currentIndex);
           currentIndex++;
-          setTimeout(animateText, charInterval);
+          const timeoutId = setTimeout(animateText, charInterval);
+          timeoutIds.push(timeoutId);
         } else if (isLooping) {
-          // For looping, add a pause before restart
-          setTimeout(() => {
+          const loopTimeoutId = setTimeout(() => {
             currentIndex = 0;
             textAnimationRef.current = '';
-            setTimeout(animateText, 100); // Short delay before starting next loop
-          }, 1000); // Pause at the end for 1 second
+            const startTimeoutId = setTimeout(animateText, 100);
+            timeoutIds.push(startTimeoutId);
+          }, 1000);
+          timeoutIds.push(loopTimeoutId);
         }
       };
 
@@ -157,8 +189,20 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
 
       // Set up animation loop
       let animationFrameId: number;
-      const animate = () => {
-        renderToCanvas(ctx);
+      let lastFrameTime = 0;
+      const targetFPS = 60;
+      const frameInterval = 1000 / targetFPS;
+
+      const animate = (timestamp: number) => {
+        if (!lastFrameTime) lastFrameTime = timestamp;
+        
+        const elapsed = timestamp - lastFrameTime;
+        
+        if (elapsed > frameInterval) {
+          renderToCanvas();
+          lastFrameTime = timestamp - (elapsed % frameInterval);
+        }
+        
         animationFrameId = requestAnimationFrame(animate);
       };
 
@@ -182,6 +226,13 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
       };
 
       mediaRecorder.onstop = () => {
+        // Reset recording flag
+        if (containerRef.current?.querySelector('canvas').__proto__.isRecordingRef) {
+          containerRef.current.querySelector('canvas').__proto__.isRecordingRef.current = false;
+        }
+        
+        // Clean up everything
+        clearTimeouts();
         cancelAnimationFrame(animationFrameId);
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
         
@@ -201,13 +252,18 @@ export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
       mediaRecorder.start(100);
 
       // Auto-stop after recording duration
-      setTimeout(() => {
+      const stopTimeoutId = setTimeout(() => {
         if (mediaRecorderRef.current?.state === 'recording') {
           mediaRecorderRef.current.stop();
         }
       }, recordingDuration);
+      timeoutIds.push(stopTimeoutId);
 
     } catch (error) {
+      // Reset recording flag in case of error
+      if (containerRef.current?.querySelector('canvas').__proto__.isRecordingRef) {
+        containerRef.current.querySelector('canvas').__proto__.isRecordingRef.current = false;
+      }
       console.error('Error starting recording:', error);
       setIsRecording(false);
     }

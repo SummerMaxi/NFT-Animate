@@ -315,7 +315,20 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
   const [layers, setLayers] = useState<LayerImage[]>([]);
   const { bubbleText, isTyping, typingDuration, isLooping, backgroundColor } = useAnimationStore();
 
+  // Add a ref to track if we're currently recording
+  const isRecordingRef = useRef(false);
+
+  // Add this to track previous text to prevent unnecessary updates
+  const prevTextRef = useRef(bubbleText);
+
   useEffect(() => {
+    // Skip text updates if recording is in progress
+    if (isRecordingRef.current && prevTextRef.current !== bubbleText) {
+      console.log('Skipping text update during recording');
+      return;
+    }
+    prevTextRef.current = bubbleText;
+    
     const loadLayers = async () => {
       if (!metadata) return;
 
