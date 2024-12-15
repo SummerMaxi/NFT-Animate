@@ -223,16 +223,26 @@ const getShoesValue = (metadata: NFTMetadata): string | null => {
   return shoesTrait.value.toString();
 };
 
-// Update the wave animation keyframes to be more pronounced
+// Update keyframes with proper wave motion and pause
 const waveKeyframes = keyframes`
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(20deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(20deg); }
-  100% { transform: rotate(0deg); }
+  0% { 
+    transform: rotate(0deg); 
+  }
+  10% { 
+    transform: rotate(-15deg);
+  }
+  15% { 
+    transform: rotate(-5deg);
+  }
+  20% { 
+    transform: rotate(-15deg);
+  }
+  25%, 100% { 
+    transform: rotate(0deg);
+  }
 `;
 
-// Update the AnimatedImage component to have the correct transform origin
+// Update AnimatedImage with proper timing for loop and pause
 const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
   position: absolute;
   width: 100%;
@@ -240,9 +250,9 @@ const AnimatedImage = styled('img')<{ $isWaving: boolean }>`
   top: 0;
   left: 0;
   animation: ${props => props.$isWaving 
-    ? css`${waveKeyframes} 2s ease-in-out infinite` 
+    ? css`${waveKeyframes} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite` 
     : 'none'};
-  transform-origin: 65% 90%; // Adjust this to match the arm's pivot point
+  transform-origin: 50% 50%;
 `;
 
 export const Canvas = ({ 
@@ -383,7 +393,7 @@ export const Canvas = ({
             const sleeveLeftLayer = {
               src: `/Assets/traits/${files[0]}`,
               zIndex: layerOrder['sleeve-left'],
-              alt: `Top Sleeve Left - ${topValue}`
+              alt: `sleeve-left-${topValue}`
             };
             newLayers.push(sleeveLeftLayer);
 
@@ -498,13 +508,12 @@ export const Canvas = ({
     loadLayers();
   }, [metadata]);
 
-  // Update the renderLayer function to remove debug logs
+  // Simplified renderLayer function
   const renderLayer = (layer: LayerImage) => {
     const shouldAnimate = isWaving && (
-      layer.alt?.toLowerCase().includes('sleeve-right') ||
-      layer.alt?.toLowerCase().includes('arm-right') ||
-      layer.alt?.toLowerCase().includes('accessory-4') ||
-      layer.src.toLowerCase().includes('sleeve-right')
+      layer.alt?.toLowerCase().includes('sleeve-left') ||
+      layer.alt?.toLowerCase().includes('arm-left') ||
+      layer.alt?.toLowerCase().includes('top sleeve left')
     );
 
     return shouldAnimate ? (
@@ -513,10 +522,7 @@ export const Canvas = ({
         src={layer.src}
         alt={layer.alt}
         $isWaving={true}
-        style={{ 
-          zIndex: layer.zIndex,
-          transformOrigin: '65% 90%'
-        }}
+        style={{ zIndex: layer.zIndex }}
         onError={(e) => handleImageError(e, layer.src)}
       />
     ) : (
