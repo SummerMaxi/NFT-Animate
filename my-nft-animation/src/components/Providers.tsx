@@ -4,7 +4,11 @@ import { AlchemyClientState } from "@account-kit/core";
 import { AlchemyAccountProvider } from "@account-kit/react";
 import { PropsWithChildren } from "react";
 import { WagmiProvider, createConfig, http } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from "@/config/accountKit";
+
+// Create a new query client
+const wagmiQueryClient = new QueryClient();
 
 // Configure Wagmi
 const wagmiConfig = createConfig({
@@ -26,13 +30,15 @@ export function Providers({
 }: PropsWithChildren<ProvidersProps>) {
   return (
     <WagmiProvider config={wagmiConfig}>
-      <AlchemyAccountProvider
-        config={config}
-        queryClient={queryClient}
-        initialState={initialState}
-      >
-        {children}
-      </AlchemyAccountProvider>
+      <QueryClientProvider client={wagmiQueryClient}>
+        <AlchemyAccountProvider
+          config={config}
+          queryClient={queryClient}
+          initialState={initialState}
+        >
+          {children}
+        </AlchemyAccountProvider>
+      </QueryClientProvider>
     </WagmiProvider>
   );
 } 
