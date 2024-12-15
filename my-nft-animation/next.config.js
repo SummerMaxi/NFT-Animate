@@ -9,6 +9,16 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    missingSuspenseWithCSRError: false,
+    esmExternals: 'loose'
+  },
+  transpilePackages: [
+    'recordrtc', 
+    '@account-kit/react', 
+    '@account-kit/core', 
+    '@account-kit/infra'
+  ],
   images: {
     unoptimized: true,
     domains: [
@@ -38,9 +48,6 @@ const nextConfig = {
       '@': path.resolve(__dirname, './src'),
     };
     return config;
-  },
-  experimental: {
-    esmExternals: 'loose'
   }
 };
 
