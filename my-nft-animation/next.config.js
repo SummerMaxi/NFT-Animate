@@ -43,9 +43,7 @@ const nextConfig = {
   experimental: {
     esmExternals: false,
     serverActions: true,
-    webpackBuildWorker: true,
-  },
-  transpilePackages: ['recordrtc']
+  }
 };
 
 module.exports = nextConfig; 
