@@ -2,7 +2,7 @@ import {
   AlchemyAccountsUIConfig,
   createConfig,
 } from "@account-kit/react";
-import { alchemy } from "@account-kit/infra";
+import { alchemy, mainnet, polygon, arbitrum, optimism, sepolia } from "@account-kit/infra";
 import { cookieStorage } from "@account-kit/core";
 import { QueryClient } from "@tanstack/react-query";
 import { createPublicClient, http } from 'viem';
@@ -20,6 +20,7 @@ export const queryClient = new QueryClient({
 
 // Define Shape Mainnet chain
 export const shapeMainnet = {
+  ...mainnet,
   id: 360,
   name: 'Shape',
   network: 'shape',
@@ -42,11 +43,11 @@ export const shapeMainnet = {
   },
   blockExplorers: {
     default: {
-      name: 'Shape Explorer',
-      url: 'https://explorer.shape.network',
+      name: 'ShapeScan',
+      url: 'https://scan.shape.network',
     },
   },
-};
+} as const;
 
 // UI Config
 const uiConfig: AlchemyAccountsUIConfig = {
@@ -81,7 +82,26 @@ export const config = createConfig(
       { 
         chain: shapeMainnet,
         transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
-        policyId: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+      },
+      { 
+        chain: mainnet,
+        transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+      },
+      {
+        chain: polygon,
+        transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+      },
+      {
+        chain: arbitrum,
+        transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+      },
+      {
+        chain: optimism,
+        transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+      },
+      {
+        chain: sepolia,
+        transport: alchemy({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
       }
     ],
     ssr: true,
@@ -95,4 +115,4 @@ export const config = createConfig(
 export const publicClient = createPublicClient({
   chain: shapeMainnet,
   transport: http(),
-}); 
+});

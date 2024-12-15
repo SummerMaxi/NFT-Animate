@@ -5,6 +5,13 @@ import { mainnet, polygon, arbitrum, optimism, sepolia } from "@account-kit/infr
 import { shapeMainnet } from "@/config/accountKit";
 import { useState, useRef, useEffect } from 'react';
 import { useThemeStore } from '@/store/themeStore';
+import { alchemy } from "@account-kit/infra";
+
+type ChainConfig = {
+  chain: typeof mainnet;
+  label: string;
+  icon: string;
+};
 
 export function ChainSelector() {
   const { chain, setChain } = useChain();
@@ -12,22 +19,26 @@ export function ChainSelector() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { isDarkMode } = useThemeStore();
 
-  const chains = [
-    { ...shapeMainnet, label: 'Shape', icon: '🔺' },
-    { ...mainnet, label: 'Ethereum', icon: '🔷' },
-    { ...polygon, label: 'Polygon', icon: '💜' },
-    { ...arbitrum, label: 'Arbitrum', icon: '🔵' },
-    { ...optimism, label: 'Optimism', icon: '❤️' },
-    { ...sepolia, label: 'Sepolia', icon: '🟣' },
+  // Define supported chains with their configurations
+  const chainConfigs = [
+    { chain: shapeMainnet, label: 'Shape', icon: '🔺' },
+    { chain: mainnet, label: 'Ethereum', icon: '🔷' },
+    { chain: polygon, label: 'Polygon', icon: '💜' },
+    { chain: arbitrum, label: 'Arbitrum', icon: '🔵' },
+    { chain: optimism, label: 'Optimism', icon: '❤️' },
+    { chain: sepolia, label: 'Sepolia', icon: '🟣' },
   ];
 
-  useEffect(() => {
-    if (chain.id !== shapeMainnet.id) {
-      setChain({ chain: shapeMainnet });
+  const handleChainChange = async (newChain: typeof mainnet) => {
+    try {
+      await setChain({ chain: newChain });
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Failed to switch chain:', error);
     }
-  }, []);
+  };
 
-  const currentChain = chains.find(c => c.id === chain.id) || chains[0];
+  const currentChain = chainConfigs.find(c => c.chain.id === chain?.id) || chainConfigs[0];
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -49,7 +60,7 @@ export function ChainSelector() {
             ? 'bg-gray-800 hover:bg-gray-700 text-white border border-gray-700' 
             : 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-200'
           }
-          transition-all duration-200 ease-in-out
+          transition-colors duration-150
         `}
       >
         <span className="text-lg">{currentChain.icon}</span>
@@ -75,28 +86,25 @@ export function ChainSelector() {
           transform origin-top scale-100 transition-all duration-200 ease-in-out
         `}>
           <div className="py-1">
-            {chains.map((c) => (
+            {chainConfigs.map((config) => (
               <button
-                key={c.id}
-                onClick={() => {
-                  setChain({ chain: shapeMainnet });
-                  setIsOpen(false);
-                }}
+                key={config.chain.id}
+                onClick={() => handleChainChange(config.chain)}
                 className={`
                   w-full flex items-center gap-2 px-4 py-2
                   ${isDarkMode 
                     ? 'hover:bg-gray-700 text-gray-200' 
                     : 'hover:bg-gray-50 text-gray-900'
                   }
-                  ${c.id === chain.id 
+                  ${config.chain.id === chain?.id 
                     ? (isDarkMode ? 'bg-gray-700' : 'bg-gray-50') 
                     : ''
                   }
                   transition-colors duration-150
                 `}
               >
-                <span className="text-lg">{c.icon}</span>
-                <span className="font-medium">{c.label}</span>
+                <span className="text-lg">{config.icon}</span>
+                <span className="font-medium">{config.label}</span>
               </button>
             ))}
           </div>
