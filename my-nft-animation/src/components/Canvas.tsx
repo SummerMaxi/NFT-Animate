@@ -124,25 +124,25 @@ type LayerKey =
   | 'hair-hat-front' 
   | 'ear-right';
 
-// Update the layerOrder object with the correct z-index ordering
+// Update the layerOrder object with the new z-index ordering
 const layerOrder: Record<LayerKey, number> = {
   'arm-left': 1,
   'body': 2,
-  'arm-right': 3,
-  'sleeve-right': 4, // Moved up to be behind bottom
-  'bottom': 5,      // Bottom comes after sleeve-right
-  'shoes': 6,
-  'sleeve-left': 7,
-  'torso': 8,
-  'accessory-4': 9,
-  'ear-left': 10,
-  'hair-hat-back': 11,
-  'head': 12,
-  'beard': 13,
-  'face': 14,
-  'accessory-2': 15,
-  'hair-hat-front': 16,
-  'ear-right': 17
+  'bottom': 3,
+  'shoes': 3,     // Same level as bottom
+  'arm-right': 4,
+  'sleeve-left': 5,
+  'torso': 5,     // Same level as sleeve-left
+  'sleeve-right': 6,
+  'accessory-4': 7,
+  'ear-left': 7,
+  'hair-hat-back': 8,
+  'head': 9,
+  'beard': 9,     // Same level as head
+  'face': 10,
+  'accessory-2': 11,
+  'hair-hat-front': 12,
+  'ear-right': 13
 };
 
 // Add this helper function to get accessory values
@@ -607,7 +607,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       ctx.fillStyle = backgroundColor;
       ctx.fillRect(0, 0, 828, 828);
       
-      // Draw all layers
+      // Draw all layers in sorted order
       loadedImages.forEach((img, index) => {
         const layer = layers[index];
         if (layer) {
