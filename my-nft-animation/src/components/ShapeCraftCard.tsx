@@ -5,6 +5,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useAnimationStore } from '../store/animationStore';
+import { useUser } from "@account-kit/react";
 
 const SHAPE_CONTRACT_1 = '0xF2E4b2a15872a20D0fFB336a89B94BA782cE9Ba5';
 const SHAPE_CONTRACT_2 = '0x0602b0fad4d305b2C670808Dd9f77B0A68E36c5B';
@@ -127,6 +128,7 @@ export const ShapeCraftCard = ({
   const [selectedId1, setSelectedId1] = useState('');
   const [selectedId2, setSelectedId2] = useState('');
   const [loading, setLoading] = useState(false);
+  const user = useUser();
 
   const fetchTokenIds = async (address: string, contractAddress: string) => {
     if (!address) return [];
@@ -151,19 +153,37 @@ export const ShapeCraftCard = ({
   useEffect(() => {
     const loadTokenIds = async () => {
       setLoading(true);
-      const [ids1, ids2] = await Promise.all([
-        fetchTokenIds(userAddress1, SHAPE_CONTRACT_1),
-        fetchTokenIds(userAddress2, SHAPE_CONTRACT_2),
-      ]);
+      
+      let ids1: string[] = [];
+      let ids2: string[] = [];
+
+      // First try connected wallet for both contracts
+      if (user?.address) {
+        [ids1, ids2] = await Promise.all([
+          fetchTokenIds(user.address, SHAPE_CONTRACT_1),
+          fetchTokenIds(user.address, SHAPE_CONTRACT_2),
+        ]);
+      }
+
+      // If no NFTs found for Contract 1 and manual address provided, try that
+      if (ids1.length === 0 && userAddress1) {
+        ids1 = await fetchTokenIds(userAddress1, SHAPE_CONTRACT_1);
+      }
+
+      // If no NFTs found for Contract 2 and manual address provided, try that
+      if (ids2.length === 0 && userAddress2) {
+        ids2 = await fetchTokenIds(userAddress2, SHAPE_CONTRACT_2);
+      }
+      
       setTokenIds1(ids1);
       setTokenIds2(ids2);
       setLoading(false);
     };
 
-    if (userAddress1 || userAddress2) {
+    if (user?.address || userAddress1 || userAddress2) {
       loadTokenIds();
     }
-  }, [userAddress1, userAddress2]);
+  }, [user?.address, userAddress1, userAddress2]);
 
   const handleSelect1 = (id: string) => {
     setSelectedId1(id);

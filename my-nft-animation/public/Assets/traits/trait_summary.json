@@ -1,0 +1,3892 @@
+{
+  "hair-hat": {
+    "total_traits": 24,
+    "traits": [
+      {
+        "name": "Hair Tied 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Hair Tied 2",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Hair Tied 3",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Hair Tied 4",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Hair Medium 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Hair Medium 2",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Hair Medium 3",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Hair Medium 4",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Hair Long 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/17.png"
+        ],
+        "files": [
+          "17.png"
+        ]
+      },
+      {
+        "name": "Hair Long 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/18.png"
+        ],
+        "files": [
+          "18.png"
+        ]
+      },
+      {
+        "name": "Hair Long 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/19.png"
+        ],
+        "files": [
+          "19.png"
+        ]
+      },
+      {
+        "name": "Hair Long 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/20.png"
+        ],
+        "files": [
+          "20.png"
+        ]
+      },
+      {
+        "name": "Hair Short 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/29.png"
+        ],
+        "files": [
+          "29.png"
+        ]
+      },
+      {
+        "name": "Hat Beanie 1 - Front",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/144-1.png"
+        ],
+        "files": [
+          "144-1.png"
+        ]
+      },
+      {
+        "name": "Hat Beanie 1 - Back",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/144-2.png"
+        ],
+        "files": [
+          "144-2.png"
+        ]
+      },
+      {
+        "name": "Pumpkin",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/160.png"
+        ],
+        "files": [
+          "160.png"
+        ]
+      },
+      {
+        "name": "Ghost White",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/161.png"
+        ],
+        "files": [
+          "161.png"
+        ]
+      },
+      {
+        "name": "Ghost Black",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/162.png"
+        ],
+        "files": [
+          "162.png"
+        ]
+      },
+      {
+        "name": "Mushroom Red",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/163.png"
+        ],
+        "files": [
+          "163.png"
+        ]
+      },
+      {
+        "name": "Mushroom Blue",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/164.png"
+        ],
+        "files": [
+          "164.png"
+        ]
+      },
+      {
+        "name": "Zombie Purple",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/169.png"
+        ],
+        "files": [
+          "169.png"
+        ]
+      },
+      {
+        "name": "Doll Blue",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/172.png"
+        ],
+        "files": [
+          "172.png"
+        ]
+      },
+      {
+        "name": "Robot Bunny Dark",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/173.png"
+        ],
+        "files": [
+          "173.png"
+        ]
+      },
+      {
+        "name": "Robot Bunny Light",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/hair-hat/174.png"
+        ],
+        "files": [
+          "174.png"
+        ]
+      }
+    ]
+  },
+  "top": {
+    "total_traits": 140,
+    "traits": [
+      {
+        "name": "Hoodie 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/1.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/1.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/1.png"
+        ],
+        "files": [
+          "top/sleeve-left/1_sleeve-left.png",
+          "top/torso/1_torso.png",
+          "top/sleeve-right/1_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Hoodie 2",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/2.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/2.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/2.png"
+        ],
+        "files": [
+          "top/sleeve-left/2_sleeve-left.png",
+          "top/torso/2_torso.png",
+          "top/sleeve-right/2_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 3",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/3.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/3.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/3.png"
+        ],
+        "files": [
+          "top/sleeve-left/3_sleeve-left.png",
+          "top/torso/3_torso.png",
+          "top/sleeve-right/3_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 4",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/4.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/4.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/4.png"
+        ],
+        "files": [
+          "top/sleeve-left/4_sleeve-left.png",
+          "top/torso/4_torso.png",
+          "top/sleeve-right/4_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/5.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/5.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/5.png"
+        ],
+        "files": [
+          "top/sleeve-left/5_sleeve-left.png",
+          "top/torso/5_torso.png",
+          "top/sleeve-right/5_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/6.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/6.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/6.png"
+        ],
+        "files": [
+          "top/sleeve-left/6_sleeve-left.png",
+          "top/torso/6_torso.png",
+          "top/sleeve-right/6_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/7.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/7.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/7.png"
+        ],
+        "files": [
+          "top/sleeve-left/7_sleeve-left.png",
+          "top/torso/7_torso.png",
+          "top/sleeve-right/7_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/8.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/8.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/8.png"
+        ],
+        "files": [
+          "top/sleeve-left/8_sleeve-left.png",
+          "top/torso/8_torso.png",
+          "top/sleeve-right/8_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/9.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/9.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/9.png"
+        ],
+        "files": [
+          "top/sleeve-left/9_sleeve-left.png",
+          "top/torso/9_torso.png",
+          "top/sleeve-right/9_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 10",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/10.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/10.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/10.png"
+        ],
+        "files": [
+          "top/sleeve-left/10_sleeve-left.png",
+          "top/torso/10_torso.png",
+          "top/sleeve-right/10_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 11",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/11.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/11.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/11.png"
+        ],
+        "files": [
+          "top/sleeve-left/11_sleeve-left.png",
+          "top/torso/11_torso.png",
+          "top/sleeve-right/11_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 12",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/12.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/12.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/12.png"
+        ],
+        "files": [
+          "top/sleeve-left/12_sleeve-left.png",
+          "top/torso/12_torso.png",
+          "top/sleeve-right/12_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 13",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/13.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/13.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/13.png"
+        ],
+        "files": [
+          "top/sleeve-left/13_sleeve-left.png",
+          "top/torso/13_torso.png",
+          "top/sleeve-right/13_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 14",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/14.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/14.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/14.png"
+        ],
+        "files": [
+          "top/sleeve-left/14_sleeve-left.png",
+          "top/torso/14_torso.png",
+          "top/sleeve-right/14_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 15",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/15.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/15.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/15.png"
+        ],
+        "files": [
+          "top/sleeve-left/15_sleeve-left.png",
+          "top/torso/15_torso.png",
+          "top/sleeve-right/15_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 16",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/16.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/16.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/16.png"
+        ],
+        "files": [
+          "top/sleeve-left/16_sleeve-left.png",
+          "top/torso/16_torso.png",
+          "top/sleeve-right/16_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 17",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/17.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/17.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/17.png"
+        ],
+        "files": [
+          "top/sleeve-left/17_sleeve-left.png",
+          "top/torso/17_torso.png",
+          "top/sleeve-right/17_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 18",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/18.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/18.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/18.png"
+        ],
+        "files": [
+          "top/sleeve-left/18_sleeve-left.png",
+          "top/torso/18_torso.png",
+          "top/sleeve-right/18_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 19",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/19.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/19.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/19.png"
+        ],
+        "files": [
+          "top/sleeve-left/19_sleeve-left.png",
+          "top/torso/19_torso.png",
+          "top/sleeve-right/19_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 20",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/20.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/20.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/20.png"
+        ],
+        "files": [
+          "top/sleeve-left/20_sleeve-left.png",
+          "top/torso/20_torso.png",
+          "top/sleeve-right/20_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 21",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/21.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/21.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/21.png"
+        ],
+        "files": [
+          "top/sleeve-left/21_sleeve-left.png",
+          "top/torso/21_torso.png",
+          "top/sleeve-right/21_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 22",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/22.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/22.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/22.png"
+        ],
+        "files": [
+          "top/sleeve-left/22_sleeve-left.png",
+          "top/torso/22_torso.png",
+          "top/sleeve-right/22_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 23",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/23.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/23.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/23.png"
+        ],
+        "files": [
+          "top/sleeve-left/23_sleeve-left.png",
+          "top/torso/23_torso.png",
+          "top/sleeve-right/23_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 24",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/24.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/24.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/24.png"
+        ],
+        "files": [
+          "top/sleeve-left/24_sleeve-left.png",
+          "top/torso/24_torso.png",
+          "top/sleeve-right/24_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 25",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/25.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/25.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/25.png"
+        ],
+        "files": [
+          "top/sleeve-left/25_sleeve-left.png",
+          "top/torso/25_torso.png",
+          "top/sleeve-right/25_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 26",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/26.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/26.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/26.png"
+        ],
+        "files": [
+          "top/sleeve-left/26_sleeve-left.png",
+          "top/torso/26_torso.png",
+          "top/sleeve-right/26_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 27",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/27.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/27.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/27.png"
+        ],
+        "files": [
+          "top/sleeve-left/27_sleeve-left.png",
+          "top/torso/27_torso.png",
+          "top/sleeve-right/27_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 28",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/28.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/28.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/28.png"
+        ],
+        "files": [
+          "top/sleeve-left/28_sleeve-left.png",
+          "top/torso/28_torso.png",
+          "top/sleeve-right/28_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 29",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/29.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/29.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/29.png"
+        ],
+        "files": [
+          "top/sleeve-left/29_sleeve-left.png",
+          "top/torso/29_torso.png",
+          "top/sleeve-right/29_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 30",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/30.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/30.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/30.png"
+        ],
+        "files": [
+          "top/sleeve-left/30_sleeve-left.png",
+          "top/torso/30_torso.png",
+          "top/sleeve-right/30_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 31",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/31.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/31.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/31.png"
+        ],
+        "files": [
+          "top/sleeve-left/31_sleeve-left.png",
+          "top/torso/31_torso.png",
+          "top/sleeve-right/31_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 32",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/32.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/32.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/32.png"
+        ],
+        "files": [
+          "top/sleeve-left/32_sleeve-left.png",
+          "top/torso/32_torso.png",
+          "top/sleeve-right/32_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 33",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/33.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/33.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/33.png"
+        ],
+        "files": [
+          "top/sleeve-left/33_sleeve-left.png",
+          "top/torso/33_torso.png",
+          "top/sleeve-right/33_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 34",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/34.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/34.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/34.png"
+        ],
+        "files": [
+          "top/sleeve-left/34_sleeve-left.png",
+          "top/torso/34_torso.png",
+          "top/sleeve-right/34_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 35",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/35.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/35.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/35.png"
+        ],
+        "files": [
+          "top/sleeve-left/35_sleeve-left.png",
+          "top/torso/35_torso.png",
+          "top/sleeve-right/35_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 36",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/36.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/36.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/36.png"
+        ],
+        "files": [
+          "top/sleeve-left/36_sleeve-left.png",
+          "top/torso/36_torso.png",
+          "top/sleeve-right/36_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 37",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/37.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/37.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/37.png"
+        ],
+        "files": [
+          "top/sleeve-left/37_sleeve-left.png",
+          "top/torso/37_torso.png",
+          "top/sleeve-right/37_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 38",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/38.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/38.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/38.png"
+        ],
+        "files": [
+          "top/sleeve-left/38_sleeve-left.png",
+          "top/torso/38_torso.png",
+          "top/sleeve-right/38_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 39",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/39.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/39.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/39.png"
+        ],
+        "files": [
+          "top/sleeve-left/39_sleeve-left.png",
+          "top/torso/39_torso.png",
+          "top/sleeve-right/39_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 40",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/40.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/40.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/40.png"
+        ],
+        "files": [
+          "top/sleeve-left/40_sleeve-left.png",
+          "top/torso/40_torso.png",
+          "top/sleeve-right/40_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 41",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/41.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/41.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/41.png"
+        ],
+        "files": [
+          "top/sleeve-left/41_sleeve-left.png",
+          "top/torso/41_torso.png",
+          "top/sleeve-right/41_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 42",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/42.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/42.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/42.png"
+        ],
+        "files": [
+          "top/sleeve-left/42_sleeve-left.png",
+          "top/torso/42_torso.png",
+          "top/sleeve-right/42_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 43",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/43.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/43.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/43.png"
+        ],
+        "files": [
+          "top/sleeve-left/43_sleeve-left.png",
+          "top/torso/43_torso.png",
+          "top/sleeve-right/43_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 44",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/44.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/44.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/44.png"
+        ],
+        "files": [
+          "top/sleeve-left/44_sleeve-left.png",
+          "top/torso/44_torso.png",
+          "top/sleeve-right/44_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 45",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/45.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/45.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/45.png"
+        ],
+        "files": [
+          "top/sleeve-left/45_sleeve-left.png",
+          "top/torso/45_torso.png",
+          "top/sleeve-right/45_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 46",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/46.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/46.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/46.png"
+        ],
+        "files": [
+          "top/sleeve-left/46_sleeve-left.png",
+          "top/torso/46_torso.png",
+          "top/sleeve-right/46_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 47",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/47.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/47.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/47.png"
+        ],
+        "files": [
+          "top/sleeve-left/47_sleeve-left.png",
+          "top/torso/47_torso.png",
+          "top/sleeve-right/47_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 48",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/48.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/48.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/48.png"
+        ],
+        "files": [
+          "top/sleeve-left/48_sleeve-left.png",
+          "top/torso/48_torso.png",
+          "top/sleeve-right/48_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 49",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/49.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/49.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/49.png"
+        ],
+        "files": [
+          "top/sleeve-left/49_sleeve-left.png",
+          "top/torso/49_torso.png",
+          "top/sleeve-right/49_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 50",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/50.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/50.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/50.png"
+        ],
+        "files": [
+          "top/sleeve-left/50_sleeve-left.png",
+          "top/torso/50_torso.png",
+          "top/sleeve-right/50_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 51",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/51.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/51.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/51.png"
+        ],
+        "files": [
+          "top/sleeve-left/51_sleeve-left.png",
+          "top/torso/51_torso.png",
+          "top/sleeve-right/51_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 52",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/52.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/52.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/52.png"
+        ],
+        "files": [
+          "top/sleeve-left/52_sleeve-left.png",
+          "top/torso/52_torso.png",
+          "top/sleeve-right/52_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 53",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/53.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/53.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/53.png"
+        ],
+        "files": [
+          "top/sleeve-left/53_sleeve-left.png",
+          "top/torso/53_torso.png",
+          "top/sleeve-right/53_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 54",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/54.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/54.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/54.png"
+        ],
+        "files": [
+          "top/sleeve-left/54_sleeve-left.png",
+          "top/torso/54_torso.png",
+          "top/sleeve-right/54_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 55",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/55.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/55.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/55.png"
+        ],
+        "files": [
+          "top/sleeve-left/55_sleeve-left.png",
+          "top/torso/55_torso.png",
+          "top/sleeve-right/55_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 56",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/56.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/56.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/56.png"
+        ],
+        "files": [
+          "top/sleeve-left/56_sleeve-left.png",
+          "top/torso/56_torso.png",
+          "top/sleeve-right/56_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 57",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/57.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/57.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/57.png"
+        ],
+        "files": [
+          "top/sleeve-left/57_sleeve-left.png",
+          "top/torso/57_torso.png",
+          "top/sleeve-right/57_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 58",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/58.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/58.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/58.png"
+        ],
+        "files": [
+          "top/sleeve-left/58_sleeve-left.png",
+          "top/torso/58_torso.png",
+          "top/sleeve-right/58_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 59",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/59.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/59.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/59.png"
+        ],
+        "files": [
+          "top/sleeve-left/59_sleeve-left.png",
+          "top/torso/59_torso.png",
+          "top/sleeve-right/59_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 60",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/60.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/60.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/60.png"
+        ],
+        "files": [
+          "top/sleeve-left/60_sleeve-left.png",
+          "top/torso/60_torso.png",
+          "top/sleeve-right/60_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 61",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/61.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/61.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/61.png"
+        ],
+        "files": [
+          "top/sleeve-left/61_sleeve-left.png",
+          "top/torso/61_torso.png",
+          "top/sleeve-right/61_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 62",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/62.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/62.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/62.png"
+        ],
+        "files": [
+          "top/sleeve-left/62_sleeve-left.png",
+          "top/torso/62_torso.png",
+          "top/sleeve-right/62_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 63",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/63.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/63.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/63.png"
+        ],
+        "files": [
+          "top/sleeve-left/63_sleeve-left.png",
+          "top/torso/63_torso.png",
+          "top/sleeve-right/63_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 64",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/64.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/64.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/64.png"
+        ],
+        "files": [
+          "top/sleeve-left/64_sleeve-left.png",
+          "top/torso/64_torso.png",
+          "top/sleeve-right/64_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 65",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/65.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/65.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/65.png"
+        ],
+        "files": [
+          "top/sleeve-left/65_sleeve-left.png",
+          "top/torso/65_torso.png",
+          "top/sleeve-right/65_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 66",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/66.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/66.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/66.png"
+        ],
+        "files": [
+          "top/sleeve-left/66_sleeve-left.png",
+          "top/torso/66_torso.png",
+          "top/sleeve-right/66_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 67",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/67.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/67.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/67.png"
+        ],
+        "files": [
+          "top/sleeve-left/67_sleeve-left.png",
+          "top/torso/67_torso.png",
+          "top/sleeve-right/67_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 68",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/68.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/68.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/68.png"
+        ],
+        "files": [
+          "top/sleeve-left/68_sleeve-left.png",
+          "top/torso/68_torso.png",
+          "top/sleeve-right/68_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 69",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/69.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/69.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/69.png"
+        ],
+        "files": [
+          "top/sleeve-left/69_sleeve-left.png",
+          "top/torso/69_torso.png",
+          "top/sleeve-right/69_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 70",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/70.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/70.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/70.png"
+        ],
+        "files": [
+          "top/sleeve-left/70_sleeve-left.png",
+          "top/torso/70_torso.png",
+          "top/sleeve-right/70_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 71",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/71.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/71.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/71.png"
+        ],
+        "files": [
+          "top/sleeve-left/71_sleeve-left.png",
+          "top/torso/71_torso.png",
+          "top/sleeve-right/71_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 72",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/72.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/72.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/72.png"
+        ],
+        "files": [
+          "top/sleeve-left/72_sleeve-left.png",
+          "top/torso/72_torso.png",
+          "top/sleeve-right/72_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 73",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/73.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/73.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/73.png"
+        ],
+        "files": [
+          "top/sleeve-left/73_sleeve-left.png",
+          "top/torso/73_torso.png",
+          "top/sleeve-right/73_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 74",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/74.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/74.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/74.png"
+        ],
+        "files": [
+          "top/sleeve-left/74_sleeve-left.png",
+          "top/torso/74_torso.png",
+          "top/sleeve-right/74_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 75",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/75.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/75.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/75.png"
+        ],
+        "files": [
+          "top/sleeve-left/75_sleeve-left.png",
+          "top/torso/75_torso.png",
+          "top/sleeve-right/75_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 76",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/76.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/76.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/76.png"
+        ],
+        "files": [
+          "top/sleeve-left/76_sleeve-left.png",
+          "top/torso/76_torso.png",
+          "top/sleeve-right/76_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 77",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/77.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/77.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/77.png"
+        ],
+        "files": [
+          "top/sleeve-left/77_sleeve-left.png",
+          "top/torso/77_torso.png",
+          "top/sleeve-right/77_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 78",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/78.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/78.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/78.png"
+        ],
+        "files": [
+          "top/sleeve-left/78_sleeve-left.png",
+          "top/torso/78_torso.png",
+          "top/sleeve-right/78_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 79",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/79.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/79.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/79.png"
+        ],
+        "files": [
+          "top/sleeve-left/79_sleeve-left.png",
+          "top/torso/79_torso.png",
+          "top/sleeve-right/79_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 80",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/80.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/80.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/80.png"
+        ],
+        "files": [
+          "top/sleeve-left/80_sleeve-left.png",
+          "top/torso/80_torso.png",
+          "top/sleeve-right/80_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 81",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/81.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/81.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/81.png"
+        ],
+        "files": [
+          "top/sleeve-left/81_sleeve-left.png",
+          "top/torso/81_torso.png",
+          "top/sleeve-right/81_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 82",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/82.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/82.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/82.png"
+        ],
+        "files": [
+          "top/sleeve-left/82_sleeve-left.png",
+          "top/torso/82_torso.png",
+          "top/sleeve-right/82_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 83",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/83.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/83.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/83.png"
+        ],
+        "files": [
+          "top/sleeve-left/83_sleeve-left.png",
+          "top/torso/83_torso.png",
+          "top/sleeve-right/83_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 84",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/84.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/84.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/84.png"
+        ],
+        "files": [
+          "top/sleeve-left/84_sleeve-left.png",
+          "top/torso/84_torso.png",
+          "top/sleeve-right/84_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 85",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/85.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/85.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/85.png"
+        ],
+        "files": [
+          "top/sleeve-left/85_sleeve-left.png",
+          "top/torso/85_torso.png",
+          "top/sleeve-right/85_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 90",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/90.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/90.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/90.png"
+        ],
+        "files": [
+          "top/sleeve-left/90_sleeve-left.png",
+          "top/torso/90_torso.png",
+          "top/sleeve-right/90_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 91",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/91.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/91.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/91.png"
+        ],
+        "files": [
+          "top/sleeve-left/91_sleeve-left.png",
+          "top/torso/91_torso.png",
+          "top/sleeve-right/91_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 92",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/92.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/92.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/92.png"
+        ],
+        "files": [
+          "top/sleeve-left/92_sleeve-left.png",
+          "top/torso/92_torso.png",
+          "top/sleeve-right/92_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 93",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/93.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/93.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/93.png"
+        ],
+        "files": [
+          "top/sleeve-left/93_sleeve-left.png",
+          "top/torso/93_torso.png",
+          "top/sleeve-right/93_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 94",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/94.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/94.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/94.png"
+        ],
+        "files": [
+          "top/sleeve-left/94_sleeve-left.png",
+          "top/torso/94_torso.png",
+          "top/sleeve-right/94_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 95",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/95.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/95.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/95.png"
+        ],
+        "files": [
+          "top/sleeve-left/95_sleeve-left.png",
+          "top/torso/95_torso.png",
+          "top/sleeve-right/95_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 96",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/96.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/96.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/96.png"
+        ],
+        "files": [
+          "top/sleeve-left/96_sleeve-left.png",
+          "top/torso/96_torso.png",
+          "top/sleeve-right/96_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 97",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/97.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/97.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/97.png"
+        ],
+        "files": [
+          "top/sleeve-left/97_sleeve-left.png",
+          "top/torso/97_torso.png",
+          "top/sleeve-right/97_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 98",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/98.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/98.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/98.png"
+        ],
+        "files": [
+          "top/sleeve-left/98_sleeve-left.png",
+          "top/torso/98_torso.png",
+          "top/sleeve-right/98_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 99",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/99.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/99.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/99.png"
+        ],
+        "files": [
+          "top/sleeve-left/99_sleeve-left.png",
+          "top/torso/99_torso.png",
+          "top/sleeve-right/99_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 100",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/100.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/100.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/100.png"
+        ],
+        "files": [
+          "top/sleeve-left/100_sleeve-left.png",
+          "top/torso/100_torso.png",
+          "top/sleeve-right/100_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 101",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/101.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/101.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/101.png"
+        ],
+        "files": [
+          "top/sleeve-left/101_sleeve-left.png",
+          "top/torso/101_torso.png",
+          "top/sleeve-right/101_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 102",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/102.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/102.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/102.png"
+        ],
+        "files": [
+          "top/sleeve-left/102_sleeve-left.png",
+          "top/torso/102_torso.png",
+          "top/sleeve-right/102_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 103",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/103.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/103.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/103.png"
+        ],
+        "files": [
+          "top/sleeve-left/103_sleeve-left.png",
+          "top/torso/103_torso.png",
+          "top/sleeve-right/103_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 104",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/104.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/104.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/104.png"
+        ],
+        "files": [
+          "top/sleeve-left/104_sleeve-left.png",
+          "top/torso/104_torso.png",
+          "top/sleeve-right/104_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 105",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/105.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/105.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/105.png"
+        ],
+        "files": [
+          "top/sleeve-left/105_sleeve-left.png",
+          "top/torso/105_torso.png",
+          "top/sleeve-right/105_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 106",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/106.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/106.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/106.png"
+        ],
+        "files": [
+          "top/sleeve-left/106_sleeve-left.png",
+          "top/torso/106_torso.png",
+          "top/sleeve-right/106_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 107",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/107.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/107.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/107.png"
+        ],
+        "files": [
+          "top/sleeve-left/107_sleeve-left.png",
+          "top/torso/107_torso.png",
+          "top/sleeve-right/107_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 108",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/108.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/108.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/108.png"
+        ],
+        "files": [
+          "top/sleeve-left/108_sleeve-left.png",
+          "top/torso/108_torso.png",
+          "top/sleeve-right/108_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 109",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/109.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/109.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/109.png"
+        ],
+        "files": [
+          "top/sleeve-left/109_sleeve-left.png",
+          "top/torso/109_torso.png",
+          "top/sleeve-right/109_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 110",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/110.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/110.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/110.png"
+        ],
+        "files": [
+          "top/sleeve-left/110_sleeve-left.png",
+          "top/torso/110_torso.png",
+          "top/sleeve-right/110_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 111",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/111.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/111.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/111.png"
+        ],
+        "files": [
+          "top/sleeve-left/111_sleeve-left.png",
+          "top/torso/111_torso.png",
+          "top/sleeve-right/111_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 112",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/112.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/112.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/112.png"
+        ],
+        "files": [
+          "top/sleeve-left/112_sleeve-left.png",
+          "top/torso/112_torso.png",
+          "top/sleeve-right/112_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 113",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/113.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/113.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/113.png"
+        ],
+        "files": [
+          "top/sleeve-left/113_sleeve-left.png",
+          "top/torso/113_torso.png",
+          "top/sleeve-right/113_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 114",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/114.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/114.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/114.png"
+        ],
+        "files": [
+          "top/sleeve-left/114_sleeve-left.png",
+          "top/torso/114_torso.png",
+          "top/sleeve-right/114_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 115",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/115.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/115.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/115.png"
+        ],
+        "files": [
+          "top/sleeve-left/115_sleeve-left.png",
+          "top/torso/115_torso.png",
+          "top/sleeve-right/115_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 116",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/116.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/116.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/116.png"
+        ],
+        "files": [
+          "top/sleeve-left/116_sleeve-left.png",
+          "top/torso/116_torso.png",
+          "top/sleeve-right/116_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 117",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/117.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/117.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/117.png"
+        ],
+        "files": [
+          "top/sleeve-left/117_sleeve-left.png",
+          "top/torso/117_torso.png",
+          "top/sleeve-right/117_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 118",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/118.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/118.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/118.png"
+        ],
+        "files": [
+          "top/sleeve-left/118_sleeve-left.png",
+          "top/torso/118_torso.png",
+          "top/sleeve-right/118_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 119",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/119.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/119.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/119.png"
+        ],
+        "files": [
+          "top/sleeve-left/119_sleeve-left.png",
+          "top/torso/119_torso.png",
+          "top/sleeve-right/119_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 120",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/120.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/120.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/120.png"
+        ],
+        "files": [
+          "top/sleeve-left/120_sleeve-left.png",
+          "top/torso/120_torso.png",
+          "top/sleeve-right/120_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 121",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/121.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/121.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/121.png"
+        ],
+        "files": [
+          "top/sleeve-left/121_sleeve-left.png",
+          "top/torso/121_torso.png",
+          "top/sleeve-right/121_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 122",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/122.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/122.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/122.png"
+        ],
+        "files": [
+          "top/sleeve-left/122_sleeve-left.png",
+          "top/torso/122_torso.png",
+          "top/sleeve-right/122_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 123",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/123.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/123.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/123.png"
+        ],
+        "files": [
+          "top/sleeve-left/123_sleeve-left.png",
+          "top/torso/123_torso.png",
+          "top/sleeve-right/123_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 124",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/124.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/124.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/124.png"
+        ],
+        "files": [
+          "top/sleeve-left/124_sleeve-left.png",
+          "top/torso/124_torso.png",
+          "top/sleeve-right/124_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 125",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/125.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/125.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/125.png"
+        ],
+        "files": [
+          "top/sleeve-left/125_sleeve-left.png",
+          "top/torso/125_torso.png",
+          "top/sleeve-right/125_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 126",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/126.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/126.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/126.png"
+        ],
+        "files": [
+          "top/sleeve-left/126_sleeve-left.png",
+          "top/torso/126_torso.png",
+          "top/sleeve-right/126_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 127",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/127.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/127.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/127.png"
+        ],
+        "files": [
+          "top/sleeve-left/127_sleeve-left.png",
+          "top/torso/127_torso.png",
+          "top/sleeve-right/127_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 128",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/128.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/128.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/128.png"
+        ],
+        "files": [
+          "top/sleeve-left/128_sleeve-left.png",
+          "top/torso/128_torso.png",
+          "top/sleeve-right/128_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 129",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/129.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/129.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/129.png"
+        ],
+        "files": [
+          "top/sleeve-left/129_sleeve-left.png",
+          "top/torso/129_torso.png",
+          "top/sleeve-right/129_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 130",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/130.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/130.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/130.png"
+        ],
+        "files": [
+          "top/sleeve-left/130_sleeve-left.png",
+          "top/torso/130_torso.png",
+          "top/sleeve-right/130_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 131",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/131.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/131.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/131.png"
+        ],
+        "files": [
+          "top/sleeve-left/131_sleeve-left.png",
+          "top/torso/131_torso.png",
+          "top/sleeve-right/131_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 132",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/132.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/132.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/132.png"
+        ],
+        "files": [
+          "top/sleeve-left/132_sleeve-left.png",
+          "top/torso/132_torso.png",
+          "top/sleeve-right/132_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 137",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/137.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/137.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/137.png"
+        ],
+        "files": [
+          "top/sleeve-left/137_sleeve-left.png",
+          "top/torso/137_torso.png",
+          "top/sleeve-right/137_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 138",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/138.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/138.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/138.png"
+        ],
+        "files": [
+          "top/sleeve-left/138_sleeve-left.png",
+          "top/torso/138_torso.png",
+          "top/sleeve-right/138_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 139",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/139.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/139.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/139.png"
+        ],
+        "files": [
+          "top/sleeve-left/139_sleeve-left.png",
+          "top/torso/139_torso.png",
+          "top/sleeve-right/139_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 140",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/140.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/140.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/140.png"
+        ],
+        "files": [
+          "top/sleeve-left/140_sleeve-left.png",
+          "top/torso/140_torso.png",
+          "top/sleeve-right/140_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 141",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/141.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/141.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/141.png"
+        ],
+        "files": [
+          "top/sleeve-left/141_sleeve-left.png",
+          "top/torso/141_torso.png",
+          "top/sleeve-right/141_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 142",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/142.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/142.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/142.png"
+        ],
+        "files": [
+          "top/sleeve-left/142_sleeve-left.png",
+          "top/torso/142_torso.png",
+          "top/sleeve-right/142_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 143",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/143.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/143.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/143.png"
+        ],
+        "files": [
+          "top/sleeve-left/143_sleeve-left.png",
+          "top/torso/143_torso.png",
+          "top/sleeve-right/143_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 144",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/144.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/144.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/144.png"
+        ],
+        "files": [
+          "top/sleeve-left/144_sleeve-left.png",
+          "top/torso/144_torso.png",
+          "top/sleeve-right/144_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 145",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/145.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/145.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/145.png"
+        ],
+        "files": [
+          "top/sleeve-left/145_sleeve-left.png",
+          "top/torso/145_torso.png",
+          "top/sleeve-right/145_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 146",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/146.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/146.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/146.png"
+        ],
+        "files": [
+          "top/sleeve-left/146_sleeve-left.png",
+          "top/torso/146_torso.png",
+          "top/sleeve-right/146_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 147",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/147.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/147.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/147.png"
+        ],
+        "files": [
+          "top/sleeve-left/147_sleeve-left.png",
+          "top/torso/147_torso.png",
+          "top/sleeve-right/147_sleeve-right.png"
+        ]
+      },
+      {
+        "name": "Top 148",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-left/148.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/torso/148.png",
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/top/sleeve-right/148.png"
+        ],
+        "files": [
+          "top/sleeve-left/148_sleeve-left.png",
+          "top/torso/148_torso.png",
+          "top/sleeve-right/148_sleeve-right.png"
+        ]
+      }
+    ]
+  },
+  "bottom": {
+    "total_traits": 68,
+    "traits": [
+      {
+        "name": "Pants 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Pants Ankle 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Pants Ripped 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Bottom 4",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Bottom 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Bottom 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Bottom 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Bottom 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Bottom 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      },
+      {
+        "name": "Bottom 10",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/10.png"
+        ],
+        "files": [
+          "10.png"
+        ]
+      },
+      {
+        "name": "Bottom 11",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/11.png"
+        ],
+        "files": [
+          "11.png"
+        ]
+      },
+      {
+        "name": "Bottom 12",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/12.png"
+        ],
+        "files": [
+          "12.png"
+        ]
+      },
+      {
+        "name": "Bottom 13",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/13.png"
+        ],
+        "files": [
+          "13.png"
+        ]
+      },
+      {
+        "name": "Bottom 14",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/14.png"
+        ],
+        "files": [
+          "14.png"
+        ]
+      },
+      {
+        "name": "Bottom 15",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/15.png"
+        ],
+        "files": [
+          "15.png"
+        ]
+      },
+      {
+        "name": "Bottom 16",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/16.png"
+        ],
+        "files": [
+          "16.png"
+        ]
+      },
+      {
+        "name": "Bottom 17",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/17.png"
+        ],
+        "files": [
+          "17.png"
+        ]
+      },
+      {
+        "name": "Bottom 18",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/18.png"
+        ],
+        "files": [
+          "18.png"
+        ]
+      },
+      {
+        "name": "Bottom 19",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/19.png"
+        ],
+        "files": [
+          "19.png"
+        ]
+      },
+      {
+        "name": "Bottom 20",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/20.png"
+        ],
+        "files": [
+          "20.png"
+        ]
+      },
+      {
+        "name": "Bottom 21",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/21.png"
+        ],
+        "files": [
+          "21.png"
+        ]
+      },
+      {
+        "name": "Bottom 22",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/22.png"
+        ],
+        "files": [
+          "22.png"
+        ]
+      },
+      {
+        "name": "Bottom 23",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/23.png"
+        ],
+        "files": [
+          "23.png"
+        ]
+      },
+      {
+        "name": "Bottom 24",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/24.png"
+        ],
+        "files": [
+          "24.png"
+        ]
+      },
+      {
+        "name": "Bottom 25",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/25.png"
+        ],
+        "files": [
+          "25.png"
+        ]
+      },
+      {
+        "name": "Bottom 26",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/26.png"
+        ],
+        "files": [
+          "26.png"
+        ]
+      },
+      {
+        "name": "Bottom 27",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/27.png"
+        ],
+        "files": [
+          "27.png"
+        ]
+      },
+      {
+        "name": "Bottom 28",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/28.png"
+        ],
+        "files": [
+          "28.png"
+        ]
+      },
+      {
+        "name": "Bottom 29",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/29.png"
+        ],
+        "files": [
+          "29.png"
+        ]
+      },
+      {
+        "name": "Bottom 30",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/30.png"
+        ],
+        "files": [
+          "30.png"
+        ]
+      },
+      {
+        "name": "Bottom 31",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/31.png"
+        ],
+        "files": [
+          "31.png"
+        ]
+      },
+      {
+        "name": "Bottom 32",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/32.png"
+        ],
+        "files": [
+          "32.png"
+        ]
+      },
+      {
+        "name": "Bottom 33",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/33.png"
+        ],
+        "files": [
+          "33.png"
+        ]
+      },
+      {
+        "name": "Bottom 34",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/34.png"
+        ],
+        "files": [
+          "34.png"
+        ]
+      },
+      {
+        "name": "Bottom 35",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/35.png"
+        ],
+        "files": [
+          "35.png"
+        ]
+      },
+      {
+        "name": "Bottom 36",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/36.png"
+        ],
+        "files": [
+          "36.png"
+        ]
+      },
+      {
+        "name": "Bottom 37",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/37.png"
+        ],
+        "files": [
+          "37.png"
+        ]
+      },
+      {
+        "name": "Bottom 38",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/38.png"
+        ],
+        "files": [
+          "38.png"
+        ]
+      },
+      {
+        "name": "Bottom 39",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/39.png"
+        ],
+        "files": [
+          "39.png"
+        ]
+      },
+      {
+        "name": "Bottom 40",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/40.png"
+        ],
+        "files": [
+          "40.png"
+        ]
+      },
+      {
+        "name": "Bottom 41",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/41.png"
+        ],
+        "files": [
+          "41.png"
+        ]
+      },
+      {
+        "name": "Bottom 42",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/42.png"
+        ],
+        "files": [
+          "42.png"
+        ]
+      },
+      {
+        "name": "Bottom 43",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/43.png"
+        ],
+        "files": [
+          "43.png"
+        ]
+      },
+      {
+        "name": "Bottom 44",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/44.png"
+        ],
+        "files": [
+          "44.png"
+        ]
+      },
+      {
+        "name": "Bottom 45",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/45.png"
+        ],
+        "files": [
+          "45.png"
+        ]
+      },
+      {
+        "name": "Bottom 46",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/46.png"
+        ],
+        "files": [
+          "46.png"
+        ]
+      },
+      {
+        "name": "Bottom 47",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/47.png"
+        ],
+        "files": [
+          "47.png"
+        ]
+      },
+      {
+        "name": "Bottom 48",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/48.png"
+        ],
+        "files": [
+          "48.png"
+        ]
+      },
+      {
+        "name": "Bottom 49",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/49.png"
+        ],
+        "files": [
+          "49.png"
+        ]
+      },
+      {
+        "name": "Bottom 50",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/50.png"
+        ],
+        "files": [
+          "50.png"
+        ]
+      },
+      {
+        "name": "Bottom 51",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/51.png"
+        ],
+        "files": [
+          "51.png"
+        ]
+      },
+      {
+        "name": "Bottom 52",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/52.png"
+        ],
+        "files": [
+          "52.png"
+        ]
+      },
+      {
+        "name": "Bottom 53",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/53.png"
+        ],
+        "files": [
+          "53.png"
+        ]
+      },
+      {
+        "name": "Bottom 54",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/54.png"
+        ],
+        "files": [
+          "54.png"
+        ]
+      },
+      {
+        "name": "Bottom 55",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/55.png"
+        ],
+        "files": [
+          "55.png"
+        ]
+      },
+      {
+        "name": "Bottom 56",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/56.png"
+        ],
+        "files": [
+          "56.png"
+        ]
+      },
+      {
+        "name": "Bottom 57",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/57.png"
+        ],
+        "files": [
+          "57.png"
+        ]
+      },
+      {
+        "name": "Bottom 58",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/58.png"
+        ],
+        "files": [
+          "58.png"
+        ]
+      },
+      {
+        "name": "Bottom 59",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/59.png"
+        ],
+        "files": [
+          "59.png"
+        ]
+      },
+      {
+        "name": "Bottom 60",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/60.png"
+        ],
+        "files": [
+          "60.png"
+        ]
+      },
+      {
+        "name": "Bottom 61",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/61.png"
+        ],
+        "files": [
+          "61.png"
+        ]
+      },
+      {
+        "name": "Bottom 62",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/62.png"
+        ],
+        "files": [
+          "62.png"
+        ]
+      },
+      {
+        "name": "Bottom 63",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/63.png"
+        ],
+        "files": [
+          "63.png"
+        ]
+      },
+      {
+        "name": "Bottom 64",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/64.png"
+        ],
+        "files": [
+          "64.png"
+        ]
+      },
+      {
+        "name": "Bottom 65",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/65.png"
+        ],
+        "files": [
+          "65.png"
+        ]
+      },
+      {
+        "name": "Bottom 66",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/66.png"
+        ],
+        "files": [
+          "66.png"
+        ]
+      },
+      {
+        "name": "Bottom 67",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/67.png"
+        ],
+        "files": [
+          "67.png"
+        ]
+      },
+      {
+        "name": "Bottom 68",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/bottom/68.png"
+        ],
+        "files": [
+          "68.png"
+        ]
+      }
+    ]
+  },
+  "shoes": {
+    "total_traits": 69,
+    "traits": [
+      {
+        "name": "Sneakers 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Sneakers 2",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Sneakers 3",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Shoes 4",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Shoes 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Shoes 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Shoes 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Shoes 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Shoes 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      },
+      {
+        "name": "Shoes 10",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/10.png"
+        ],
+        "files": [
+          "10.png"
+        ]
+      },
+      {
+        "name": "Shoes 11",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/11.png"
+        ],
+        "files": [
+          "11.png"
+        ]
+      },
+      {
+        "name": "Shoes 12",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/12.png"
+        ],
+        "files": [
+          "12.png"
+        ]
+      },
+      {
+        "name": "Shoes 13",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/13.png"
+        ],
+        "files": [
+          "13.png"
+        ]
+      },
+      {
+        "name": "Shoes 14",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/14.png"
+        ],
+        "files": [
+          "14.png"
+        ]
+      },
+      {
+        "name": "Shoes 15",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/15.png"
+        ],
+        "files": [
+          "15.png"
+        ]
+      },
+      {
+        "name": "Shoes 16",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/16.png"
+        ],
+        "files": [
+          "16.png"
+        ]
+      },
+      {
+        "name": "Shoes 17",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/17.png"
+        ],
+        "files": [
+          "17.png"
+        ]
+      },
+      {
+        "name": "Shoes 18",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/18.png"
+        ],
+        "files": [
+          "18.png"
+        ]
+      },
+      {
+        "name": "Shoes 19",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/19.png"
+        ],
+        "files": [
+          "19.png"
+        ]
+      },
+      {
+        "name": "Shoes 20",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/20.png"
+        ],
+        "files": [
+          "20.png"
+        ]
+      },
+      {
+        "name": "Shoes 21",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/21.png"
+        ],
+        "files": [
+          "21.png"
+        ]
+      },
+      {
+        "name": "Shoes 22",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/22.png"
+        ],
+        "files": [
+          "22.png"
+        ]
+      },
+      {
+        "name": "Shoes 23",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/23.png"
+        ],
+        "files": [
+          "23.png"
+        ]
+      },
+      {
+        "name": "Shoes 24",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/24.png"
+        ],
+        "files": [
+          "24.png"
+        ]
+      },
+      {
+        "name": "Shoes 25",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/25.png"
+        ],
+        "files": [
+          "25.png"
+        ]
+      },
+      {
+        "name": "Shoes 26",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/26.png"
+        ],
+        "files": [
+          "26.png"
+        ]
+      },
+      {
+        "name": "Shoes 27",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/27.png"
+        ],
+        "files": [
+          "27.png"
+        ]
+      },
+      {
+        "name": "Shoes 28",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/28.png"
+        ],
+        "files": [
+          "28.png"
+        ]
+      },
+      {
+        "name": "Shoes 29",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/29.png"
+        ],
+        "files": [
+          "29.png"
+        ]
+      },
+      {
+        "name": "Shoes 30",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/30.png"
+        ],
+        "files": [
+          "30.png"
+        ]
+      },
+      {
+        "name": "Shoes 31",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/31.png"
+        ],
+        "files": [
+          "31.png"
+        ]
+      },
+      {
+        "name": "Shoes 32",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/32.png"
+        ],
+        "files": [
+          "32.png"
+        ]
+      },
+      {
+        "name": "Shoes 33",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/33.png"
+        ],
+        "files": [
+          "33.png"
+        ]
+      },
+      {
+        "name": "Shoes 34",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/34.png"
+        ],
+        "files": [
+          "34.png"
+        ]
+      },
+      {
+        "name": "Shoes 35",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/35.png"
+        ],
+        "files": [
+          "35.png"
+        ]
+      },
+      {
+        "name": "Shoes 36",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/36.png"
+        ],
+        "files": [
+          "36.png"
+        ]
+      },
+      {
+        "name": "Shoes 37",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/37.png"
+        ],
+        "files": [
+          "37.png"
+        ]
+      },
+      {
+        "name": "Shoes 38",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/38.png"
+        ],
+        "files": [
+          "38.png"
+        ]
+      },
+      {
+        "name": "Shoes 39",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/39.png"
+        ],
+        "files": [
+          "39.png"
+        ]
+      },
+      {
+        "name": "Shoes 40",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/40.png"
+        ],
+        "files": [
+          "40.png"
+        ]
+      },
+      {
+        "name": "Shoes 41",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/41.png"
+        ],
+        "files": [
+          "41.png"
+        ]
+      },
+      {
+        "name": "Shoes 42",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/42.png"
+        ],
+        "files": [
+          "42.png"
+        ]
+      },
+      {
+        "name": "Shoes 43",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/43.png"
+        ],
+        "files": [
+          "43.png"
+        ]
+      },
+      {
+        "name": "Shoes 44",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/44.png"
+        ],
+        "files": [
+          "44.png"
+        ]
+      },
+      {
+        "name": "Shoes 45",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/45.png"
+        ],
+        "files": [
+          "45.png"
+        ]
+      },
+      {
+        "name": "Shoes 46",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/46.png"
+        ],
+        "files": [
+          "46.png"
+        ]
+      },
+      {
+        "name": "Shoes 47",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/47.png"
+        ],
+        "files": [
+          "47.png"
+        ]
+      },
+      {
+        "name": "Shoes 48",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/48.png"
+        ],
+        "files": [
+          "48.png"
+        ]
+      },
+      {
+        "name": "Shoes 49",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/49.png"
+        ],
+        "files": [
+          "49.png"
+        ]
+      },
+      {
+        "name": "Shoes 50",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/50.png"
+        ],
+        "files": [
+          "50.png"
+        ]
+      },
+      {
+        "name": "Shoes 51",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/51.png"
+        ],
+        "files": [
+          "51.png"
+        ]
+      },
+      {
+        "name": "Shoes 52",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/52.png"
+        ],
+        "files": [
+          "52.png"
+        ]
+      },
+      {
+        "name": "Shoes 53",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/53.png"
+        ],
+        "files": [
+          "53.png"
+        ]
+      },
+      {
+        "name": "Shoes 54",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/54.png"
+        ],
+        "files": [
+          "54.png"
+        ]
+      },
+      {
+        "name": "Shoes 55",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/55.png"
+        ],
+        "files": [
+          "55.png"
+        ]
+      },
+      {
+        "name": "Shoes 56",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/56.png"
+        ],
+        "files": [
+          "56.png"
+        ]
+      },
+      {
+        "name": "Shoes 57",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/57.png"
+        ],
+        "files": [
+          "57.png"
+        ]
+      },
+      {
+        "name": "Shoes 58",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/58.png"
+        ],
+        "files": [
+          "58.png"
+        ]
+      },
+      {
+        "name": "Shoes 59",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/59.png"
+        ],
+        "files": [
+          "59.png"
+        ]
+      },
+      {
+        "name": "Shoes 60",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/60.png"
+        ],
+        "files": [
+          "60.png"
+        ]
+      },
+      {
+        "name": "Shoes 61",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/61.png"
+        ],
+        "files": [
+          "61.png"
+        ]
+      },
+      {
+        "name": "Shoes 62",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/62.png"
+        ],
+        "files": [
+          "62.png"
+        ]
+      },
+      {
+        "name": "Shoes 63",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/63.png"
+        ],
+        "files": [
+          "63.png"
+        ]
+      },
+      {
+        "name": "Shoes 64",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/64.png"
+        ],
+        "files": [
+          "64.png"
+        ]
+      },
+      {
+        "name": "Shoes 65",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/65.png"
+        ],
+        "files": [
+          "65.png"
+        ]
+      },
+      {
+        "name": "Shoes 66",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/66.png"
+        ],
+        "files": [
+          "66.png"
+        ]
+      },
+      {
+        "name": "Shoes 67",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/67.png"
+        ],
+        "files": [
+          "67.png"
+        ]
+      },
+      {
+        "name": "Shoes 68",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/68.png"
+        ],
+        "files": [
+          "68.png"
+        ]
+      },
+      {
+        "name": "Shoes 69",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/shoes/69.png"
+        ],
+        "files": [
+          "69.png"
+        ]
+      }
+    ]
+  },
+  "accessory-1": {
+    "total_traits": 13,
+    "traits": [
+      {
+        "name": "Glasses Round 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Glasses Square 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Glasses Cyber 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Glasses Unique 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 10",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/10.png"
+        ],
+        "files": [
+          "10.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 11",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/11.png"
+        ],
+        "files": [
+          "11.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 12",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/12.png"
+        ],
+        "files": [
+          "12.png"
+        ]
+      },
+      {
+        "name": "Accessory-1 13",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-1/13.png"
+        ],
+        "files": [
+          "13.png"
+        ]
+      }
+    ]
+  },
+  "accessory-2": {
+    "total_traits": 12,
+    "traits": [
+      {
+        "name": "Gum 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Mask 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Beard 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 4",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 10",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/10.png"
+        ],
+        "files": [
+          "10.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 11",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/11.png"
+        ],
+        "files": [
+          "11.png"
+        ]
+      },
+      {
+        "name": "Accessory-2 12",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-2/12.png"
+        ],
+        "files": [
+          "12.png"
+        ]
+      }
+    ]
+  },
+  "accessory-3": {
+    "total_traits": 12,
+    "traits": [
+      {
+        "name": "Bag Purse 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Bag Fanny 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Bag Fanny 2",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Bag Backpack 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 10",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/10.png"
+        ],
+        "files": [
+          "10.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 11",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/11.png"
+        ],
+        "files": [
+          "11.png"
+        ]
+      },
+      {
+        "name": "Accessory-3 12",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/12.png"
+        ],
+        "files": [
+          "12.png"
+        ]
+      }
+    ]
+  },
+  "accessory-4": {
+    "total_traits": 9,
+    "traits": [
+      {
+        "name": "Camera 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Chain 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Watch 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Pen 1",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Accessory-4 5",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "Accessory-4 6",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Accessory-4 7",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Accessory-4 8",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Accessory-4 9",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-4/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      }
+    ]
+  },
+  "suits": {
+    "total_traits": 18,
+    "traits": [
+      {
+        "name": "DeeKay",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/1.png"
+        ],
+        "files": [
+          "1.png"
+        ]
+      },
+      {
+        "name": "Ape",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/2.png"
+        ],
+        "files": [
+          "2.png"
+        ]
+      },
+      {
+        "name": "Punk",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/3.png"
+        ],
+        "files": [
+          "3.png"
+        ]
+      },
+      {
+        "name": "Summercat",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/4.png"
+        ],
+        "files": [
+          "4.png"
+        ]
+      },
+      {
+        "name": "Ranger",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/5.png"
+        ],
+        "files": [
+          "5.png"
+        ]
+      },
+      {
+        "name": "TKD Boy",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/6.png"
+        ],
+        "files": [
+          "6.png"
+        ]
+      },
+      {
+        "name": "Naked",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/7.png"
+        ],
+        "files": [
+          "7.png"
+        ]
+      },
+      {
+        "name": "Dokkaebi",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/8.png"
+        ],
+        "files": [
+          "8.png"
+        ]
+      },
+      {
+        "name": "Traveler",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/9.png"
+        ],
+        "files": [
+          "9.png"
+        ]
+      },
+      {
+        "name": "Tubey",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/10.png"
+        ],
+        "files": [
+          "10.png"
+        ]
+      },
+      {
+        "name": "Rainbow",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/11.png"
+        ],
+        "files": [
+          "11.png"
+        ]
+      },
+      {
+        "name": "Froggy",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/12.png"
+        ],
+        "files": [
+          "12.png"
+        ]
+      },
+      {
+        "name": "Death",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/13.png"
+        ],
+        "files": [
+          "13.png"
+        ]
+      },
+      {
+        "name": "Cozomo de Medici",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/14.png"
+        ],
+        "files": [
+          "14.png"
+        ]
+      },
+      {
+        "name": "Maroon",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/15.png"
+        ],
+        "files": [
+          "15.png"
+        ]
+      },
+      {
+        "name": "Panda",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/16.png"
+        ],
+        "files": [
+          "16.png"
+        ]
+      },
+      {
+        "name": "Loony",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/17.png"
+        ],
+        "files": [
+          "17.png"
+        ]
+      },
+      {
+        "name": "Caster",
+        "urls": [
+          "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/suits/18.png"
+        ],
+        "files": [
+          "18.png"
+        ]
+      }
+    ]
+  }
+}
