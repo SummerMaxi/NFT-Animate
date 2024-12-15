@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState, RefObject } from 'react';
+import { useEffect, useState, RefObject, useRef } from 'react';
 import styled from '@emotion/styled';
 import { ChatBubble } from './ChatBubble';
 import { useAnimationStore } from '../store/animationStore';
 import { LAYER_STRUCTURE } from '../constants/layerStructure';
 import type { NFTMetadata } from '../types/nft';
-import Image from 'next/image';
 import { keyframes, css } from '@emotion/react';
 
 const Container = styled.div`
@@ -20,6 +19,13 @@ const Container = styled.div`
   transform: translateZ(0);
   backfaceVisibility: hidden;
   perspective: 1000;
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const StyledImage = styled.img<{ zIndex: number }>`
@@ -118,25 +124,25 @@ type LayerKey =
   | 'hair-hat-front' 
   | 'ear-right';
 
-// Update the layerOrder object with the type
+// Update the layerOrder object with the correct z-index ordering
 const layerOrder: Record<LayerKey, number> = {
   'arm-left': 1,
   'body': 2,
-  'bottom': 3,
-  'shoes': 3,
-  'arm-right': 4,
-  'sleeve-left': 5,
-  'torso': 5,
-  'sleeve-right': 5,
-  'accessory-4': 6,
-  'ear-left': 7,
-  'hair-hat-back': 8,
-  'head': 9,
-  'beard': 9,
-  'face': 10,
-  'accessory-2': 11,
-  'hair-hat-front': 12,
-  'ear-right': 13
+  'arm-right': 3,
+  'sleeve-right': 4, // Moved up to be behind bottom
+  'bottom': 5,      // Bottom comes after sleeve-right
+  'shoes': 6,
+  'sleeve-left': 7,
+  'torso': 8,
+  'accessory-4': 9,
+  'ear-left': 10,
+  'hair-hat-back': 11,
+  'head': 12,
+  'beard': 13,
+  'face': 14,
+  'accessory-2': 15,
+  'hair-hat-front': 16,
+  'ear-right': 17
 };
 
 // Add this helper function to get accessory values
@@ -297,6 +303,7 @@ interface CanvasProps {
 type TraitFile = string;
 
 export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   if (!metadata) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -551,61 +558,102 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
     loadLayers();
   }, [metadata]);
 
-  // Simplified renderLayer function
-  const renderLayer = (layer: LayerImage) => {
-    const shouldAnimate = isWaving && (
-      layer.alt?.toLowerCase().includes('sleeve-left') ||
-      layer.alt?.toLowerCase().includes('arm-left') ||
-      layer.alt?.toLowerCase().includes('top sleeve left')
-    );
-
-    return shouldAnimate ? (
-      <AnimatedImage
-        key={layer.src}
-        src={layer.src}
-        alt={layer.alt}
-        $isWaving={true}
-        style={{ zIndex: layer.zIndex }}
-        onError={(e) => handleImageError(e, layer.src)}
-      />
-    ) : (
-      <img
-        key={layer.src}
-        src={layer.src}
-        alt={layer.alt}
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: 0,
-          left: 0,
-          zIndex: layer.zIndex,
-        }}
-        onError={(e) => handleImageError(e, layer.src)}
-      />
-    );
-  };
-
   useEffect(() => {
-    // Make sure all images are loaded before animation starts
-    const images = containerRef.current?.getElementsByTagName('img');
-    if (images) {
-      Promise.all(Array.from(images).map((img: HTMLImageElement) => {
-        if (img.complete) return Promise.resolve();
-        return new Promise(resolve => {
-          img.onload = resolve;
-          img.onerror = resolve; // Handle error case as well
-        });
-      })).then(() => {
-        // All images are loaded
-        console.log('All images loaded');
+    if (!canvasRef.current) return;
+    const ctx = canvasRef.current.getContext('2d');
+    if (!ctx) return;
+
+    const loadedImages: HTMLImageElement[] = [];
+    let frameId: number;
+
+    const loadImage = (src: string): Promise<HTMLImageElement> => {
+      return new Promise((resolve, reject) => {
+        const img = document.createElement('img');
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
       });
-    }
-  }, [metadata]); // Add containerRef to dependencies if needed
+    };
+
+    const loadAllImages = async () => {
+      try {
+        for (const layer of layers) {
+          const img = await loadImage(layer.src);
+          loadedImages.push(img);
+        }
+        startAnimation();
+      } catch (error) {
+        console.error('Error loading images:', error);
+      }
+    };
+
+    const renderFrame = () => {
+      ctx.clearRect(0, 0, 828, 828);
+      
+      // Draw background
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, 828, 828);
+      
+      // Draw all layers
+      loadedImages.forEach((img, index) => {
+        const layer = layers[index];
+        if (layer) {
+          ctx.save();
+          
+          // Apply wave animation if needed
+          if (isWaving && (
+            layer.alt?.toLowerCase().includes('sleeve-left') ||
+            layer.alt?.toLowerCase().includes('arm-left') ||
+            layer.alt?.toLowerCase().includes('top sleeve left')
+          )) {
+            const time = Date.now() / 1000;
+            
+            // Base wave motion
+            const baseAngle = Math.sin(time * 2) * 0.15;
+            
+            // Only apply shake when arm is raised (baseAngle is negative)
+            const isRaised = baseAngle < 0;
+            
+            // Calculate shake and pause only when raised
+            const shake = isRaised ? Math.sin(time * 20) * 0.02 : 0;
+            const pauseFactor = isRaised ? Math.pow(Math.sin(time * 2), 2) : 0;
+            
+            // Combine movements - shake only affects upward motion
+            const finalAngle = baseAngle + (shake * pauseFactor);
+            
+            // Apply transformation
+            ctx.translate(414, 414);
+            ctx.rotate(finalAngle);
+            ctx.translate(-414, -414);
+          }
+          
+          ctx.drawImage(img, 0, 0, 828, 828);
+          ctx.restore();
+        }
+      });
+
+      frameId = requestAnimationFrame(renderFrame);
+    };
+
+    const startAnimation = () => {
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+      renderFrame();
+    };
+
+    loadAllImages();
+
+    return () => {
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+    };
+  }, [layers, isWaving, backgroundColor]);
 
   return (
     <Container style={{ backgroundColor }}>
-      {layers.map(renderLayer)}
+      <canvas ref={canvasRef} width={828} height={828} />
       <ChatBubble
         text={bubbleText}
         initialPosition={{ x: 300, y: 200 }}

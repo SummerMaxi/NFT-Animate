@@ -1,11 +1,5 @@
-let RecordRTC: any = null;
-let RecordRTCPromisesHandler: any = null;
+import RecordRTC from 'recordrtc';
 
-if (typeof window !== 'undefined') {
-  import('recordrtc').then((recordrtc) => {
-    RecordRTC = recordrtc.default || recordrtc;
-    RecordRTCPromisesHandler = recordrtc.RecordRTCPromisesHandler;
-  });
-}
-
-export { RecordRTC, RecordRTCPromisesHandler }; 
+export const createRecorder = (stream: MediaStream, options: RecordRTC.Options) => {
+  return new RecordRTC(stream, options);
+}; 

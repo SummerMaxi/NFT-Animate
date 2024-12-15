@@ -29,6 +29,7 @@ const serializeData = (data: any) => {
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
   const { isDarkMode, toggleTheme } = useThemeStore();
   const [userAddress1, setUserAddress1] = useState('');
   const [userAddress2, setUserAddress2] = useState('');
@@ -45,6 +46,20 @@ export default function Home() {
   const handleAnimationChange = (value: string) => {
     setIsWaving(value === 'wave');
   };
+
+  useEffect(() => {
+    if (canvasContainerRef.current) {
+      console.log('Canvas container mounted:', {
+        ref: canvasContainerRef.current,
+        dimensions: {
+          width: canvasContainerRef.current.offsetWidth,
+          height: canvasContainerRef.current.offsetHeight
+        },
+        children: canvasContainerRef.current.children.length,
+        content: canvasContainerRef.current.innerHTML
+      });
+    }
+  }, [nftMetadata]);
 
   return (
     <main className={`min-h-screen ${isDarkMode ? 'bg-[#0A0A0A] dark' : 'bg-[#FAFAFA]'}`}>
@@ -114,7 +129,7 @@ export default function Home() {
               {/* Download Card */}
               <div className={`bento-card glass-effect ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                 <h2 className="text-lg font-semibold mb-6">Download</h2>
-                <ScreenRecorder containerRef={containerRef} />
+                <ScreenRecorder containerRef={canvasContainerRef} />
               </div>
             </div>
 
@@ -131,11 +146,30 @@ export default function Home() {
                   }}
                 >
                   {nftMetadata && (
-                    <Canvas 
-                      metadata={nftMetadata} 
-                      isWaving={isWaving} 
-                      containerRef={containerRef} 
-                    />
+                    <div 
+                      ref={canvasContainerRef}
+                      className="w-[828px] h-[828px] relative"
+                      style={{
+                        position: 'relative',
+                        width: '828px',
+                        height: '828px'
+                      }}
+                      onLoad={() => {
+                        console.log('Canvas container loaded:', {
+                          element: canvasContainerRef.current,
+                          dimensions: {
+                            width: canvasContainerRef.current?.offsetWidth,
+                            height: canvasContainerRef.current?.offsetHeight
+                          }
+                        });
+                      }}
+                    >
+                      <Canvas 
+                        metadata={nftMetadata} 
+                        isWaving={isWaving} 
+                        containerRef={containerRef} 
+                      />
+                    </div>
                   )}
                 </div>
               </div>

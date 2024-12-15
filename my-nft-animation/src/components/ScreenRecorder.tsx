@@ -1,127 +1,88 @@
 'use client';
 
-import { useState, useRef, RefObject, useCallback } from 'react';
+import { useRef, useState } from 'react';
 
 interface ScreenRecorderProps {
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
-export function ScreenRecorder({ containerRef }: ScreenRecorderProps) {
+export const ScreenRecorder = ({ containerRef }: ScreenRecorderProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
-  const animationFrameRef = useRef<number>();
 
-  const startRecording = useCallback(async () => {
-    if (!containerRef.current) return;
+  const startRecording = async () => {
+    console.log('Starting recording...');
+    if (!containerRef.current) {
+      console.error('Container ref not found');
+      return;
+    }
 
     try {
-      // Create a canvas element if it doesn't exist
-      if (!canvasRef.current) {
-        canvasRef.current = document.createElement('canvas');
-        const context = canvasRef.current.getContext('2d', {
-          alpha: true,
-          willReadFrequently: true
-        });
-        if (!context) throw new Error('Failed to get canvas context');
-        contextRef.current = context;
+      // Find the canvas element within the container
+      const canvas = containerRef.current.querySelector('canvas');
+      if (!canvas) {
+        console.error('Canvas element not found');
+        return;
       }
 
-      // Set canvas size to match container
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      canvasRef.current.width = width;
-      canvasRef.current.height = height;
+      console.log('Found canvas:', canvas);
 
-      // Function to capture and draw frame
-      const captureFrame = () => {
-        if (!containerRef.current || !contextRef.current || !canvasRef.current) return;
-        
-        // Clear previous frame
-        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        
-        // Draw current state of container to canvas
-        const svg = new XMLSerializer().serializeToString(containerRef.current);
-        const blob = new Blob([svg], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(blob);
-        const img = new Image();
-        
-        img.onload = () => {
-          if (!contextRef.current || !canvasRef.current) return;
-          contextRef.current.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
-          URL.revokeObjectURL(url);
-        };
-        
-        img.src = url;
-      };
+      // Get the media stream from the canvas
+      const stream = canvas.captureStream(60); // 60 FPS
+      console.log('Created stream:', stream);
 
-      // Setup MediaRecorder
-      const stream = canvasRef.current.captureStream(60); // 60fps for smooth animation
-      const options = {
+      // Create MediaRecorder instance
+      const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
-        videoBitsPerSecond: 5000000 // 5Mbps
-      };
+        videoBitsPerSecond: 8000000,
+      });
 
-      mediaRecorderRef.current = new MediaRecorder(stream, options);
-      chunksRef.current = [];
-
-      mediaRecorderRef.current.ondataavailable = (event) => {
+      // Handle data available event
+      mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
           chunksRef.current.push(event.data);
         }
       };
 
-      mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+      // Handle recording stop
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, {
+          type: 'video/webm'
+        });
+        chunksRef.current = [];
+
+        // Create download link
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `nft-animation-${Date.now()}.webm`;
-        document.body.appendChild(a);
+        a.download = 'nft-animation.webm';
         a.click();
-        document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        chunksRef.current = [];
+
+        setIsRecording(false);
       };
 
       // Start recording
-      mediaRecorderRef.current.start(100); // Collect data every 100ms
+      mediaRecorderRef.current = mediaRecorder;
+      mediaRecorder.start();
       setIsRecording(true);
 
-      // Start animation frame loop
-      const animate = () => {
-        captureFrame();
-        animationFrameRef.current = requestAnimationFrame(animate);
-      };
-      animate();
+      // Stop recording after 5 seconds
+      setTimeout(() => {
+        stopRecording();
+      }, 5000);
 
     } catch (error) {
       console.error('Error starting recording:', error);
-      setIsRecording(false);
     }
-  }, [containerRef]);
+  };
 
-  const stopRecording = useCallback(() => {
-    if (!mediaRecorderRef.current || mediaRecorderRef.current.state === 'inactive') return;
-
-    try {
-      // Stop animation frame
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-
-      // Stop recording
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
-      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
-      setIsRecording(false);
-      mediaRecorderRef.current = null;
-
-    } catch (error) {
-      console.error('Error stopping recording:', error);
-      setIsRecording(false);
     }
-  }, []);
+  };
 
   return (
     <div className="space-y-4">
@@ -142,4 +103,4 @@ export function ScreenRecorder({ containerRef }: ScreenRecorderProps) {
       )}
     </div>
   );
-} 
+}; 
