@@ -11,13 +11,20 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-        pathname: '/**',
-      }
-    ],
+    domains: [
+      'dweb.link',
+      'shape-mainnet.g.alchemy.com',
+      'cloudflare-ipfs.com',
+      'gateway.ipfscdn.io',
+      'ipfs.io',
+      'ipfs.filebase.io',
+      'nft-cdn.alchemy.com',
+      'res.cloudinary.com',
+      'prod-otoms.s3.us-east-1.amazonaws.com',
+      'i.seadn.io',
+      'arweave.net',
+      'storage.googleapis.com'
+    ]
   },
   webpack: (config) => {
     config.resolve.fallback = {
@@ -33,7 +40,7 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    esmExternals: false,
+    esmExternals: 'loose'
   }
 };
 
