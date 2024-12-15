@@ -94,11 +94,11 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, src:
   console.error(e);
 };
 
-// Update the layerOrder object to include bottom
+// Update the layerOrder object to handle different accessory-2 positions
 const layerOrder = {
   'arm-left': 1,
   'body': 2,
-  'bottom': 3,     // Add bottom layer before arm-right
+  'bottom': 3,
   'arm-right': 4,
   'sleeve-left': 5,
   'torso': 5,
@@ -107,9 +107,11 @@ const layerOrder = {
   'ear-left': 7,
   'hair-hat-back': 8,
   'head': 9,
+  'beard': 9,        // Beards go under face
   'face': 10,
-  'hair-hat-front': 11,
-  'ear-right': 12
+  'accessory-2': 11, // Other accessory-2 items go above face
+  'hair-hat-front': 12,
+  'ear-right': 13
 };
 
 // Add this helper function to get accessory values
@@ -177,6 +179,26 @@ const getBottomValue = (metadata: NFTMetadata): string | null => {
 
   console.log('Found bottom trait:', bottomTrait);
   return bottomTrait.value.toString();
+};
+
+// Add getAccessory2Value function
+const getAccessory2Value = (metadata: NFTMetadata): string | null => {
+  if (!metadata?.raw?.metadata?.attributes) {
+    console.log('No attributes found in metadata');
+    return null;
+  }
+
+  const accessory2Trait = metadata.raw.metadata.attributes.find(attr => 
+    attr.trait_type?.toLowerCase() === 'accessory 2'
+  );
+
+  if (!accessory2Trait) {
+    console.log('No accessory 2 trait found');
+    return null;
+  }
+
+  console.log('Found accessory 2 trait:', accessory2Trait);
+  return accessory2Trait.value.toString();
 };
 
 export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
@@ -400,6 +422,40 @@ export const Canvas = ({ metadata }: { metadata: NFTMetadata }) => {
             console.log('Added bottom layer:', bottomLayer);
           } else {
             console.log('No matching bottom found for:', bottomValue);
+          }
+        }
+
+        // Load accessory-2 metadata and layer
+        console.log('Loading accessory-2 layer...');
+        const accessory2Value = getAccessory2Value(metadata);
+        console.log('Accessory 2 value:', accessory2Value);
+
+        if (accessory2Value) {
+          const accessory2Metadata = await fetch('/Assets/traits/metadata/accessory-2_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching accessory-2 entry
+          const accessory2Entry = Object.entries(accessory2Metadata).find(([_, data]) => 
+            (data as any).name === accessory2Value
+          );
+
+          if (accessory2Entry) {
+            const [_, data] = accessory2Entry;
+            const file = (data as any).files[0];
+            
+            // Determine if it's a beard (check if name starts with "Beard")
+            const isBeard = accessory2Value.toLowerCase().startsWith('beard');
+            
+            // Add accessory-2 layer with appropriate z-index
+            const accessory2Layer = {
+              src: `/Assets/traits/accessory-2/${file}`,
+              zIndex: isBeard ? layerOrder['beard'] : layerOrder['accessory-2'],
+              alt: `Accessory 2 - ${accessory2Value}`
+            };
+            newLayers.push(accessory2Layer);
+            console.log('Added accessory-2 layer:', accessory2Layer);
+          } else {
+            console.log('No matching accessory-2 found for:', accessory2Value);
           }
         }
 
