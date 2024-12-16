@@ -31,7 +31,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const { isDarkMode, toggleTheme } = useThemeStore();
-  const [userAddress1, setUserAddress1] = useState('');
+  const [userAddress1, setUserAddress1] = useState('0x6132653299A912BF5726a215F4d020d76A776e35');
   const [userAddress2, setUserAddress2] = useState('');
   const [selectedId1, setSelectedId1] = useState('');
   const [selectedId2, setSelectedId2] = useState('');
