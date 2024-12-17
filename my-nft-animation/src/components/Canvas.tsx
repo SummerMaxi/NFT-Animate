@@ -369,9 +369,21 @@ const getBagType = (accessoryName: string): 'backpack' | 'purse' | 'fanny' => {
   return 'purse'; // default case
 };
 
-// Add helper function to check if accessory is a pen
-const isPen = (accessoryName: string): boolean => {
-  return accessoryName.toLowerCase().includes('pen 1');
+// Helper function to check if something is a pen
+const isPen = (input: string | LayerImage): boolean => {
+  if (typeof input === 'string') {
+    // Handle string input (accessoryName)
+    return input.toLowerCase().includes('pen 1');
+  } else {
+    // Handle LayerImage input
+    const isPenLayer = input.alt?.toLowerCase().includes('accessory-4') && 
+                      input.alt?.toLowerCase().includes('pen 1');
+    console.log('Layer check:', {
+      alt: input.alt,
+      isPen: isPenLayer
+    });
+    return isPenLayer;
+  }
 };
 
 export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
@@ -827,21 +839,22 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       loadedImages.forEach((img, index) => {
         const layer = layers[index];
         if (layer) {
-          // Add debug logging for pen detection
-          if (layer.alt?.toLowerCase().includes('accessory-4')) {
-            console.log('Found accessory-4:', layer.alt);
-            console.log('Is pen?', layer.alt?.toLowerCase().includes('pen 1'));
-          }
-
           ctx.save();
+          
+          // Enhanced debug logging
+          console.log('Processing layer:', {
+            alt: layer.alt,
+            zIndex: layer.zIndex,
+            isPen: isPen(layer),
+            isWaving
+          });
           
           // Apply wave animation if needed
           if (isWaving && (
             layer.alt?.toLowerCase().includes('sleeve-left') ||
             layer.alt?.toLowerCase().includes('arm-left') ||
             layer.alt?.toLowerCase().includes('top sleeve left') ||
-            (layer.alt?.toLowerCase().includes('accessory-4') && 
-             layer.alt?.toLowerCase().includes('pen 1'))
+            isPen(layer)
           )) {
             const time = Date.now() / 1000;
             
@@ -858,7 +871,18 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
             // Combine movements - shake only affects upward motion
             const finalAngle = baseAngle + (shake * pauseFactor);
             
-            // Apply same transformation to both arm/sleeve and pen
+            // Log animation values
+            console.log('Animation values:', {
+              time,
+              baseAngle,
+              isRaised,
+              shake,
+              pauseFactor,
+              finalAngle,
+              layerType: isPen(layer) ? 'pen' : 'arm/sleeve'
+            });
+
+            // Apply transformation
             ctx.translate(414, 414);
             ctx.rotate(finalAngle);
             ctx.translate(-414, -414);
