@@ -121,45 +121,62 @@ type LayerKey =
   | 'beard' 
   | 'face' 
   | 'accessory-2'
-  | 'accessory-1'    // Add accessory-1
+  | 'accessory-1'
   | 'hair-hat-front' 
-  | 'ear-right';
+  | 'ear-right'
+  | 'accessory-3-back'    // Behind torso (-1 file)
+  | 'accessory-3-middle'  // Between torso and arm (-2 file)
+  | 'accessory-3-front';  // In front of arm (-3 file)
 
 // Update the layerOrder object to put accessory-2 above accessory-1
 const layerOrder: Record<LayerKey, number> = {
   'arm-left': 1,      // Left arm at the back
-  'sleeve-left': 2,   // Left sleeve just in front of left arm, but behind torso
-  'body': 3,          // Body comes next
-  'bottom': 4,
-  'shoes': 4,         // Same level as bottom
-  'torso': 5,         // Torso above everything so far
-  'arm-right': 6,     // Right arm between torso and right sleeve
-  'sleeve-right': 7,  // Right sleeve above right arm
-  'accessory-4': 8,   // Accessory-4 above right sleeve
-  'ear-left': 9,
-  'hair-hat-back': 10,
-  'head': 11,
-  'beard': 11,        // Same level as head
-  'face': 12,
-  'accessory-1': 13,  // Glasses below accessory-2
-  'hair-hat-front': 14,
-  'ear-right': 15,
-  'accessory-2': 16   // Accessory-2 at the very top
+  'sleeve-left': 2,   // Left sleeve just in front of left arm
+  'accessory-3-middle': 3,  // Second file (-2) between left arm and body
+  'accessory-3-back': 4,    // First file (-1) behind body
+  'body': 5,          // Body comes next
+  'bottom': 5,        // Same level as body
+  'shoes': 5,         // Same level as body
+  'torso': 6,         // Torso above body
+  'accessory-3-front': 7,   // Third file (-3) in front of torso
+  'arm-right': 8,     // Right arm
+  'sleeve-right': 9,  // Right sleeve
+  'accessory-4': 10,  // Accessory-4 above sleeve
+  'ear-left': 11,
+  'hair-hat-back': 12,
+  'head': 13,
+  'beard': 13,
+  'face': 14,
+  'accessory-1': 15,
+  'hair-hat-front': 16,
+  'ear-right': 17,
+  'accessory-2': 18
 };
 
-// Add a function to get accessory values
+// Update the getAccessoryValue function with better logging
 const getAccessoryValue = (metadata: NFTMetadata, accessoryNumber: number): string | null => {
   if (!metadata?.raw?.metadata?.attributes) {
     console.log(`No attributes found in metadata for accessory-${accessoryNumber}`);
     return null;
   }
 
-  const accessoryTrait = metadata.raw.metadata.attributes.find(attr => 
-    attr.trait_type?.toLowerCase() === `accessory ${accessoryNumber}`
-  );
+  // Log all attributes to see what we're working with
+  console.log(`All attributes for accessory-${accessoryNumber}:`, metadata.raw.metadata.attributes);
+
+  // Try different possible formats of the trait type
+  const accessoryTrait = metadata.raw.metadata.attributes.find(attr => {
+    const traitType = attr.trait_type?.toLowerCase();
+    return traitType === `accessory ${accessoryNumber}` || 
+           traitType === `accessory-${accessoryNumber}` ||
+           traitType === `accessory${accessoryNumber}`;
+  });
 
   if (!accessoryTrait) {
-    console.log(`No accessory-${accessoryNumber} trait found`);
+    console.log(`No accessory-${accessoryNumber} trait found. Looking for:`, [
+      `accessory ${accessoryNumber}`,
+      `accessory-${accessoryNumber}`,
+      `accessory${accessoryNumber}`
+    ]);
     return null;
   }
 
@@ -167,7 +184,7 @@ const getAccessoryValue = (metadata: NFTMetadata, accessoryNumber: number): stri
   return accessoryTrait.value.toString();
 };
 
-// Update getHairHatValue function
+// Update getHairHatValue function to handle both "Hair/Hat" and "hair-hat" trait types
 const getHairHatValue = (metadata: NFTMetadata): string | null => {
   if (!metadata?.raw?.metadata?.attributes) {
     console.log('No attributes found in metadata');
@@ -175,7 +192,8 @@ const getHairHatValue = (metadata: NFTMetadata): string | null => {
   }
 
   const hairHatTrait = metadata.raw.metadata.attributes.find(attr => 
-    attr.trait_type?.toLowerCase() === 'hair/hat'
+    attr.trait_type?.toLowerCase() === 'hair/hat' || 
+    attr.trait_type?.toLowerCase() === 'hair-hat'
   );
 
   if (!hairHatTrait) {
@@ -227,24 +245,25 @@ const getBottomValue = (metadata: NFTMetadata): string | null => {
   return bottomTrait.value.toString();
 };
 
-// Add getAccessory2Value function
-const getAccessory2Value = (metadata: NFTMetadata): string | null => {
+// Update getAccessory2Value to handle multiple Accessory 2 traits
+const getAccessory2Value = (metadata: NFTMetadata): string[] | null => {
   if (!metadata?.raw?.metadata?.attributes) {
     console.log('No attributes found in metadata');
     return null;
   }
 
-  const accessory2Trait = metadata.raw.metadata.attributes.find(attr => 
+  // Find all Accessory 2 traits
+  const accessory2Traits = metadata.raw.metadata.attributes.filter(attr => 
     attr.trait_type?.toLowerCase() === 'accessory 2'
   );
 
-  if (!accessory2Trait) {
-    console.log('No accessory 2 trait found');
+  if (!accessory2Traits.length) {
+    console.log('No accessory 2 traits found');
     return null;
   }
 
-  console.log('Found accessory 2 trait:', accessory2Trait);
-  return accessory2Trait.value.toString();
+  console.log('Found accessory 2 traits:', accessory2Traits);
+  return accessory2Traits.map(trait => trait.value.toString());
 };
 
 // Add getShoesValue function
@@ -317,6 +336,39 @@ interface CanvasProps {
 // Add type for files array
 type TraitFile = string;
 
+// First, add a helper function to check if an accessory is a mask
+const isMask = (accessoryName: string): boolean => {
+  return accessoryName.toLowerCase().includes('mask');
+};
+
+// Update helper function to check only for Hat Helmet 1 and 2
+const isFullHeadwear = (hairHatValue: string): boolean => {
+  const value = hairHatValue.toLowerCase();
+  return value.includes('hat helmet 1') || value.includes('hat helmet 2');
+};
+
+// Add helper to check if an accessory is a backpack
+const isBackpack = (accessoryName: string): boolean => {
+  return accessoryName.toLowerCase().includes('bag backpack');
+};
+
+// Update helper to check if an accessory is any type of bag
+const isBag = (accessoryName: string): boolean => {
+  const name = accessoryName.toLowerCase();
+  return name.includes('bag backpack') || 
+         name.includes('bag purse') || 
+         name.includes('bag fanny');
+};
+
+// Helper to determine bag type
+const getBagType = (accessoryName: string): 'backpack' | 'purse' | 'fanny' => {
+  const name = accessoryName.toLowerCase();
+  if (name.includes('backpack')) return 'backpack';
+  if (name.includes('purse')) return 'purse';
+  if (name.includes('fanny')) return 'fanny';
+  return 'purse'; // default case
+};
+
 export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   if (!metadata) {
@@ -348,6 +400,10 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       if (!metadata) return;
 
       try {
+        // Add this at the start of the function
+        console.log('Full metadata:', metadata);
+        console.log('Metadata attributes:', metadata.raw?.metadata?.attributes);
+
         const skinTone = getTraitValue(metadata, 'skin');
         if (!skinTone) return;
 
@@ -370,7 +426,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         });
 
         // Load accessory-4 metadata
-        const accessory4Value = getAccessoryValue(metadata, 'Accessory 4');
+        const accessory4Value = getAccessoryValue(metadata, 4);
         if (accessory4Value) {
           const accessory4Metadata = await fetch('/Assets/traits/metadata/accessory-4_metadata.json')
             .then(res => res.json());
@@ -393,29 +449,38 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
 
         // Load hair/hat metadata
         const hairHatValue = getHairHatValue(metadata);
+        console.log('Hair/Hat value:', hairHatValue); // Add debug logging
 
         if (hairHatValue) {
           const hairHatMetadata = await fetch('/Assets/traits/metadata/hair-hat_metadata.json')
             .then(res => res.json());
           
-          // Find the matching hair/hat entry by exact name match first
+          console.log('Hair/Hat metadata:', hairHatMetadata); // Add debug logging
+          
+          // Find the matching hair/hat entry by exact name match
           let hairHatEntry = Object.entries(hairHatMetadata).find(([_, data]) => 
             (data as any).name === hairHatValue
           );
 
-          // If no exact match, then try with base name
+          // If no exact match found, try matching without color/variant
           if (!hairHatEntry) {
             const baseName = hairHatValue.split(' - ')[0];
+            console.log('Trying base name match:', baseName); // Add debug logging
             
             hairHatEntry = Object.entries(hairHatMetadata).find(([_, data]) => 
-              (data as any).name === baseName
+              (data as any).name.startsWith(baseName)
             );
           }
 
           if (hairHatEntry) {
             const [_, data] = hairHatEntry;
             const files = (data as any).files as TraitFile[];
+            const isFullCoverage = isFullHeadwear(hairHatValue);
             
+            console.log('Found hair/hat entry:', hairHatEntry); // Add debug logging
+            console.log('Files:', files); // Add debug logging
+            console.log('Is full coverage:', isFullCoverage); // Add debug logging
+
             // If there are multiple files, load them in different positions
             if (files.length > 1) {
               // Add the back layer (-1 file)
@@ -427,6 +492,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
                   alt: `Hair/Hat Back - ${hairHatValue}`
                 };
                 newLayers.push(backLayer);
+                console.log('Added back layer:', backLayer); // Add debug logging
               }
 
               // Add the front layer (-2 file)
@@ -438,16 +504,29 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
                   alt: `Hair/Hat Front - ${hairHatValue}`
                 };
                 newLayers.push(frontLayer);
+                console.log('Added front layer:', frontLayer); // Add debug logging
               }
-            } else {
-              // Single file case - place in front of head
+            } else if (files.length === 1) {
+              // Single file case
               const hairHatLayer = {
                 src: `/Assets/traits/hair-hat/${files[0]}`,
-                zIndex: layerOrder['hair-hat-front'], // Changed from 'hair-hat-back' to 'hair-hat-front'
+                zIndex: layerOrder['hair-hat-front'],
                 alt: `Hair/Hat - ${hairHatValue}`
               };
               newLayers.push(hairHatLayer);
+              console.log('Added single layer:', hairHatLayer); // Add debug logging
             }
+
+            // Adjust ear-right z-index if it's a hat or helmet
+            if (isFullCoverage) {
+              const earRightLayer = newLayers.find(layer => layer.alt === 'base-ear-right');
+              if (earRightLayer) {
+                earRightLayer.zIndex = layerOrder['hair-hat-back'] - 1;
+                console.log('Adjusted ear-right z-index:', earRightLayer); // Add debug logging
+              }
+            }
+          } else {
+            console.log('No matching hair/hat entry found for:', hairHatValue); // Add debug logging
           }
         }
 
@@ -520,31 +599,77 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         }
 
         // Load accessory-2 metadata and layer
-        const accessory2Value = getAccessory2Value(metadata);
-
-        if (accessory2Value) {
+        const accessory2Values = getAccessory2Value(metadata);
+        if (accessory2Values) {
           const accessory2Metadata = await fetch('/Assets/traits/metadata/accessory-2_metadata.json')
             .then(res => res.json());
-          
-          // Find the matching accessory-2 entry
-          const accessory2Entry = Object.entries(accessory2Metadata).find(([_, data]) => 
-            (data as any).name === accessory2Value
-          );
+          const accessory3Metadata = await fetch('/Assets/traits/metadata/accessory-3_metadata.json')
+            .then(res => res.json());
 
-          if (accessory2Entry) {
-            const [_, data] = accessory2Entry;
-            const file = (data as any).files[0];
+          for (const accessory2Value of accessory2Values) {
+            console.log('Processing accessory 2 value:', accessory2Value);
             
-            // Determine if it's a beard (check if name starts with "Beard")
-            const isBeard = accessory2Value.toLowerCase().startsWith('beard');
-            
-            // Add accessory-2 layer with appropriate z-index
-            const accessory2Layer = {
-              src: `/Assets/traits/accessory-2/${file}`,
-              zIndex: isBeard ? layerOrder['beard'] : layerOrder['accessory-2'],
-              alt: `Accessory 2 - ${accessory2Value}`
-            };
-            newLayers.push(accessory2Layer);
+            // Check if it's a backpack
+            if (isBackpack(accessory2Value)) {
+              console.log('Found backpack:', accessory2Value);
+              
+              const backpackEntry = Object.entries(accessory3Metadata)
+                .find(([_, data]) => (data as any).name === accessory2Value);
+
+              if (backpackEntry) {
+                const [_, data] = backpackEntry;
+                const files = (data as any).files;
+                console.log('Backpack files:', files);
+
+                // Add middle layer (-2 file) between left arm and body
+                const middleLayer = {
+                  src: `/Assets/traits/accessory-3/${files[1]}`,
+                  zIndex: layerOrder['accessory-3-middle'],
+                  alt: `Accessory 3 Middle - ${accessory2Value}`
+                };
+                newLayers.push(middleLayer);
+                console.log('Added backpack middle layer:', middleLayer);
+
+                // Add back layer (-1 file) behind body
+                const backLayer = {
+                  src: `/Assets/traits/accessory-3/${files[0]}`,
+                  zIndex: layerOrder['accessory-3-back'],
+                  alt: `Accessory 3 Back - ${accessory2Value}`
+                };
+                newLayers.push(backLayer);
+                console.log('Added backpack back layer:', backLayer);
+
+                // Add front layer (-3 file) in front of torso
+                const frontLayer = {
+                  src: `/Assets/traits/accessory-3/${files[2]}`,
+                  zIndex: layerOrder['accessory-3-front'],
+                  alt: `Accessory 3 Front - ${accessory2Value}`
+                };
+                newLayers.push(frontLayer);
+                console.log('Added backpack front layer:', frontLayer);
+              }
+            } else {
+              // Handle regular accessory-2 items (masks, beards, etc.)
+              const accessory2Entry = Object.entries(accessory2Metadata)
+                .find(([_, data]) => (data as any).name === accessory2Value);
+
+              if (accessory2Entry) {
+                const [_, data] = accessory2Entry;
+                const file = (data as any).files[0];
+                
+                const isMaskItem = isMask(accessory2Value);
+                const isBeard = accessory2Value.toLowerCase().startsWith('beard');
+                
+                const accessory2Layer = {
+                  src: `/Assets/traits/accessory-2/${file}`,
+                  zIndex: isBeard ? layerOrder['beard'] : 
+                         isMaskItem ? layerOrder['accessory-1'] - 1 : 
+                         layerOrder['accessory-2'],
+                  alt: `Accessory 2 - ${accessory2Value}`
+                };
+                newLayers.push(accessory2Layer);
+              }
+            }
           }
         }
 
@@ -581,7 +706,9 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
           const accessory1Metadata = await fetch('/Assets/traits/metadata/accessory-1_metadata.json')
             .then(res => res.json());
           
-          // Find the matching accessory-1 entry
+          const accessory2Value = getAccessoryValue(metadata, 2);
+          const isMaskPresent = accessory2Value && isMask(accessory2Value);
+          
           const accessory1Entry = Object.entries(accessory1Metadata).find(([_, data]) => 
             (data as any).name === accessory1Value
           );
@@ -590,14 +717,57 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
             const [_, data] = accessory1Entry;
             const file = (data as any).files[0];
             
-            // Add accessory-1 layer using the correct file name
             const accessory1Layer = {
               src: `/Assets/traits/accessory-1/${file}`,
-              zIndex: layerOrder['accessory-1'],
+              // If accessory-2 is a mask, put accessory-1 above it
+              zIndex: isMaskPresent ? layerOrder['accessory-2'] : layerOrder['accessory-1'],
               alt: `Accessory 1 - ${accessory1Value}`
             };
             newLayers.push(accessory1Layer);
             console.log('Added accessory-1 layer:', accessory1Layer);
+          }
+        }
+
+        // Load accessory-3 metadata and layer
+        const accessory3Value = getAccessoryValue(metadata, 3);
+        if (accessory3Value) {
+          const accessory3Metadata = await fetch('/Assets/traits/metadata/accessory-3_metadata.json')
+            .then(res => res.json());
+          
+          const accessory3Entry = Object.entries(accessory3Metadata).find(([_, data]) => 
+            (data as any).name === accessory3Value
+          );
+
+          if (accessory3Entry) {
+            const [_, data] = accessory3Entry;
+            const files = (data as any).files;
+            
+            // Check if it's a backpack (has multiple files)
+            if (files.length === 3 && accessory3Value.toLowerCase().includes('backpack')) {
+              // Add back layer (-1 file) behind torso
+              const backLayer = {
+                src: `/Assets/traits/accessory-3/${files[0]}`, // First file (-1)
+                zIndex: layerOrder['accessory-3-back'],
+                alt: `Accessory 3 Back - ${accessory3Value}`
+              };
+              newLayers.push(backLayer);
+
+              // Add front layers (-2 and -3 files) in front of torso
+              const frontLayers = files.slice(1).map((file: string, index: number) => ({
+                src: `/Assets/traits/accessory-3/${file}`,
+                zIndex: layerOrder['accessory-3-front'],
+                alt: `Accessory 3 Front ${index + 1} - ${accessory3Value}`
+              }));
+              newLayers.push(...frontLayers);
+            } else {
+              // Handle non-backpack accessories (single layer)
+              const accessory3Layer = {
+                src: `/Assets/traits/accessory-3/${files[0]}`,
+                zIndex: layerOrder['accessory-3-front'],
+                alt: `Accessory 3 - ${accessory3Value}`
+              };
+              newLayers.push(accessory3Layer);
+            }
           }
         }
 

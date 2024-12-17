@@ -106,5 +106,57 @@
     "files": [
       "12.png"
     ]
+  },
+  "13": {
+    "name": "Bag Backpack 1 - Blue",
+    "urls": [
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/13-1.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/13-2.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/13-3.png"
+    ],
+    "files": [
+      "13-1.png",
+      "13-2.png",
+      "13-3.png"
+    ]
+  },
+  "14": {
+    "name": "Bag Backpack 1 - Red",
+    "urls": [
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/14-1.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/14-2.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/14-3.png"
+    ],
+    "files": [
+      "14-1.png",
+      "14-2.png",
+      "14-3.png"
+    ]
+  },
+  "15": {
+    "name": "Bag Backpack 1 - White",
+    "urls": [
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/15-1.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/15-2.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/15-3.png"
+    ],
+    "files": [
+      "15-1.png",
+      "15-2.png",
+      "15-3.png"
+    ]
+  },
+  "16": {
+    "name": "Bag Backpack 1 - Yellow",
+    "urls": [
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/16-1.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/16-2.png",
+      "https://cdn.transientlabs.xyz/tlx/Deekay-Folder-Tree_Final/accessory-3/16-3.png"
+    ],
+    "files": [
+      "16-1.png",
+      "16-2.png",
+      "16-3.png"
+    ]
   }
 }
