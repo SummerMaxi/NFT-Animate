@@ -120,36 +120,51 @@ type LayerKey =
   | 'head' 
   | 'beard' 
   | 'face' 
-  | 'accessory-2' 
+  | 'accessory-2'
+  | 'accessory-1'    // Add accessory-1
   | 'hair-hat-front' 
   | 'ear-right';
 
-// Update the layerOrder object with the new z-index ordering
+// Update the layerOrder object to put accessory-2 above accessory-1
 const layerOrder: Record<LayerKey, number> = {
-  'arm-left': 1,
-  'body': 2,
-  'bottom': 3,
-  'shoes': 3,     // Same level as bottom
-  'arm-right': 4,
-  'sleeve-left': 5,
-  'torso': 5,     // Same level as sleeve-left
-  'sleeve-right': 6,
-  'accessory-4': 7,
-  'ear-left': 7,
-  'hair-hat-back': 8,
-  'head': 9,
-  'beard': 9,     // Same level as head
-  'face': 10,
-  'accessory-2': 11,
-  'hair-hat-front': 12,
-  'ear-right': 13
+  'arm-left': 1,      // Left arm at the back
+  'sleeve-left': 2,   // Left sleeve just in front of left arm, but behind torso
+  'body': 3,          // Body comes next
+  'bottom': 4,
+  'shoes': 4,         // Same level as bottom
+  'torso': 5,         // Torso above everything so far
+  'arm-right': 6,     // Right arm between torso and right sleeve
+  'sleeve-right': 7,  // Right sleeve above right arm
+  'accessory-4': 8,   // Accessory-4 above right sleeve
+  'ear-left': 9,
+  'hair-hat-back': 10,
+  'head': 11,
+  'beard': 11,        // Same level as head
+  'face': 12,
+  'accessory-1': 13,  // Glasses below accessory-2
+  'hair-hat-front': 14,
+  'ear-right': 15,
+  'accessory-2': 16   // Accessory-2 at the very top
 };
 
-// Add this helper function to get accessory values
-const getAccessoryValue = (metadata: NFTMetadata, accessoryType: string) => {
-  return metadata?.raw?.metadata?.attributes?.find(
-    attr => attr.trait_type.toLowerCase() === accessoryType.toLowerCase()
-  )?.value;
+// Add a function to get accessory values
+const getAccessoryValue = (metadata: NFTMetadata, accessoryNumber: number): string | null => {
+  if (!metadata?.raw?.metadata?.attributes) {
+    console.log(`No attributes found in metadata for accessory-${accessoryNumber}`);
+    return null;
+  }
+
+  const accessoryTrait = metadata.raw.metadata.attributes.find(attr => 
+    attr.trait_type?.toLowerCase() === `accessory ${accessoryNumber}`
+  );
+
+  if (!accessoryTrait) {
+    console.log(`No accessory-${accessoryNumber} trait found`);
+    return null;
+  }
+
+  console.log(`Found accessory-${accessoryNumber} trait:`, accessoryTrait);
+  return accessoryTrait.value.toString();
 };
 
 // Update getHairHatValue function
@@ -559,6 +574,33 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
           }
         }
 
+        // Load accessory-1 (glasses)
+        const accessory1Value = getAccessoryValue(metadata, 1);
+        if (accessory1Value) {
+          // Load the accessory-1 metadata file
+          const accessory1Metadata = await fetch('/Assets/traits/metadata/accessory-1_metadata.json')
+            .then(res => res.json());
+          
+          // Find the matching accessory-1 entry
+          const accessory1Entry = Object.entries(accessory1Metadata).find(([_, data]) => 
+            (data as any).name === accessory1Value
+          );
+
+          if (accessory1Entry) {
+            const [_, data] = accessory1Entry;
+            const file = (data as any).files[0];
+            
+            // Add accessory-1 layer using the correct file name
+            const accessory1Layer = {
+              src: `/Assets/traits/accessory-1/${file}`,
+              zIndex: layerOrder['accessory-1'],
+              alt: `Accessory 1 - ${accessory1Value}`
+            };
+            newLayers.push(accessory1Layer);
+            console.log('Added accessory-1 layer:', accessory1Layer);
+          }
+        }
+
         // Sort layers by zIndex
         newLayers.sort((a, b) => a.zIndex - b.zIndex);
         setLayers(newLayers);
@@ -663,6 +705,14 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       }
     };
   }, [layers, isWaving, backgroundColor]);
+
+  useEffect(() => {
+    if (metadata) {
+      const accessory1Value = getAccessoryValue(metadata, 1);
+      console.log('Accessory 1 value from getter:', accessory1Value);
+      console.log('Raw metadata attributes:', metadata.raw?.metadata?.attributes);
+    }
+  }, [metadata]);
 
   return (
     <Container style={{ backgroundColor }}>
