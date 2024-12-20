@@ -412,6 +412,34 @@ const isAccessory3Item = (value: string): boolean => {
   return value.toLowerCase().startsWith('bag ');  // All bags are accessory-3 items
 };
 
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const LoaderContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+`;
+
+const Loader = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid #2563eb;
+  border-radius: 50%;
+  animation: ${spin} 1s linear infinite;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
 export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   if (!metadata) {
@@ -430,6 +458,9 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
 
   // Add this to track previous text to prevent unnecessary updates
   const prevTextRef = useRef(bubbleText);
+
+  // Add this state near other state declarations
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Skip text updates if recording is in progress
@@ -911,7 +942,6 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         img.onload = () => resolve(img);
         img.onerror = (error) => {
           console.error(`Failed to load image: ${src}`, error);
-          // Provide a fallback or placeholder image instead of rejecting
           resolve(getFallbackImage());
         };
         img.src = src;
@@ -927,13 +957,16 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
 
     const loadAllImages = async () => {
       try {
+        setIsLoading(true);
         for (const layer of layers) {
           const img = await loadImage(layer.src);
           loadedImages.push(img);
         }
+        setIsLoading(false);
         startAnimation();
       } catch (error) {
         console.error('Error loading images:', error);
+        setIsLoading(false);
       }
     };
 
@@ -989,7 +1022,6 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       if (frameId) {
         cancelAnimationFrame(frameId);
       }
-      // Add this to clean up loaded images
       loadedImages.forEach(img => {
         img.onload = null;
         img.onerror = null;
@@ -1010,6 +1042,11 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
     <Container style={{ backgroundColor }}>
       <div className="relative w-full h-full">
         <canvas ref={canvasRef} width={828} height={828} />
+        {isLoading && (
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
+        )}
         <div className="absolute inset-0">
           <ChatBubble
             text={bubbleText}
