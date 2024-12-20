@@ -407,6 +407,11 @@ const normalizeShoeValue = (value: string): string => {
   return value.replace(/\s+/g, ' ').trim();
 };
 
+// Add this helper function to check if an accessory is actually an accessory-3 item
+const isAccessory3Item = (value: string): boolean => {
+  return value.toLowerCase().startsWith('bag ');  // All bags are accessory-3 items
+};
+
 export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   if (!metadata) {
@@ -690,44 +695,58 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
           for (const accessory2Value of accessory2Values) {
             console.log('Processing accessory 2 value:', accessory2Value);
             
-            // Check if it's a backpack
-            if (isBackpack(accessory2Value)) {
-              console.log('Found backpack:', accessory2Value);
+            // First check if this is actually an accessory-3 item
+            if (isAccessory3Item(accessory2Value)) {
+              console.log('Found accessory-3 item in accessory-2:', accessory2Value);
               
-              const backpackEntry = Object.entries(accessory3Metadata)
+              // Look for the item in accessory-3 metadata
+              const accessory3Entry = Object.entries(accessory3Metadata)
                 .find(([_, data]) => (data as any).name === accessory2Value);
 
-              if (backpackEntry) {
-                const [_, data] = backpackEntry;
+              if (accessory3Entry) {
+                const [_, data] = accessory3Entry;
                 const files = (data as any).files;
-                console.log('Backpack files:', files);
+                
+                // Check if it's a backpack
+                if (isBackpack(accessory2Value) && files.length === 3) {
+                  console.log('Found backpack:', accessory2Value);
+                  
+                  // Add middle layer (-2 file) between left arm and body
+                  const middleLayer = {
+                    src: `/Assets/traits/accessory-3/${files[1]}`,
+                    zIndex: layerOrder['accessory-3-middle'],
+                    alt: `Accessory 3 Middle - ${accessory2Value}`
+                  };
+                  newLayers.push(middleLayer);
+                  console.log('Added backpack middle layer:', middleLayer);
 
-                // Add middle layer (-2 file) between left arm and body
-                const middleLayer = {
-                  src: `/Assets/traits/accessory-3/${files[1]}`,
-                  zIndex: layerOrder['accessory-3-middle'],
-                  alt: `Accessory 3 Middle - ${accessory2Value}`
-                };
-                newLayers.push(middleLayer);
-                console.log('Added backpack middle layer:', middleLayer);
+                  // Add back layer (-1 file) behind body
+                  const backLayer = {
+                    src: `/Assets/traits/accessory-3/${files[0]}`,
+                    zIndex: layerOrder['accessory-3-back'],
+                    alt: `Accessory 3 Back - ${accessory2Value}`
+                  };
+                  newLayers.push(backLayer);
+                  console.log('Added backpack back layer:', backLayer);
 
-                // Add back layer (-1 file) behind body
-                const backLayer = {
-                  src: `/Assets/traits/accessory-3/${files[0]}`,
-                  zIndex: layerOrder['accessory-3-back'],
-                  alt: `Accessory 3 Back - ${accessory2Value}`
-                };
-                newLayers.push(backLayer);
-                console.log('Added backpack back layer:', backLayer);
-
-                // Add front layer (-3 file) in front of torso
-                const frontLayer = {
-                  src: `/Assets/traits/accessory-3/${files[2]}`,
-                  zIndex: layerOrder['accessory-3-front'],
-                  alt: `Accessory 3 Front - ${accessory2Value}`
-                };
-                newLayers.push(frontLayer);
-                console.log('Added backpack front layer:', frontLayer);
+                  // Add front layer (-3 file) in front of torso
+                  const frontLayer = {
+                    src: `/Assets/traits/accessory-3/${files[2]}`,
+                    zIndex: layerOrder['accessory-3-front'],
+                    alt: `Accessory 3 Front - ${accessory2Value}`
+                  };
+                  newLayers.push(frontLayer);
+                  console.log('Added backpack front layer:', frontLayer);
+                } else {
+                  // If it's a single file (like Fanny Pack)
+                  const accessory3Layer = {
+                    src: `/Assets/traits/accessory-3/${files[0]}`,
+                    zIndex: layerOrder['accessory-3-front'],
+                    alt: `Accessory 3 - ${accessory2Value}`
+                  };
+                  newLayers.push(accessory3Layer);
+                  console.log('Added accessory-3 layer:', accessory3Layer);
+                }
               }
             } else {
               // Handle regular accessory-2 items (masks, beards, etc.)
