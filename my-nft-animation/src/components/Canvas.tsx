@@ -64,9 +64,15 @@ const TRAIT_TYPE_MAPPING: Record<string, string[]> = {
   // 'FACE': ['Face']
 };
 
+// Add type guard
+const isValidMetadata = (metadata: any): metadata is NFTMetadata => {
+  return metadata?.raw?.metadata?.attributes !== undefined;
+};
+
+// Use in getter functions
 const getTraitValue = (metadata: NFTMetadata, traitType: string): string | null => {
-  if (!metadata?.raw?.metadata?.attributes) {
-    console.log('No attributes found in metadata');
+  if (!isValidMetadata(metadata)) {
+    console.log('Invalid metadata structure');
     return null;
   }
 
@@ -128,29 +134,33 @@ type LayerKey =
   | 'accessory-3-middle'  // Between torso and arm (-2 file)
   | 'accessory-3-front';  // In front of arm (-3 file)
 
-// Update the layerOrder object to put accessory-2 above accessory-1
-const layerOrder: Record<LayerKey, number> = {
-  'arm-left': 1,      // Left arm at the back
-  'sleeve-left': 2,   // Left sleeve just in front of left arm
-  'accessory-3-middle': 3,  // Second file (-2) between left arm and body
-  'accessory-3-back': 4,    // First file (-1) behind body
-  'body': 5,          // Body comes next
-  'bottom': 5,        // Same level as body
-  'shoes': 5,         // Same level as body
-  'torso': 6,         // Torso above body
-  'accessory-3-front': 7,   // Third file (-3) in front of torso
-  'arm-right': 8,     // Right arm
-  'sleeve-right': 9,  // Right sleeve
-  'accessory-4': 10,  // Accessory-4 above sleeve
-  'ear-left': 11,
-  'hair-hat-back': 12,
-  'head': 13,
-  'beard': 13,
-  'face': 14,
-  'accessory-1': 15,
-  'hair-hat-front': 16,
-  'ear-right': 17,
-  'accessory-2': 18
+// First update the layerOrder to include specific witch hat layers
+const layerOrder: Record<LayerKey | string, number> = {
+  'arm-left': 10,      
+  'sleeve-left': 20,   
+  'witch-hat-back': 25,    // -1 part (lowest)
+  'accessory-3-middle': 30,
+  'accessory-3-back': 40,
+  'body': 50,         
+  'bottom': 51,       
+  'shoes': 52,        
+  'torso': 60,         
+  'accessory-3-front': 70,   
+  'arm-right': 80,     
+  'sleeve-right': 90,  
+  'accessory-4': 100,  
+  'ear-left': 110,
+  'hair-hat-back': 120,
+  'head': 130,
+  'beard': 130,
+  'face': 140,
+  'accessory-1': 150,
+  'hair-hat-front': 160,
+  'witch-hat-front1': 165,  // -2 part
+  'witch-hat-front2': 166,  // -3 part (below right ear)
+  'ear-right': 170,         // Right ear above -3 part
+  'witch-hat-front3': 175,  // -4 part (highest)
+  'accessory-2': 180
 };
 
 // Update the getAccessoryValue function with better logging
@@ -372,18 +382,29 @@ const getBagType = (accessoryName: string): 'backpack' | 'purse' | 'fanny' => {
 // Helper function to check if something is a pen
 const isPen = (input: string | LayerImage): boolean => {
   if (typeof input === 'string') {
-    // Handle string input (accessoryName)
     return input.toLowerCase().includes('pen 1');
   } else {
-    // Handle LayerImage input
-    const isPenLayer = input.alt?.toLowerCase().includes('accessory-4') && 
-                      input.alt?.toLowerCase().includes('pen 1');
-    console.log('Layer check:', {
-      alt: input.alt,
-      isPen: isPenLayer
-    });
-    return isPenLayer;
+    return input.alt?.toLowerCase().includes('accessory-4') && 
+           input.alt?.toLowerCase().includes('pen 1');
   }
+};
+
+const fetchMetadata = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch metadata from ${url}:`, error);
+    return null;
+  }
+};
+
+// Add this helper function to normalize shoe names
+const normalizeShoeValue = (value: string): string => {
+  return value.replace(/\s+/g, ' ').trim();
 };
 
 export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
@@ -413,6 +434,8 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
     }
     prevTextRef.current = bubbleText;
     
+    let isMounted = true;  // Add mounted flag
+    
     const loadLayers = async () => {
       if (!metadata) return;
 
@@ -424,9 +447,9 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         const skinTone = getTraitValue(metadata, 'skin');
         if (!skinTone) return;
 
-        const skinMapping = await fetch('/Assets/traits/metadata/base_skin_mapping.json')
-          .then(res => res.json());
-        
+        const skinMapping = await fetchMetadata('/Assets/traits/metadata/base_skin_mapping.json');
+        if (!skinMapping) return;
+
         const basePaths = skinMapping[skinTone];
         if (!basePaths) return;
 
@@ -445,8 +468,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         // Load accessory-4 metadata
         const accessory4Value = getAccessoryValue(metadata, 4);
         if (accessory4Value) {
-          const accessory4Metadata = await fetch('/Assets/traits/metadata/accessory-4_metadata.json')
-            .then(res => res.json());
+          const accessory4Metadata = await fetchMetadata('/Assets/traits/metadata/accessory-4_metadata.json');
           
           // Find the matching accessory by name
           const accessoryEntry = Object.entries(accessory4Metadata)
@@ -469,8 +491,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         console.log('Hair/Hat value:', hairHatValue); // Add debug logging
 
         if (hairHatValue) {
-          const hairHatMetadata = await fetch('/Assets/traits/metadata/hair-hat_metadata.json')
-            .then(res => res.json());
+          const hairHatMetadata = await fetchMetadata('/Assets/traits/metadata/hair-hat_metadata.json');
           
           console.log('Hair/Hat metadata:', hairHatMetadata); // Add debug logging
           
@@ -493,13 +514,60 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
             const [_, data] = hairHatEntry;
             const files = (data as any).files as TraitFile[];
             const isFullCoverage = isFullHeadwear(hairHatValue);
+            const isWitchHat = hairHatValue.toLowerCase().includes('witch');
             
-            console.log('Found hair/hat entry:', hairHatEntry); // Add debug logging
-            console.log('Files:', files); // Add debug logging
-            console.log('Is full coverage:', isFullCoverage); // Add debug logging
+            console.log('Found hair/hat entry:', hairHatEntry);
+            console.log('Files:', files);
+            console.log('Is full coverage:', isFullCoverage);
+            console.log('Is witch hat:', isWitchHat);
 
-            // If there are multiple files, load them in different positions
-            if (files.length > 1) {
+            if (isWitchHat && files.length === 4) {
+              // Handle witch hat's 4 parts
+              // For witch hats, the files are ordered:
+              // files[0] = -1.png (back part)
+              // files[1] = -2.png (middle part)
+              // files[2] = -3.png (front part)
+              // files[3] = -4.png (top front part that should be most visible)
+              
+              // Back part (-1) goes behind head/below trunk
+              const backLayer = {
+                src: `/Assets/traits/hair-hat/${files[0]}`,
+                zIndex: layerOrder['witch-hat-back'],
+                alt: `Hair/Hat Back - ${hairHatValue}`
+              };
+              newLayers.push(backLayer);
+
+              // Middle part (-2)
+              const middleLayer = {
+                src: `/Assets/traits/hair-hat/${files[1]}`,
+                zIndex: layerOrder['witch-hat-front1'],
+                alt: `Hair/Hat Middle - ${hairHatValue}`
+              };
+              newLayers.push(middleLayer);
+
+              // Front part (-3)
+              const frontLayer = {
+                src: `/Assets/traits/hair-hat/${files[2]}`,
+                zIndex: layerOrder['witch-hat-front2'],
+                alt: `Hair/Hat Front - ${hairHatValue}`
+              };
+              newLayers.push(frontLayer);
+
+              // Top front part (-4) should be most visible
+              const topFrontLayer = {
+                src: `/Assets/traits/hair-hat/${files[3]}`,
+                zIndex: layerOrder['witch-hat-front3'],  // New highest z-index
+                alt: `Hair/Hat Top Front - ${hairHatValue}`
+              };
+              newLayers.push(topFrontLayer);
+
+              console.log('Added witch hat layers:', {
+                back: backLayer,
+                middle: middleLayer,
+                front: frontLayer,
+                topFront: topFrontLayer
+              });
+            } else if (files.length > 1) {
               // Add the back layer (-1 file)
               const backFile = files.find((f: string) => f.includes('-1'));
               if (backFile) {
@@ -551,8 +619,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         const topValue = getTopValue(metadata);
 
         if (topValue) {
-          const topMetadata = await fetch('/Assets/traits/metadata/top_metadata.json')
-            .then(res => res.json());
+          const topMetadata = await fetchMetadata('/Assets/traits/metadata/top_metadata.json');
           
           // Find the matching top entry
           const topEntry = Object.entries(topMetadata).find(([_, data]) => 
@@ -593,8 +660,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         const bottomValue = getBottomValue(metadata);
 
         if (bottomValue) {
-          const bottomMetadata = await fetch('/Assets/traits/metadata/bottom_metadata.json')
-            .then(res => res.json());
+          const bottomMetadata = await fetchMetadata('/Assets/traits/metadata/bottom_metadata.json');
           
           // Find the matching bottom entry
           const bottomEntry = Object.entries(bottomMetadata).find(([_, data]) => 
@@ -618,10 +684,8 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         // Load accessory-2 metadata and layer
         const accessory2Values = getAccessory2Value(metadata);
         if (accessory2Values) {
-          const accessory2Metadata = await fetch('/Assets/traits/metadata/accessory-2_metadata.json')
-            .then(res => res.json());
-          const accessory3Metadata = await fetch('/Assets/traits/metadata/accessory-3_metadata.json')
-            .then(res => res.json());
+          const accessory2Metadata = await fetchMetadata('/Assets/traits/metadata/accessory-2_metadata.json');
+          const accessory3Metadata = await fetchMetadata('/Assets/traits/metadata/accessory-3_metadata.json');
 
           for (const accessory2Value of accessory2Values) {
             console.log('Processing accessory 2 value:', accessory2Value);
@@ -692,27 +756,37 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
 
         // Load shoes metadata and layer
         const shoesValue = getShoesValue(metadata);
+        console.log('Shoes value:', shoesValue);
 
         if (shoesValue) {
-          const shoesMetadata = await fetch('/Assets/traits/metadata/shoes_metadata.json')
-            .then(res => res.json());
+          console.log('Loading shoes:', shoesValue);
+          const shoesMetadata = await fetchMetadata('/Assets/traits/metadata/shoes_metadata.json');
+          console.log('Shoes metadata:', shoesMetadata);
           
-          // Find the matching shoes entry
-          const shoesEntry = Object.entries(shoesMetadata).find(([_, data]) => 
-            (data as any).name === shoesValue
-          );
+          // Find the matching shoes entry, normalizing the names for comparison
+          const shoesEntry = Object.entries(shoesMetadata).find(([_, data]) => {
+            const metadataName = normalizeShoeValue((data as any).name);
+            const valueToMatch = normalizeShoeValue(shoesValue);
+            const match = metadataName === valueToMatch;
+            console.log('Comparing shoes:', { metadataName, valueToMatch, match });
+            return match;
+          });
 
           if (shoesEntry) {
             const [_, data] = shoesEntry;
             const file = (data as any).files[0];
+            console.log('Found shoes file:', file);
             
-            // Add shoes layer
             const shoesLayer = {
               src: `/Assets/traits/shoes/${file}`,
               zIndex: layerOrder['shoes'],
               alt: `Shoes - ${shoesValue}`
             };
+            console.log('Adding shoes layer:', shoesLayer);
             newLayers.push(shoesLayer);
+          } else {
+            console.log('No matching shoes entry found for:', shoesValue);
+            console.log('Available shoes:', Object.values(shoesMetadata).map((d: any) => d.name));
           }
         }
 
@@ -720,8 +794,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         const accessory1Value = getAccessoryValue(metadata, 1);
         if (accessory1Value) {
           // Load the accessory-1 metadata file
-          const accessory1Metadata = await fetch('/Assets/traits/metadata/accessory-1_metadata.json')
-            .then(res => res.json());
+          const accessory1Metadata = await fetchMetadata('/Assets/traits/metadata/accessory-1_metadata.json');
           
           const accessory2Value = getAccessoryValue(metadata, 2);
           const isMaskPresent = accessory2Value && isMask(accessory2Value);
@@ -748,8 +821,7 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         // Load accessory-3 metadata and layer
         const accessory3Value = getAccessoryValue(metadata, 3);
         if (accessory3Value) {
-          const accessory3Metadata = await fetch('/Assets/traits/metadata/accessory-3_metadata.json')
-            .then(res => res.json());
+          const accessory3Metadata = await fetchMetadata('/Assets/traits/metadata/accessory-3_metadata.json');
           
           const accessory3Entry = Object.entries(accessory3Metadata).find(([_, data]) => 
             (data as any).name === accessory3Value
@@ -790,14 +862,20 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
 
         // Sort layers by zIndex
         newLayers.sort((a, b) => a.zIndex - b.zIndex);
-        setLayers(newLayers);
 
+        if (isMounted) {  // Only update state if component is mounted
+          setLayers(newLayers);
+        }
       } catch (error) {
         console.error('Error loading layers:', error);
       }
     };
 
     loadLayers();
+
+    return () => {
+      isMounted = false;  // Cleanup
+    };
   }, [metadata]);
 
   useEffect(() => {
@@ -812,9 +890,20 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       return new Promise((resolve, reject) => {
         const img = document.createElement('img');
         img.onload = () => resolve(img);
-        img.onerror = reject;
+        img.onerror = (error) => {
+          console.error(`Failed to load image: ${src}`, error);
+          // Provide a fallback or placeholder image instead of rejecting
+          resolve(getFallbackImage());
+        };
         img.src = src;
       });
+    };
+
+    const getFallbackImage = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 828;
+      canvas.height = 828;
+      return canvas;
     };
 
     const loadAllImages = async () => {
@@ -841,14 +930,6 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
         if (layer) {
           ctx.save();
           
-          // Enhanced debug logging
-          console.log('Processing layer:', {
-            alt: layer.alt,
-            zIndex: layer.zIndex,
-            isPen: isPen(layer),
-            isWaving
-          });
-          
           // Apply wave animation if needed
           if (isWaving && (
             layer.alt?.toLowerCase().includes('sleeve-left') ||
@@ -857,32 +938,12 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
             isPen(layer)
           )) {
             const time = Date.now() / 1000;
-            
-            // Base wave motion
             const baseAngle = Math.sin(time * 2) * 0.15;
-            
-            // Only apply shake when arm is raised (baseAngle is negative)
             const isRaised = baseAngle < 0;
-            
-            // Calculate shake and pause only when raised
             const shake = isRaised ? Math.sin(time * 20) * 0.02 : 0;
             const pauseFactor = isRaised ? Math.pow(Math.sin(time * 2), 2) : 0;
-            
-            // Combine movements - shake only affects upward motion
             const finalAngle = baseAngle + (shake * pauseFactor);
             
-            // Log animation values
-            console.log('Animation values:', {
-              time,
-              baseAngle,
-              isRaised,
-              shake,
-              pauseFactor,
-              finalAngle,
-              layerType: isPen(layer) ? 'pen' : 'arm/sleeve'
-            });
-
-            // Apply transformation
             ctx.translate(414, 414);
             ctx.rotate(finalAngle);
             ctx.translate(-414, -414);
@@ -909,6 +970,12 @@ export const Canvas = ({ metadata, isWaving, containerRef }: CanvasProps) => {
       if (frameId) {
         cancelAnimationFrame(frameId);
       }
+      // Add this to clean up loaded images
+      loadedImages.forEach(img => {
+        img.onload = null;
+        img.onerror = null;
+      });
+      loadedImages.length = 0;
     };
   }, [layers, isWaving, backgroundColor]);
 
